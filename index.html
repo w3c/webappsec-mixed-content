@@ -434,7 +434,6 @@
 
 	img {
 		border-style: none;
-		color: white;
 	}
 
 	figure, div.figure, div.sidefigure {
@@ -994,7 +993,7 @@
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Mixed Content</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-10-01">1 October 2015</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-10-22">22 October 2015</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1009,7 +1008,7 @@
      <dt>Version History:
      <dd><a href="https://github.com/w3c/webappsec-mixed-content/commits/master/index.src.html">https://github.com/w3c/webappsec-mixed-content/commits/master/index.src.html</a>
      <dt>Feedback:
-     <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bmixed-content%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[mixed-content] <var>… message topic …</var></kbd>” (<a href="http://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
+     <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bmixed-content%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[mixed-content] <i>… message topic …</i></kbd>” (<a href="http://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
      <dt class="editor">Editor:
      <dd class="editor p-author h-card vcard" data-editor-id="56384"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
      <dt>Participate:
@@ -1077,7 +1076,7 @@ encrypted and authenticated document.</p>
     <li>
      <a href="#algorithms"><span class="secno">5</span> <span class="content">Insecure Content in Secure Contexts</span></a>
      <ul class="toc">
-      <li><a href="#categorize-settings-object"><span class="secno">5.1</span> <span class="content"> Does <var>settings object</var> restrict mixed content? </span></a>
+      <li><a href="#categorize-settings-object"><span class="secno">5.1</span> <span class="content"> Does <var>settings</var> prohibit mixed security contexts? </span></a>
       <li><a href="#is-passthrough"><span class="secno">5.2</span> <span class="content"> Is <var>request</var> a passthrough request? </span></a>
       <li><a href="#should-block-fetch"><span class="secno">5.3</span> <span class="content"> Should fetching <var>request</var> be blocked as mixed content? </span></a>
       <li><a href="#should-block-response"><span class="secno">5.4</span> <span class="content"> Should <var>response</var> to <var>request</var> be blocked as mixed
@@ -1153,8 +1152,10 @@ encrypted and authenticated document.</p>
     <dl>
      <dt> <dfn data-dfn-type="dfn" data-export="" data-local-lt="mixed" id="mixed-content">mixed content<a class="self-link" href="#mixed-content"></a></dfn> 
      <dd>
-       A resource or <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> is <strong>mixed content</strong> if its <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <a data-link-type="dfn" href="#insecure-origin">insecure</a>, <strong>and</strong> the context
-      responsible for loading it restricts mixed content. See <a href="#categorize-settings-object">§5.1 Does settings object restrict mixed content?</a> for a normative definition of the latter. 
+       A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> is <strong>mixed content</strong> if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">url</a> is not <a data-link-type="dfn" href="#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated</a>, <strong>and</strong> the context responsible for
+      loading it requires prohibits mixed security contexts (see <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> for a normative definition of the latter). 
+      <p>A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> is <strong>mixed content</strong> if it is an <a data-link-type="dfn" href="#unauthenticated-response">unauthenticated response</a>, <strong>and</strong> the context
+      responsible for loading it requires prohibits mixed security contexts.</p>
       <div class="example" id="example-0665cf9f">
        <a class="self-link" href="#example-0665cf9f"></a> Inside a context that restricts mixed content
         (<code>https://secure.example.com/</code>, for example): 
@@ -1176,30 +1177,15 @@ encrypted and authenticated document.</p>
       concept. This is potentially confusing, but given the term’s near
       ubiquitious usage in a security context across user agents for more than
       a decade, the practical risk of confusion seems low.</p>
-     <dt> <dfn data-dfn-type="dfn" data-export="" data-local-lt="potentially secure" data-lt="potentially secure origin" id="potentially-secure-origin"> potentially secure origin <a class="self-link" href="#potentially-secure-origin"></a></dfn> 
-     <dt> <dfn data-dfn-type="dfn" data-export="" data-lt="potentially secure URL" id="potentially-secure-url"> potentially secure URL <a class="self-link" href="#potentially-secure-url"></a></dfn> 
-     <dd>
-       An <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is said to be <strong>potentially secure</strong> if the origin’s scheme component is <code>HTTPS</code>, <code>WSS</code>,
-      or <code>about</code>. 
-      <p>A URL whose <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is potentially secure is itself considered to
-      be potentially secure.</p>
-     <dt> <dfn data-dfn-type="dfn" data-export="" data-local-lt="a priori insecure" data-lt="a priori insecure origin" id="a-priori-insecure-origin"> <i lang="la">a priori</i> insecure origin <a class="self-link" href="#a-priori-insecure-origin"></a></dfn> 
-     <dt> <dfn data-dfn-type="dfn" data-export="" data-lt="a priori insecure URL" id="a-priori-insecure-url"> <i lang="la">a priori</i> insecure URL <a class="self-link" href="#a-priori-insecure-url"></a></dfn> 
-     <dd>
-       Any <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> which is not <a data-link-type="dfn" href="#potentially-secure-origin">potentially secure</a> is said to
-      be <strong><i lang="la">a priori</i> insecure</strong>. We know, for
-      example, that <code>(http, example.com, 80)</code> is insecure just by
-      looking at its scheme component. 
-      <p>A URL whose <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <i lang="la">a priori</i> insecure is itself
-      considered to be <i lang="la">a priori</i> insecure.</p>
-     <dt> <dfn data-dfn-type="dfn" data-export="" data-local-lt="insecure" data-lt="insecure origin" id="insecure-origin"> insecure origin <a class="self-link" href="#insecure-origin"></a></dfn> 
-     <dt> <dfn data-dfn-type="dfn" data-export="" data-lt="insecure URL" id="insecure-url"> insecure URL <a class="self-link" href="#insecure-url"></a></dfn> 
-     <dd>
-       A resource’s origin is said to be <strong>insecure</strong> if it is
-      either <a data-link-type="dfn" href="#a-priori-insecure-origin"><i lang="la">a priori</i> insecure</a>, or the user agent discovers
-      only after performing a TLS-handshake that the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">Response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS
-      state</a> is <code>deprecated authentication</code>. 
-      <p>A URL whose <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is insecure is itself considered to be insecure.</p>
+     <dt> <dfn data-dfn-type="dfn" data-export="" data-local-lt="a priori authenticated" data-lt="a priori authenticated URL" id="a-priori-authenticated-url"> <i lang="la">a priori</i> authenticated URL <a class="self-link" href="#a-priori-authenticated-url"></a></dfn> 
+     <dd> We know <i lang="la">a priori</i> that a request to a particular URL will
+      be strongly authenticated if the URL’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a> is
+      "<code>https</code>" or "<code>wss</code>", as requests to those schemes will result in network
+      errors for unauthenticated responses. 
+     <dt> <dfn data-dfn-type="dfn" data-export="" data-local-lt="unauthenticated" data-lt="unauthenticated response" id="unauthenticated-response"> unauthenticated response <a class="self-link" href="#unauthenticated-response"></a></dfn> 
+     <dd> We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> is
+      unauthenticated if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is "<code>deprecated</code>"
+      or "<code>none</code>". 
      <dt><dfn data-dfn-type="dfn" data-export="" id="embedding-document">embedding document<a class="self-link" href="#embedding-document"></a></dfn>
      <dd> Given a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> <var>A</var>, the <strong>embedding
       document</strong> of <var>A</var> is the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context-nested-through">through which</a> <var>A</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
@@ -1331,48 +1317,50 @@ directive-value = ""
   whether particular requests should succeed, or should result in network
   errors.</p>
     <p>Fetch calls the algorithm defined in <a href="#should-block-fetch">§5.3 Should fetching request be blocked as mixed content?</a> during <a href="https://fetch.spec.whatwg.org/#fetching">Step 4 of the Fetching
-  algorithm</a> <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> in order to block network traffic to <a data-link-type="dfn" href="#a-priori-insecure-origin"><em>a
-  priori</em> insecure origins</a>.</p>
+  algorithm</a> <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> in order to block network traffic to <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">URL</a>s
+  which are not <a data-link-type="dfn" href="#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated</a>.</p>
     <p class="note" role="note">Note: Hooking into Fetch here ensures that we catch not only the initial
   request, but all redirects as well.</p>
     <p>Further, Fetch calls the algorithm defined in <a href="#should-block-response">§5.4 Should response to request be blocked as mixed
       content?</a> during <a href="https://fetch.spec.whatwg.org/#fetching">Step 7 of the Fetching
-  algorithm</a> <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> in order to block responses from <a data-link-type="dfn" href="#insecure-origin">insecure
-  origins</a>.</p>
+  algorithm</a> <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> in order to block <a data-link-type="dfn" href="#unauthenticated-response">unauthenticated responses</a>.</p>
     <p class="note" role="note">Note: This hook is necessary to detect resources modified or
   synthesized by a ServiceWorker, as well as to determine whether a
-  resource is <a data-link-type="dfn" href="#insecure-origin">insecure</a> once the TLS-handshake has finished. See
+  response is <a data-link-type="dfn" href="#unauthenticated-response">unauthenticated</a> once the TLS-handshake has finished. See
   steps 4.1 and 4.2 of the algorithm defined in <a href="#should-block-response">§5.4 Should response to request be blocked as mixed
       content?</a> for
   detail.</p>
-    <p>The algorithm defined in <a href="#categorize-settings-object">§5.1 Does settings object restrict mixed content?</a> is used by both <a href="#should-block-fetch">§5.3 Should fetching request be blocked as mixed content?</a> and <a href="#should-block-response">§5.4 Should response to request be blocked as mixed
+    <p>The algorithm defined in <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> is used by both <a href="#should-block-fetch">§5.3 Should fetching request be blocked as mixed content?</a> and <a href="#should-block-response">§5.4 Should response to request be blocked as mixed
       content?</a>, as well as <a href="#websockets-integration">§6 Modifications to WebSockets</a> in order to determine whether an insecure request
   ought to be blocked.</p>
     <section>
-     <h3 class="heading settled" data-level="5.1" id="categorize-settings-object"><span class="secno">5.1. </span><span class="content"> Does <var>settings object</var> restrict mixed content? </span><a class="self-link" href="#categorize-settings-object"></a></h3>
+     <h3 class="heading settled" data-level="5.1" id="categorize-settings-object"><span class="secno">5.1. </span><span class="content"> Does <var>settings</var> prohibit mixed security contexts? </span><a class="self-link" href="#categorize-settings-object"></a></h3>
      <p>Both documents and workers have <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">environment settings objects</a> which
     may be examined according to the following algorithm in order to determine
-    whether they restrict mixed content. This algorithm returns <code>Restricts
-    Mixed Content</code> or <code>Does Not Restrict Mixed Content</code>, as
-    appropriate.</p>
-     <p>Given an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">environment settings object</a> <var>settings</var>:</p>
+    whether they restrict mixed content. This algorithm returns "<code>Prohibits Mixed Security Contexts</code>" or "<code>Does Not Prohibit Mixed Security Contexts</code>",
+    as appropriate.</p>
+     <p>Given an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">environment settings object</a> (<var>settings</var>):</p>
      <ol>
-      <li> If <var>settings</var>' <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is not <code>none</code>,
-        then return <strong>Restricts Mixed Content</strong>. 
-      <li>
-        If <var>settings</var> has a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> <var>document</var>, then: 
+      <li data-md="">
+       <p>If <var>settings</var>' <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is not "<code>none</code>", then return
+  "<code>Prohibits Mixed Security Contexts</code>".</p>
+      <li data-md="">
+       <p>If <var>settings</var> has a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> <var>document</var>, then:</p>
        <ol>
-        <li>
-          While <var>document</var> has an <a data-link-type="dfn" href="#embedding-document">embedding document</a>: 
+        <li data-md="">
+         <p>While <var>document</var> has an <a data-link-type="dfn" href="#embedding-document">embedding document</a>:</p>
          <ol>
-          <li> Let <var>document</var> be <var>document</var>’s <a data-link-type="dfn" href="#embedding-document">embedding
-                document</a>. 
-          <li> Let <var>embedder settings</var> be <var>document</var>’s <var>incumbent settings object</var>. 
-          <li> If <var>embedder settings</var>' <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is not <code>None</code>, then return <strong>Restricts
-                mixed content</strong>. 
+          <li data-md="">
+           <p>Set <var>document</var> to <var>document</var>'s <a data-link-type="dfn" href="#embedding-document">embedding document</a>.</p>
+          <li data-md="">
+           <p>Let <var>embedder settings</var> be <var>document</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>.</p>
+          <li data-md="">
+           <p>If <var>embedder settings</var>' <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is not "<code>None</code>",
+  then return "<code>Prohibits Mixed Security Contexts</code>".</p>
          </ol>
        </ol>
-      <li>Return <strong>Does Not Restrict Mixed Content</strong>.
+      <li data-md="">
+       <p>Return "<code>Does Not Restrict Mixed Security Contexts</code>".</p>
      </ol>
      <div class="note" role="note">
        If a document has an <a data-link-type="dfn" href="#embedding-document">embedding document</a>, a user agent needs to
@@ -1390,9 +1378,9 @@ directive-value = ""
         loads <code>http://evil.com</code>. In this case, the insecure request
         to <code>evil.com</code> will be blocked, as <code>b.com</code> was
         loaded over a secure connection, even though <code>a.com</code> was not. </div>
-      <div class="example" id="example-78c7ba27"><a class="self-link" href="#example-78c7ba27"></a> <code>https://a.com</code> frames a <code>data:</code> URL, which loads <code>http://evil.com</code>. In this case, the insecure request to <code>evil.com</code> will be blocked, as <code>a.com</code> was loaded
+      <div class="example" id="example-bd95e65c"><a class="self-link" href="#example-bd95e65c"></a> <code>https://a.com</code> frames a <code>data:</code> URL, which loads <code>http://evil.com</code>. In this case, the insecure request to <code>evil.com</code> will be blocked, as <code>a.com</code> was loaded
         over a secure connection, even though the framed <code>data:</code> URL
-        is <a data-link-type="dfn" href="#a-priori-insecure-origin"><i lang="la">a priori</i> insecure</a>. </div>
+        is not <a data-link-type="dfn" href="#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated</a>. </div>
      </div>
     </section>
     <section>
@@ -1437,9 +1425,8 @@ directive-value = ""
         Return <strong>allowed</strong> if one or more of the following
         conditions are met: 
        <ol>
-        <li> <a href="#categorize-settings-object">§5.1 Does settings object restrict mixed content?</a> returns <code>Does Not Restrict
-            Mixed Content</code> when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client">client</a>. 
-        <li> <var>request</var>’s <code>url</code>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <a data-link-type="dfn" href="#potentially-secure-origin">potentially secure</a>. 
+        <li> <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns "<code>Does Not Restrict Mixed Security Contexts</code>" when applied to <var>request</var>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client">client</a>. 
+        <li> <var>request</var>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated</a>. 
         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content">mixed content</a>, as
             described in <a href="#requirements-user-controls">§7.4 User Controls</a>). 
         <li>
@@ -1463,7 +1450,8 @@ directive-value = ""
         conditions are met: 
        <ol>
         <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator">initiator</a> is "<code>fetch</code>" and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination">destination</a> is "<code>subresource</code>", and <var>request</var> is a <a data-link-type="dfn" href="#passthrough-request">passthrough request</a>. 
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-type">type</a> is "<code>image</code>", and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator">initiator</a> is not "<code>imageset</code>". 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-type">type</a> is "<code>image</code>", and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator">initiator</a> is not "<code>imageset</code>".
+            ia>potentially secure. 
         <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-type">type</a> is "<code>video</code>". 
         <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-type">type</a> is "<code>audio</code>". 
        </ol>
@@ -1482,10 +1470,10 @@ directive-value = ""
      <p class="note" role="note">Note: <a href="#should-block-fetch">If a request proceeds</a>, we still
     might want to block the response based on the state of the connection
     that generated the response (e.g. because the request is <a data-link-type="dfn" href="#blockable">blockable</a>,
-    but the connection is <a data-link-type="dfn" href="#insecure-origin">insecure</a>), and we also need to ensure that
-    Service Worker doesn’t accidentally return an <a data-link-type="dfn" href="#insecure-origin">insecure</a> response
-    for a <a data-link-type="dfn" href="#blockable">blockable</a> request. This algorithm is used to make that
-    determination.</p>
+    but the connection is <a data-link-type="dfn" href="#unauthenticated-response">unauthenticated</a>), and we also need to ensure
+    that a Service Worker doesn’t accidentally return an <a data-link-type="dfn" href="#unauthenticated-response">unauthenticated
+    response</a> for a <a data-link-type="dfn" href="#blockable">blockable</a> request. This algorithm is used to make
+    that determination.</p>
      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> <var>request</var> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> <var>response</var>, the user agent determines what response should be
     returned via the following algorithm:</p>
      <ol>
@@ -1493,7 +1481,7 @@ directive-value = ""
         Return <strong>allowed</strong> if one or more of the following
         conditions are met: 
        <ol>
-        <li> <a href="#categorize-settings-object">§5.1 Does settings object restrict mixed content?</a> returns <code>Does Not Restrict
+        <li> <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns <code>Does Not Restrict
             Mixed Content</code> when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client">client</a>. 
         <li> <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is <code>modern</code>. 
         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content">mixed content</a>, as
@@ -1536,32 +1524,28 @@ directive-value = ""
     <p class="note" role="note">Note: This suggestion is filed as <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=28841">bug #28841</a> against <a data-link-type="biblio" href="#biblio-websockets">[WEBSOCKETS]</a>.</p>
     <p>The <a href="http://tools.ietf.org/html/rfc6455#section-4.1">Establish a
   WebSocket Connection algorithm</a> <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a> is modified as follows:</p>
-    <ul>
-     <li>
-       After the current step 1, perform the following step: 
+    <ol>
+     <li data-md="">
+      <p>After the current step 1, perform the following step:</p>
       <ol>
-       <li> If <var>secure</var> is <strong>false</strong>, and the algorithm in <a href="#categorize-settings-object">§5.1 Does settings object restrict mixed content?</a> returns <code>Restricts Mixed
-          Content</code> when applied to <var>client</var>’s <var>entry
-          script</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-script">relevant settings
-          object</a>’s, then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7">fail the WebSocket
-          connection</a> and abort the connection <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>. 
+       <li data-md="">
+        <p>If <var>secure</var> is <code>false</code>, and the algorithm in <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns "<code>Restricts Mixed Security Context</code>" when applied to <var>client</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>, then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7">fail the
+  WebSocket connection</a> and abort the connection <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>.</p>
       </ol>
-     <li>
-       After the current step 5, perform the following step: 
+     <li data-md="">
+      <p>After the current step 5, perform the following step:</p>
       <ol>
-       <li>
-         If secure is <strong>true</strong>, and the TLS handshake performed
-          in step 5 results in <code>deprecated authentication</code>,
-          then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7">fail the WebSocket connection</a> and abort
-          the connection <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>. 
+       <li data-md="">
+        <p>If <var>secure</var> is <code>true</code>, and the TLS handshake performed in step 5
+  results in an HTTPS state of "<code>deprecated</code>", then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7">fail the WebSocket connection</a> and abort the connection <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>.</p>
         <p class="issue" id="issue-3280c348"><a class="self-link" href="#issue-3280c348"></a> This is super hand-wavey.</p>
       </ol>
-    </ul>
+    </ol>
     <p class="note" role="note">Note: Filed as <a href="http://www.rfc-editor.org/errata_search.php?rfc=6455&amp;eid=4398">errata #4398</a> against <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>.</p>
-    <p>These changes together mean that we’ll no longer throw a <code>SecurityError</code> exception directly upon constructing a WebSocket
-  object, but will instead rely upon blocking the connection and triggering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7">fail the WebSocket connection</a> algorithm, which developers can catch by
-  hooking a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/websockets/#the-websocket-interface">WebSocket</a></code> object’s <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/websockets/#handler-websocket-onerror">onerror</a></code> handler. This is
-  consistent with the behavior of <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/XMLHttpRequest/#interface-xmlhttprequest">XMLHttpRequest</a></code>, <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/eventsource/#the-eventsource-interface">EventSource</a></code>, and <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#dom-global-fetch">Fetch</a></code>.</p>
+    <p>These changes together mean that we’ll no longer throw a <code>SecurityError</code> exception directly upon constructing a WebSocket object, but will instead rely
+  upon blocking the connection and triggering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7">fail the WebSocket
+  connection</a> algorithm, which developers can catch by hooking a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/websockets/#the-websocket-interface">WebSocket</a></code> object’s <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/websockets/#handler-websocket-onerror">onerror</a></code> handler. This is consistent with
+  the behavior of <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/XMLHttpRequest/#interface-xmlhttprequest">XMLHttpRequest</a></code>, <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/eventsource/#the-eventsource-interface">EventSource</a></code>, and <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#dom-global-fetch">Fetch</a></code>.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="7" id="security-considerations"><span class="secno">7. </span><span class="content">Security Considerations</span><a class="self-link" href="#security-considerations"></a></h2>
@@ -1578,10 +1562,11 @@ directive-value = ""
     </section>
     <section>
      <h3 class="heading settled" data-level="7.2" id="requirements-forms"><span class="secno">7.2. </span><span class="content">Form Submission</span><a class="self-link" href="#requirements-forms"></a></h3>
-     <p>If <a href="#categorize-settings-object">§5.1 Does settings object restrict mixed content?</a> returns <code>Restricts Mixed
+     <p>If <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns <code>Restricts Mixed
     Content</code> when applied to a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings
     object</a>, then a user agent MAY choose to warn users of the presence of
-    one or more <a data-link-type="element" href="http://www.w3.org/TR/html5/forms.html#the-form-element">form</a> elements with <a data-link-type="element-attr" href="http://www.w3.org/TR/html5/forms.html#attr-fs-action">action</a> attributes whose values are <a data-link-type="dfn" href="#insecure-url">insecure URLs</a>.</p>
+    one or more <a data-link-type="element" href="http://www.w3.org/TR/html5/forms.html#the-form-element">form</a> elements with <a data-link-type="element-attr" href="http://www.w3.org/TR/html5/forms.html#attr-fs-action">action</a> attributes whose values are not <a data-link-type="dfn" href="#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated
+    URLs</a>.</p>
      <p class="note" role="note">Note: Chrome, for example, currently gives the same UI treatment to a page
     with an insecure form action as it does for a page that displays an insecure
     image.</p>
@@ -1710,24 +1695,19 @@ directive-value = ""
   <h2 class="no-num heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="indexlist">
-   <li><a href="#a-priori-insecure-origin">a priori insecure</a><span>, in §2</span>
-   <li><a href="#a-priori-insecure-origin">a priori insecure origin</a><span>, in §2</span>
-   <li><a href="#a-priori-insecure-url">a priori insecure URL</a><span>, in §2</span>
+   <li><a href="#a-priori-authenticated-url">a priori authenticated</a><span>, in §2</span>
+   <li><a href="#a-priori-authenticated-url">a priori authenticated URL</a><span>, in §2</span>
    <li><a href="#blockable">blockable</a><span>, in §3.2</span>
    <li><a href="#block-all-mixed-content">block-all-mixed-content</a><span>, in §4.2</span>
    <li><a href="#embedding-document">embedding document</a><span>, in §2</span>
-   <li><a href="#insecure-origin">insecure</a><span>, in §2</span>
-   <li><a href="#insecure-origin">insecure origin</a><span>, in §2</span>
-   <li><a href="#insecure-url">insecure URL</a><span>, in §2</span>
    <li><a href="#mixed-content">mixed</a><span>, in §2</span>
    <li><a href="#mixed-content">mixed content</a><span>, in §2</span>
    <li><a href="#optionally-blockable">optionally-blockable</a><span>, in §3.1</span>
    <li><a href="#passthrough-request">passthrough request</a><span>, in §5.2</span>
-   <li><a href="#potentially-secure-origin">potentially secure</a><span>, in §2</span>
-   <li><a href="#potentially-secure-origin">potentially secure origin</a><span>, in §2</span>
-   <li><a href="#potentially-secure-url">potentially secure URL</a><span>, in §2</span>
    <li><a href="#strict-mixed-content-checking-flag">strict mixed content checking flag</a><span>, in §4</span>
    <li><a href="#strict-mode">strict mode</a><span>, in §4</span>
+   <li><a href="#unauthenticated-response">unauthenticated</a><span>, in §2</span>
+   <li><a href="#unauthenticated-response">unauthenticated response</a><span>, in §2</span>
   </ul>
   <h3 class="no-num heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="indexlist">
@@ -1750,6 +1730,7 @@ directive-value = ""
      <li><a href="https://fetch.spec.whatwg.org/#concept-response">response</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-request-target-browsing-context">target browsing context</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-request-type">type</a>
+     <li><a href="https://fetch.spec.whatwg.org/#concept-request-url">url</a>
     </ul>
    <li>
     <a data-link-type="biblio" href="#biblio-html5">[html5]</a> defines the following terms:
@@ -1768,16 +1749,11 @@ directive-value = ""
      <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context-nested-through">nested through</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#parent-browsing-context">parent browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/infrastructure.html#plugin">plugin</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-script">relevant settings object for a script</a>
+     <li><a href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a>
      <li><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-source-element">source</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element">video</a>
-    </ul>
-   <li>
-    <a data-link-type="biblio" href="#biblio-rfc6454">[RFC6454]</a> defines the following terms:
-    <ul>
-     <li><a href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>
     </ul>
    <li>
     <a data-link-type="biblio" href="#biblio-rfc6455">[rfc6455]</a> defines the following terms:
@@ -1789,6 +1765,11 @@ directive-value = ""
     <ul>
      <li><a href="https://dom.spec.whatwg.org/#concept-PI-target">target</a>
     </ul>
+   <li>
+    <a data-link-type="biblio" href="#biblio-url">[url]</a> defines the following terms:
+    <ul>
+     <li><a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>
+    </ul>
   </ul>
   <h2 class="no-num heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
@@ -1796,11 +1777,7 @@ directive-value = ""
    <dt id="biblio-csp2"><a class="self-link" href="#biblio-csp2"></a>[CSP2]
    <dd>Mike West; Adam Barth; Daniel Veditz. <a href="http://www.w3.org/TR/CSP2/">Content Security Policy Level 2</a>. 21 July 2015. CR. URL: <a href="http://www.w3.org/TR/CSP2/">http://www.w3.org/TR/CSP2/</a>
    <dt id="biblio-fetch"><a class="self-link" href="#biblio-fetch"></a>[FETCH]
-   <dd>Anne van Kesteren. <a href="http://fetch.spec.whatwg.org/">Fetch</a>. Living Standard. URL: <a href="http://fetch.spec.whatwg.org/">http://fetch.spec.whatwg.org/</a>
-   <dt id="biblio-rfc6454"><a class="self-link" href="#biblio-rfc6454"></a>[RFC6454]
-   <dd>Adam Barth. <a href="http://www.ietf.org/rfc/rfc6454.txt">The Web Origin Concept</a>. RFC. URL: <a href="http://www.ietf.org/rfc/rfc6454.txt">http://www.ietf.org/rfc/rfc6454.txt</a>
-   <dt id="biblio-rfc6797"><a class="self-link" href="#biblio-rfc6797"></a>[RFC6797]
-   <dd>Jeff Hodges; Collin Jackson; Adam Barth. <a href="http://www.ietf.org/rfc/rfc6797.txt">HTTP Strict Transport Security (HSTS)</a>. RFC. URL: <a href="http://www.ietf.org/rfc/rfc6797.txt">http://www.ietf.org/rfc/rfc6797.txt</a>
+   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-dom-ls"><a class="self-link" href="#biblio-dom-ls"></a>[DOM-LS]
    <dd>Document Object Model URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-html5"><a class="self-link" href="#biblio-html5"></a>[HTML5]
@@ -1809,6 +1786,10 @@ directive-value = ""
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc6455"><a class="self-link" href="#biblio-rfc6455"></a>[RFC6455]
    <dd>I. Fette; A. Melnikov. <a href="https://tools.ietf.org/html/rfc6455">The WebSocket Protocol</a>. December 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6455">https://tools.ietf.org/html/rfc6455</a>
+   <dt id="biblio-rfc6797"><a class="self-link" href="#biblio-rfc6797"></a>[RFC6797]
+   <dd>J. Hodges; C. Jackson; A. Barth. <a href="https://tools.ietf.org/html/rfc6797">HTTP Strict Transport Security (HSTS)</a>. November 2012. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6797">https://tools.ietf.org/html/rfc6797</a>
+   <dt id="biblio-url"><a class="self-link" href="#biblio-url"></a>[URL]
+   <dd>Anne van Kesteren; Sam Ruby. <a href="http://www.w3.org/TR/url-1/">URL</a>. 9 December 2014. WD. URL: <a href="http://www.w3.org/TR/url-1/">http://www.w3.org/TR/url-1/</a>
    <dt id="biblio-websockets"><a class="self-link" href="#biblio-websockets"></a>[WEBSOCKETS]
    <dd>Ian Hickson. <a href="http://www.w3.org/TR/websockets/">The WebSocket API</a>. 20 September 2012. CR. URL: <a href="http://www.w3.org/TR/websockets/">http://www.w3.org/TR/websockets/</a>
   </dl>
@@ -1817,7 +1798,7 @@ directive-value = ""
    <dt id="biblio-cab"><a class="self-link" href="#biblio-cab"></a>[CAB]
    <dd><a href="https://cabforum.org/baseline-requirements-documents/">CA/Browser Forum Baseline Requirements v1.1.8</a>. URL: <a href="https://cabforum.org/baseline-requirements-documents/">https://cabforum.org/baseline-requirements-documents/</a>
    <dt id="biblio-sri"><a class="self-link" href="#biblio-sri"></a>[SRI]
-   <dd>Frederik Braun. <a href="http://www.w3.org/TR/SRI/">Subresource Integrity</a>. 16 September 2015. WD. URL: <a href="http://www.w3.org/TR/SRI/">http://www.w3.org/TR/SRI/</a>
+   <dd>Frederik Braun. <a href="http://www.w3.org/TR/SRI/">Subresource Integrity</a>. 6 October 2015. WD. URL: <a href="http://www.w3.org/TR/SRI/">http://www.w3.org/TR/SRI/</a>
    <dt id="biblio-rfc6919"><a class="self-link" href="#biblio-rfc6919"></a>[RFC6919]
    <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
    <dt id="biblio-wsc-ui"><a class="self-link" href="#biblio-wsc-ui"></a>[WSC-UI]

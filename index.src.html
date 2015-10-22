@@ -20,6 +20,7 @@ Boilerplate: omit conformance, omit feedback-header
 !Participate: <a href="https://github.com/w3c/webappsec-mixed-content/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-mixed-content/issues">open issues</a>)
 Indent: 2
 At Risk: The <a>passthrough request</a> concept, and the related carveout in the blocking algorithms.
+Markup Shorthands: markdown on
 </pre>
 <!--
    ███    ██    ██  ██████  ██     ██  ███████  ████████   ██████ 
@@ -54,25 +55,25 @@ type: dfn
       text: sandboxed origin browsing context flag
       text: sandboxing flag set
       text: top-level browsing context; url: top-level-browsing-context
+      text: origin
+      text: opaque identifier; url: origin
     urlPrefix: infrastructure.html
       text: plugin
       text: reflect
     urlPrefix: webappapis.html
       text: environment settings object; url: settings-object
       text: incumbent settings object
-      text: relevant settings object for a script
+      text: relevant settings object; url: relevant-settings-object-for-a-global-object
       text: responsible document
       text: responsible browsing context
       text: global object
   urlPrefix: https://w3c.github.io/webappsec/specs/content-security-policy/; spec: CSP2
     text: enforce
     text: monitor
-  urlPrefix: https://tools.ietf.org/html/rfc6454; spec: RFC6454
-    text: origin; url: section-3.2
-    text: globally unique identifier; url: section-2.3
   urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
     text: fetching
     text: request; url: concept-request
+    text: url; for: request; url: concept-request-url
     text: response; url: concept-response
     text: network error; url: concept-network-error
     text: opaque filtered response; url: concept-filtered-response-opaque
@@ -81,14 +82,16 @@ type: dfn
     text: destination; url: concept-request-destination
     text: target browsing context; url: concept-request-target-browsing-context
     text: navigation request
-    url: concept-request-client
+    url: concept-request-client; for: request
       text: request client
       text: client
-    url: concept-response-https-state
+    url: concept-response-https-state; for: response
       text: response https state;
       text: https state
   urlPrefix: https://tools.ietf.org/html/rfc6455; spec: RFC6455
     text: fail the websocket connection; url: section-7.1.7
+  urlPrefix: http://www.w3.org/TR/url/; spec: URL
+    text: url; url: concept-url
 type: method
   text: Fetch; for: GlobalFetch; url: https://fetch.spec.whatwg.org/#dom-global-fetch
 type: attribute
@@ -210,10 +213,15 @@ type: element-attr
       <dfn export local-lt="mixed">mixed content</dfn>
     </dt>
     <dd>
-      A resource or <a>request</a> is <strong>mixed content</strong> if its
-      <a>origin</a> is <a>insecure</a>, <strong>and</strong> the context
-      responsible for loading it restricts mixed content. See
-      [[#categorize-settings-object]] for a normative definition of the latter.
+      A <a>request</a> is <strong>mixed content</strong> if its
+      <a for="request">url</a> is not <a><i lang="la">a priori</i>
+      authenticated</a>, <strong>and</strong> the context responsible for
+      loading it requires prohibits mixed security contexts (see
+      [[#categorize-settings-object]] for a normative definition of the latter).
+
+      A <a>response</a> is <strong>mixed content</strong> if it is an
+      <a>unauthenticated response</a>, <strong>and</strong> the context
+      responsible for loading it requires prohibits mixed security contexts.
 
       <div class="example">
         Inside a context that restricts mixed content
@@ -247,61 +255,26 @@ type: element-attr
     </dd>
 
     <dt>
-      <dfn export local-lt="potentially secure">
-        potentially secure origin
-      </dfn>
-    </dt>
-    <dt>
-      <dfn export>
-        potentially secure URL
+      <dfn export local-lt="a priori authenticated" oldids="a-priori-insecure-url a-priori-insecure-origin">
+        <i lang="la">a priori</i> authenticated URL
       </dfn>
     </dt>
     <dd>
-      An <a>origin</a> is said to be <strong>potentially secure</strong>
-      if the origin's scheme component is <code>HTTPS</code>, <code>WSS</code>,
-      or <code>about</code>.
-
-      A URL whose <a>origin</a> is potentially secure is itself considered to
-      be potentially secure.
+      We know <i lang="la">a priori</i> that a request to a particular URL will
+      be strongly authenticated if the URL's <a for="url">scheme</a> is
+      "`https`" or "`wss`", as requests to those schemes will result in network
+      errors for unauthenticated responses.
     </dd>
 
     <dt>
-      <dfn export local-lt="a priori insecure">
-        <i lang="la">a priori</i> insecure origin
-      </dfn>
-    </dt>
-    <dt>
-      <dfn export>
-        <i lang="la">a priori</i> insecure URL
+      <dfn export local-lt="unauthenticated" oldids="insecure-origin insecure-url">
+        unauthenticated response
       </dfn>
     </dt>
     <dd>
-      Any <a>origin</a> which is not <a>potentially secure</a> is said to
-      be <strong><i lang="la">a priori</i> insecure</strong>. We know, for
-      example, that <code>(http, example.com, 80)</code> is insecure just by
-      looking at its scheme component.
-
-      A URL whose <a>origin</a> is <i lang="la">a priori</i> insecure is itself
-      considered to be <i lang="la">a priori</i> insecure.
-    </dd>
-
-    <dt>
-      <dfn export local-lt="insecure">
-        insecure origin
-      </dfn>
-    </dt>
-    <dt>
-      <dfn export>
-        insecure URL
-      </dfn>
-    </dt>
-    <dd>
-      A resource's origin is said to be <strong>insecure</strong> if it is
-      either <a><i lang="la">a priori</i> insecure</a>, or the user agent discovers
-      only after performing a TLS-handshake that the <a>Response</a>'s <a>HTTPS
-      state</a> is <code>deprecated authentication</code>.
-
-      A URL whose <a>origin</a> is insecure is itself considered to be insecure.
+      We know <i lang="la">a posteriori</i> that a <a>response</a> is
+      unauthenticated if its <a for="response">HTTPS state</a> is "`deprecated`"
+      or "`none`".
     </dd>
 
     <dt><dfn export>embedding document</dfn></dt>
@@ -538,8 +511,8 @@ type: element-attr
   Fetch calls the algorithm defined in
   [[#should-block-fetch]] during
   <a href="https://fetch.spec.whatwg.org/#fetching">Step 4 of the Fetching
-  algorithm</a> [[!FETCH]] in order to block network traffic to <a><em>a
-  priori</em> insecure origins</a>.
+  algorithm</a> [[!FETCH]] in order to block network traffic to <a>URL</a>s
+  which are not <a><i lang="la">a priori</i> authenticated</a>.
 
   Note: Hooking into Fetch here ensures that we catch not only the initial
   request, but all redirects as well.
@@ -547,12 +520,11 @@ type: element-attr
   Further, Fetch calls the algorithm defined in
   [[#should-block-response]] during
   <a href="https://fetch.spec.whatwg.org/#fetching">Step 7 of the Fetching
-  algorithm</a> [[!FETCH]] in order to block responses from <a>insecure
-  origins</a>.
+  algorithm</a> [[!FETCH]] in order to block <a>unauthenticated responses</a>.
 
   Note: This hook is necessary to detect resources modified or
   synthesized by a ServiceWorker, as well as to determine whether a
-  resource is <a>insecure</a> once the TLS-handshake has finished. See
+  response is <a>unauthenticated</a> once the TLS-handshake has finished. See
   steps 4.1 and 4.2 of the algorithm defined in [[#should-block-response]] for
   detail.
 
@@ -563,50 +535,33 @@ type: element-attr
 
   <section>
     <h3 id="categorize-settings-object">
-      Does <var>settings object</var> restrict mixed content?
+      Does |settings| prohibit mixed security contexts?
     </h3>
 
     Both documents and workers have <a>environment settings objects</a> which
     may be examined according to the following algorithm in order to determine
-    whether they restrict mixed content. This algorithm returns <code>Restricts
-    Mixed Content</code> or <code>Does Not Restrict Mixed Content</code>, as
-    appropriate.
+    whether they restrict mixed content. This algorithm returns "`Prohibits
+    Mixed Security Contexts`" or "`Does Not Prohibit Mixed Security Contexts`",
+    as appropriate.
 
-    Given an <a>environment settings object</a> <var>settings</var>:
+    Given an <a>environment settings object</a> (|settings|):
+    
+    1.  If |settings|' <a>HTTPS state</a> is not "`none`", then return
+        "`Prohibits Mixed Security Contexts`".
 
-    <ol>
-      <li>
-        If <var>settings</var>' <a>HTTPS state</a> is not <code>none</code>,
-        then return <strong>Restricts Mixed Content</strong>.
-      </li>
-      <li>
-        If <var>settings</var> has a <a>responsible document</a>
-        <var>document</var>, then:
+    2.  If |settings| has a <a>responsible document</a> |document|, then:
 
-        <ol>
-          <li>
-            While <var>document</var> has an <a>embedding document</a>:
+        1.  While |document| has an <a>embedding document</a>:
 
-            <ol>
-              <li>
-                Let <var>document</var> be <var>document</var>'s <a>embedding
-                document</a>.
-              </li>
-              <li>
-                Let <var>embedder settings</var> be <var>document</var>'s
-                <var>incumbent settings object</var>.
-              </li>
-              <li>
-                If <var>embedder settings</var>' <a>HTTPS state</a> is not
-                <code>None</code>, then return <strong>Restricts
-                mixed content</strong>.
-              </li>
-            </ol>
-          </li>
-        </ol>
-      </li>
-      <li>Return <strong>Does Not Restrict Mixed Content</strong>.</li>
-    </ol>
+            1.  Set |document| to |document|'s <a>embedding document</a>.
+
+            2.  Let |embedder settings| be |document|'s <a>global object</a>'s
+                <a>relevant settings object</a>.
+
+            3.  If |embedder settings|' <a>HTTPS state</a> is not "`None`",
+                then return "`Prohibits Mixed Security Contexts`".
+
+    3.  Return "`Does Not Restrict Mixed Security Contexts`".
 
     <div class="note">
       If a document has an <a>embedding document</a>, a user agent needs to
@@ -639,7 +594,7 @@ type: element-attr
         <code>http://evil.com</code>. In this case, the insecure request to
         <code>evil.com</code> will be blocked, as <code>a.com</code> was loaded
         over a secure connection, even though the framed <code>data:</code> URL
-        is <a><i lang="la">a priori</i> insecure</a>.
+        is not <a><i lang="la">a priori</i> authenticated</a>.
       </div>
     </div>
   </section>
@@ -712,13 +667,13 @@ type: element-attr
 
         <ol>
           <li>
-            [[#categorize-settings-object]] returns <code>Does Not Restrict
-            Mixed Content</code> when applied to <var>request</var>'s
-            <a>client</a>.
+            [[#categorize-settings-object]] returns "`Does Not Restrict Mixed
+            Security Contexts`" when applied to |request|'s
+            <a for="request">client</a>.
           </li>
           <li>
-            <var>request</var>'s <code>url</code>'s <a>origin</a> is
-            <a>potentially secure</a>.
+            |request|'s <a for="request">url</a> is <a><i lang="la">a priori</i>
+            authenticated</a>.
           </li>
           <li>
             The user agent has been instructed to allow <a>mixed content</a>, as
@@ -767,6 +722,7 @@ type: element-attr
           <li>
             <var>request</var>'s <a>type</a> is "<code>image</code>", and
             <a>initiator</a> is not "<code>imageset</code>".
+            ia>potentially secure</a>.
           </li>
           <li>
             <var>request</var>'s <a>type</a> is "<code>video</code>".
@@ -799,10 +755,10 @@ type: element-attr
     Note: <a href="#should-block-fetch">If a request proceeds</a>, we still
     might want to block the response based on the state of the connection
     that generated the response (e.g. because the request is <a>blockable</a>,
-    but the connection is <a>insecure</a>), and we also need to ensure that
-    Service Worker doesn't accidentally return an <a>insecure</a> response
-    for a <a>blockable</a> request. This algorithm is used to make that
-    determination.
+    but the connection is <a>unauthenticated</a>), and we also need to ensure
+    that a Service Worker doesn't accidentally return an <a>unauthenticated
+    response</a> for a <a>blockable</a> request. This algorithm is used to make
+    that determination.
 
     Given a <a>request</a> <var>request</var> and <a>response</a>
     <var>response</var>, the user agent determines what response should be
@@ -907,49 +863,33 @@ type: element-attr
   The <a href="http://tools.ietf.org/html/rfc6455#section-4.1">Establish a
   WebSocket Connection algorithm</a> [[!RFC6455]] is modified as follows:
 
-  <ul>
-    <li>
-      After the current step 1, perform the following step:
+  1.  After the current step 1, perform the following step:
 
-      <ol>
-        <li>
-          If <var>secure</var> is <strong>false</strong>, and the algorithm in
-          [[#categorize-settings-object]] returns <code>Restricts Mixed
-          Content</code> when applied to <var>client</var>'s <var>entry
-          script</var>'s
-          <a lt="relevant settings object for a script">relevant settings
-          object</a>'s, then the client MUST <a>fail the WebSocket
-          connection</a> and abort the connection [[!RFC6455]].
-        </li>
-      </ol>
-    </li>
-    <li>
-      After the current step 5, perform the following step:
+      1.  If |secure| is `false`, and the algorithm in
+          [[#categorize-settings-object]] returns "`Restricts Mixed Security
+          Context`" when applied to |client|'s <a>global object</a>'s
+          <a>relevant settings object</a>, then the client MUST <a>fail the
+          WebSocket connection</a> and abort the connection [[!RFC6455]].
 
-      <ol>
-        <li>
-          If secure is <strong>true</strong>, and the TLS handshake performed
-          in step 5 results in <code>deprecated authentication</code>,
-          then the client MUST <a>fail the WebSocket connection</a> and abort
-          the connection [[!RFC6455]].
+  2.  After the current step 5, perform the following step:
+
+      1.  If |secure| is `true`, and the TLS handshake performed in step 5
+          results in an HTTPS state of "`deprecated`", then the client MUST
+          <a>fail the WebSocket connection</a> and abort the connection
+          [[!RFC6455]].
 
           ISSUE: This is super hand-wavey.
-        </li>
-      </ol>
-    </li>
-  </ul>
 
   Note: Filed as
   <a href="http://www.rfc-editor.org/errata_search.php?rfc=6455&eid=4398">errata #4398</a>
   against [[RFC6455]].
 
-  These changes together mean that we'll no longer throw a
-  <code>SecurityError</code> exception directly upon constructing a WebSocket
-  object, but will instead rely upon blocking the connection and triggering the
-  <a>fail the WebSocket connection</a> algorithm, which developers can catch by
-  hooking a {{WebSocket}} object's {{WebSocket/onerror}} handler. This is
-  consistent with the behavior of {{XMLHttpRequest}}, {{EventSource}}, and
-  {{Fetch}}.
+  These changes together mean that we'll no longer throw a `SecurityError`
+  exception directly upon constructing a WebSocket object, but will instead rely
+  upon blocking the connection and triggering the <a>fail the WebSocket
+  connection</a> algorithm, which developers can catch by hooking a
+  {{WebSocket}} object's {{WebSocket/onerror}} handler. This is consistent with
+  the behavior of {{XMLHttpRequest}}, {{EventSource}}, and {{Fetch}}.
 </section>
 
 <!--
@@ -986,7 +926,8 @@ type: element-attr
     Content</code> when applied to a {{Document}}'s <a>incumbent settings
     object</a>, then a user agent MAY choose to warn users of the presence of
     one or more <a element>form</a> elements with <a element-attr>action</a>
-    attributes whose values are <a>insecure URLs</a>.
+    attributes whose values are not <a><i lang="la">a priori</i> authenticated
+    URLs</a>.
 
     Note: Chrome, for example, currently gives the same UI treatment to a page
     with an insecure form action as it does for a page that displays an insecure
