@@ -79,7 +79,7 @@ type: dfn
     text: opaque filtered response; url: concept-filtered-response-opaque
     text: initiator; url: concept-request-initiator
     text: type; url: concept-request-type
-    text: destination; url: concept-request-destination
+    text: destination; for: request; url: concept-request-destination
     text: target browsing context; url: concept-request-target-browsing-context
     text: navigation request
     url: concept-request-client; for: request
@@ -282,7 +282,7 @@ type: element-attr
       Given a {{Document}} <var>A</var>, the <strong>embedding
       document</strong> of <var>A</var> is the {{Document}}
       <a lt="nested through">through which</a> <var>A</var>'s <a>browsing
-      context</a> is nested.
+      context</a> is nested [[!HTML5]].
     </dd>
   </dl>
 </section>
@@ -508,21 +508,15 @@ type: element-attr
   whether particular requests should succeed, or should result in network
   errors.
 
-  Fetch calls the algorithm defined in
-  [[#should-block-fetch]] during
-  <a href="https://fetch.spec.whatwg.org/#fetching">Step 4 of the Fetching
-  algorithm</a> [[!FETCH]] in order to block network traffic to <a>URL</a>s
-  which are not <a><i lang="la">a priori</i> authenticated</a>.
+  Fetch calls the algorithm defined in [[#should-block-fetch]] at the top of
+  the fetching algorithm in order to block network traffic to
+  <a for="request">URL</a>s which are not <a><i lang="la">a priori</i>
+  authenticated</a> [[FETCH]]. Hooking into Fetch here ensures that we catch
+  not only the initial request, but all redirects as well.
 
-  Note: Hooking into Fetch here ensures that we catch not only the initial
-  request, but all redirects as well.
-
-  Further, Fetch calls the algorithm defined in
-  [[#should-block-response]] during
-  <a href="https://fetch.spec.whatwg.org/#fetching">Step 7 of the Fetching
-  algorithm</a> [[!FETCH]] in order to block <a>unauthenticated responses</a>.
-
-  Note: This hook is necessary to detect resources modified or
+  Further, Fetch calls the algorithm defined in [[#should-block-response]]
+  at the bottom of the fetching algorithm in order to block <a>unauthenticated
+  responses</a>. This hook is necessary to detect resources modified or
   synthesized by a ServiceWorker, as well as to determine whether a
   response is <a>unauthenticated</a> once the TLS-handshake has finished. See
   steps 4.1 and 4.2 of the algorithm defined in [[#should-block-response]] for
@@ -614,7 +608,7 @@ type: element-attr
     mixed content.
 
     More formally, <var>request</var> is a passthrough request if the following
-    conditions hold:
+    conditions hold [[!FETCH]]:
 
     <ol>
       <li>
@@ -631,7 +625,7 @@ type: element-attr
         object</a> (and, therefore, <strong>not</strong> <code>no-window</code>)
 
         Note: We rely on the <code>window</code> property being properly set by
-        [[FETCH]] to the <a>environment settings object</a> responsible for the
+        [[!FETCH]] to the <a>environment settings object</a> responsible for the
         request in order to ensure that we can render some sort of warning to
         the user (as described in [[#requirements-ux]]).
       </li>
@@ -680,9 +674,9 @@ type: element-attr
             described in [[#requirements-user-controls]]).
           </li>
           <li>
-            <var>request</var>'s <a>target</a> is "<code>document</code>", and
-            <var>request</var>'s <a>target browsing context</a> has no <a>parent
-            browsing context</a>.
+            <var>request</var>'s <a for="request">destination</a> is
+            "<code>document</code>", and <var>request</var>'s <a>target browsing
+            context</a> has no <a>parent browsing context</a>.
 
             Note: We exclude top-level navigations from mixed content checks,
             but user agents MAY choose to enforce mixed content checks on
@@ -783,9 +777,9 @@ type: element-attr
             described in [[#requirements-user-controls]]).
           </li>
           <li>
-            <var>request</var>'s <a>target</a> is "<code>document</code>", and
-            <var>request</var>'s <a>target browsing context</a> has no <a>parent
-            browsing context</a>.
+            <var>request</var>'s <a for="request">destination</a> is
+            "<code>document</code>", and <var>request</var>'s <a>target browsing
+            context</a> has no <a>parent browsing context</a>.
 
             Note: We exclude top-level navigations from mixed content checks,
             but user agents MAY choose to enforce mixed content checks on
@@ -873,7 +867,7 @@ type: element-attr
 
   2.  After the current step 5, perform the following step:
 
-      1.  If |secure| is `true`, and the TLS handshake performed in step 5
+      6.  If |secure| is `true`, and the TLS handshake performed in step 5
           results in an HTTPS state of "`deprecated`", then the client MUST
           <a>fail the WebSocket connection</a> and abort the connection
           [[!RFC6455]].
@@ -902,7 +896,7 @@ type: element-attr
  ██████  ████████  ██████   ███████  ██     ██ ████    ██       ██   
 -->
 <section>
-  <h2 id="security-considerations">Security Considerations</h2>
+  <h2 id="security-considerations">Security and Privacy Considerations</h2>
 
   <section>
     <h3 id="limitations">Limitations</h3>
