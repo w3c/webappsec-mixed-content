@@ -80,6 +80,7 @@ type: dfn
     text: fetching
     text: request; url: concept-request
     text: url; for: request; url: concept-request-url
+    text: url; for: response; url: concept-response-url
     text: response; url: concept-response
     text: network error; url: concept-network-error
     text: opaque filtered response; url: concept-filtered-response-opaque
@@ -98,6 +99,11 @@ type: dfn
     text: fail the websocket connection; url: section-7.1.7
   urlPrefix: http://www.w3.org/TR/url/; spec: URL
     text: url; url: concept-url
+  urlPrefix: https://w3c.github.io/webappsec-secure-contexts/; spec: SECURE-CONTEXTS
+    text: potentially trustworthy
+  urlPrefix: https://www.w3.org/TR/url; spec: URL
+    text: scheme; for: url; url: concept-url-scheme
+    text: origin; for: url; url: concept-url-origin
 type: method
   text: Fetch; for: GlobalFetch; url: https://fetch.spec.whatwg.org/#dom-global-fetch
 type: attribute
@@ -132,6 +138,7 @@ type: element-attr
       text: action; for: form; url: attr-fs-action
     urlPrefix: embedded-content-0.html
       text: sandbox; for: iframe; url: attr-iframe-sandbox
+
 </pre>
 <pre class="biblio">
 {
@@ -220,8 +227,8 @@ type: element-attr
     </dt>
     <dd>
       A <a>request</a> is <strong>mixed content</strong> if its
-      <a for="request">url</a> is not <a><i lang="la">a priori</i>
-      authenticated</a>, <strong>and</strong> the context responsible for
+      <a for="request">url</a>'s <a for="url">origin</a> is not <a>potentially
+      trustworthy</a>, <strong>and</strong> the context responsible for
       loading it requires prohibits mixed security contexts (see
       [[#categorize-settings-object]] for a normative definition of the latter).
 
@@ -261,26 +268,27 @@ type: element-attr
     </dd>
 
     <dt>
-      <dfn export local-lt="a priori authenticated" oldids="a-priori-insecure-url a-priori-insecure-origin">
-        <i lang="la">a priori</i> authenticated URL
-      </dfn>
-    </dt>
-    <dd>
-      We know <i lang="la">a priori</i> that a request to a particular URL will
-      be strongly authenticated if the URL's <a for="url">scheme</a> is
-      "`https`" or "`wss`", as requests to those schemes will result in network
-      errors for unauthenticated responses.
-    </dd>
-
-    <dt>
       <dfn export local-lt="unauthenticated" oldids="insecure-origin insecure-url">
         unauthenticated response
       </dfn>
     </dt>
     <dd>
       We know <i lang="la">a posteriori</i> that a <a>response</a> is
-      unauthenticated if its <a for="response">HTTPS state</a> is "`deprecated`"
-      or "`none`".
+      unauthenticated if any of the following are true:
+     
+      1.  The response's <a for="response">url</a>'s <a for="url">origin</a>
+          is not <a>potentially trustworthy</a>, and its <a for="url">scheme</a>
+          is not "`data`".
+
+          Note: We special-case `data` URLs here, as we don't consider them
+          trustworthy, per se, but we also don't wish to block secure contexts
+          from embedding them.
+
+      2.  The response's <a for="response">HTTPS state</a> is "`deprecated`"
+          or "`none`", and its <a for="response">url</a>'s
+          <a for="url">scheme</a> is "`https`" or "`wss`".
+
+
     </dd>
 
     <dt><dfn export>embedding document</dfn></dt>
@@ -511,9 +519,9 @@ type: element-attr
 
   Fetch calls the algorithm defined in [[#should-block-fetch]] at the top of
   the fetching algorithm in order to block network traffic to
-  <a for="request">URL</a>s which are not <a><i lang="la">a priori</i>
-  authenticated</a> [[FETCH]]. Hooking into Fetch here ensures that we catch
-  not only the initial request, but all redirects as well.
+  <a for="request">URL</a>s whose origins are not <a>potentially trustworthy</a>
+  [[FETCH]]. Hooking into Fetch here ensures that we catch not only the initial
+  request, but all redirects as well.
 
   Further, Fetch calls the algorithm defined in [[#should-block-response]]
   at the bottom of the fetching algorithm in order to block <a>unauthenticated
@@ -589,7 +597,7 @@ type: element-attr
         <code>http://evil.com</code>. In this case, the insecure request to
         <code>evil.com</code> will be blocked, as <code>a.com</code> was loaded
         over a secure connection, even though the framed <code>data:</code> URL
-        is not <a><i lang="la">a priori</i> authenticated</a>.
+        would not block mixed content on its own.
       </div>
     </div>
   </section>
@@ -667,8 +675,9 @@ type: element-attr
             <a for="request">client</a>.
           </li>
           <li>
-            |request|'s <a for="request">url</a> is <a><i lang="la">a priori</i>
-            authenticated</a>.
+            |request|'s <a for="request">url</a>'s <a for="url">origin</a> is
+            <a>potentially trustworthy</a> [[!SECURE-CONTEXTS]], or its
+            <a for="url">scheme</a> is "`data`".
           </li>
           <li>
             The user agent has been instructed to allow <a>mixed content</a>, as
@@ -788,7 +797,7 @@ type: element-attr
             <a>client</a>.
           </li>
           <li>
-            <var>response</var>'s <a>HTTPS state</a> is <code>modern</code>.
+            |response| is not <a>unauthenticated</a>.
           </li>
           <li>
             The user agent has been instructed to allow <a>mixed content</a>, as
@@ -938,8 +947,8 @@ type: element-attr
     Content</code> when applied to a {{Document}}'s <a>incumbent settings
     object</a>, then a user agent MAY choose to warn users of the presence of
     one or more <a element>form</a> elements with <a element-attr>action</a>
-    attributes whose values are not <a><i lang="la">a priori</i> authenticated
-    URLs</a>.
+    attributes whose values would be treated as mixed content when loaded in
+    other contexts.
 
     Note: Chrome, for example, currently gives the same UI treatment to a page
     with an insecure form action as it does for a page that displays an insecure
