@@ -1438,7 +1438,8 @@ encrypted and authenticated document.</p>
       <li><a href="#service-workers"><span class="secno">7.5</span> <span class="content">Service Workers</span></a>
       <li><a href="#further-action"><span class="secno">7.6</span> <span class="content">Further Action</span></a>
      </ol>
-    <li><a href="#acknowledgements"><span class="secno">8</span> <span class="content">Acknowledgements</span></a>
+    <li><a href="#iana-considerations"><span class="secno">8</span> <span class="content">IANA Considerations</span></a>
+    <li><a href="#acknowledgements"><span class="secno">9</span> <span class="content">Acknowledgements</span></a>
     <li>
      <a href="#conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
      <ol class="toc">
@@ -2009,7 +2010,18 @@ directive-value = ""
     </section>
    </section>
    <section>
-    <h2 class="heading settled" data-level="8" id="acknowledgements"><span class="secno">8. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
+    <h2 class="heading settled" data-level="8" id="iana-considerations"><span class="secno">8. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana-considerations"></a></h2>
+    <p>The Content Security Policy Directive registry should be updated with the
+  following directives and references <a data-link-type="biblio" href="#biblio-rfc7762">[RFC7762]</a>:</p>
+    <dl>
+     <dt data-md="">
+      <p><a data-link-type="dfn" href="#block-all-mixed-content" id="ref-for-block-all-mixed-content-4"><code>block-all-mixed-content</code></a></p>
+     <dd data-md="">
+      <p>This document (see <a href="#strict-opt-in">§4.2 Opting-in</a>)</p>
+    </dl>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="9" id="acknowledgements"><span class="secno">9. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
     <p>In addition to the wonderful feedback gathered from the WebAppSec WG, the
   Chrome security team was invaluable in preparing this specification. In
   particular, Chris Palmer, Chris Evans, Ryan Sleevi, Michal Zalewski, Ken
@@ -2145,6 +2157,8 @@ directive-value = ""
    <dd>I. Fette; A. Melnikov. <a href="https://tools.ietf.org/html/rfc6455">The WebSocket Protocol</a>. December 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6455">https://tools.ietf.org/html/rfc6455</a>
    <dt id="biblio-rfc6797">[RFC6797]
    <dd>J. Hodges; C. Jackson; A. Barth. <a href="https://tools.ietf.org/html/rfc6797">HTTP Strict Transport Security (HSTS)</a>. November 2012. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6797">https://tools.ietf.org/html/rfc6797</a>
+   <dt id="biblio-rfc7762">[RFC7762]
+   <dd>M. West. <a href="https://tools.ietf.org/html/rfc7762">Initial Assignment for the Content Security Policy Directives Registry</a>. January 2016. Informational. URL: <a href="https://tools.ietf.org/html/rfc7762">https://tools.ietf.org/html/rfc7762</a>
    <dt id="biblio-websockets">[WEBSOCKETS]
    <dd>Ian Hickson. <a href="http://www.w3.org/TR/websockets/">The WebSocket API</a>. 20 September 2012. CR. URL: <a href="http://www.w3.org/TR/websockets/">http://www.w3.org/TR/websockets/</a>
    <dt id="biblio-whatwg-url">[WHATWG-URL]
@@ -2277,6 +2291,7 @@ directive-value = ""
     <li><a href="#ref-for-block-all-mixed-content-1">4. Strict Mixed Content Checking</a> <a href="#ref-for-block-all-mixed-content-2">(2)</a>
     <li><a href="#ref-for-block-all-mixed-content-3">5.3. 
       Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-block-all-mixed-content-4">8. IANA Considerations</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="passthrough-request">
