@@ -1498,7 +1498,8 @@ encrypted and authenticated document.</p>
     <dl>
      <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="mixed" id="mixed-content">mixed content</dfn> 
      <dd>
-       A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> is <strong>mixed content</strong> if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">url</a> is not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url-1"><i lang="la">a priori</i> authenticated</a>, <strong>and</strong> the context responsible for
+       A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> is <strong>mixed content</strong> if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">url</a>’s <a data-link-type="dfn" href="https://www.w3.org/TR/url#concept-url-origin">origin</a> is not <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy">potentially
+      trustworthy</a>, <strong>and</strong> the context responsible for
       loading it requires prohibits mixed security contexts (see <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> for a normative definition of the latter). 
       <p>A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> is <strong>mixed content</strong> if it is an <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response-1">unauthenticated response</a>, <strong>and</strong> the context
       responsible for loading it requires prohibits mixed security contexts.</p>
@@ -1523,15 +1524,20 @@ encrypted and authenticated document.</p>
       concept. This is potentially confusing, but given the term’s near
       ubiquitious usage in a security context across user agents for more than
       a decade, the practical risk of confusion seems low.</p>
-     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="a priori authenticated" data-lt="a priori authenticated URL" id="a-priori-authenticated-url"> <i lang="la">a priori</i> authenticated URL </dfn> 
-     <dd> We know <i lang="la">a priori</i> that a request to a particular URL will
-      be strongly authenticated if the URL’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a> is
-      "<code>https</code>" or "<code>wss</code>", as requests to those schemes will result in network
-      errors for unauthenticated responses. 
      <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="unauthenticated" data-lt="unauthenticated response" id="unauthenticated-response"> unauthenticated response </dfn> 
-     <dd> We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> is
-      unauthenticated if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is "<code>deprecated</code>"
-      or "<code>none</code>". 
+     <dd>
+       We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> is
+      unauthenticated if any of the following are true: 
+      <ol>
+       <li data-md="">
+        <p>The response’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>’s <a data-link-type="dfn" href="https://www.w3.org/TR/url#concept-url-origin">origin</a> is not <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy">potentially trustworthy</a>, and its <a data-link-type="dfn" href="https://www.w3.org/TR/url#concept-url-scheme">scheme</a> is not "<code>data</code>".</p>
+        <p class="note" role="note">Note: We special-case <code>data</code> URLs here, as we don’t consider them
+  trustworthy, per se, but we also don’t wish to block secure contexts
+  from embedding them.</p>
+       <li data-md="">
+        <p>The response’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is "<code>deprecated</code>"
+  or "<code>none</code>", and its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>’s <a data-link-type="dfn" href="https://www.w3.org/TR/url#concept-url-scheme">scheme</a> is "<code>https</code>" or "<code>wss</code>".</p>
+      </ol>
      <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="embedding-document">embedding document</dfn>
      <dd> Given a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> <var>A</var>, the <strong>embedding
       document</strong> of <var>A</var> is the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#browsing-context-nested-through">through which</a> <var>A</var>’s <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#browsing-context">browsing
@@ -1661,8 +1667,8 @@ directive-value = ""
   whether particular requests should succeed, or should result in network
   errors.</p>
     <p>Fetch calls the algorithm defined in <a href="#should-block-fetch">§5.3 Should fetching request be blocked as mixed content?</a> at the top of
-  the fetching algorithm in order to block network traffic to <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">URL</a>s which are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url-2"><i lang="la">a priori</i> authenticated</a> <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>. Hooking into Fetch here ensures that we catch
-  not only the initial request, but all redirects as well.</p>
+  the fetching algorithm in order to block network traffic to <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">URL</a>s whose origins are not <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy">potentially trustworthy</a> <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>. Hooking into Fetch here ensures that we catch not only the initial
+  request, but all redirects as well.</p>
     <p>Further, Fetch calls the algorithm defined in <a href="#should-block-response">§5.4 Should response to request be blocked as mixed
       content?</a> at the bottom of the fetching algorithm in order to block <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response-2">unauthenticated
   responses</a>. This hook is necessary to detect resources modified or
@@ -1719,9 +1725,9 @@ directive-value = ""
         loads <code>http://evil.com</code>. In this case, the insecure request
         to <code>evil.com</code> will be blocked, as <code>b.com</code> was
         loaded over a secure connection, even though <code>a.com</code> was not. </div>
-      <div class="example" id="example-bd95e65c"><a class="self-link" href="#example-bd95e65c"></a> <code>https://a.com</code> frames a <code>data:</code> URL, which loads <code>http://evil.com</code>. In this case, the insecure request to <code>evil.com</code> will be blocked, as <code>a.com</code> was loaded
+      <div class="example" id="example-64b829ac"><a class="self-link" href="#example-64b829ac"></a> <code>https://a.com</code> frames a <code>data:</code> URL, which loads <code>http://evil.com</code>. In this case, the insecure request to <code>evil.com</code> will be blocked, as <code>a.com</code> was loaded
         over a secure connection, even though the framed <code>data:</code> URL
-        is not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url-3"><i lang="la">a priori</i> authenticated</a>. </div>
+        would not block mixed content on its own. </div>
      </div>
     </section>
     <section>
@@ -1767,7 +1773,7 @@ directive-value = ""
         conditions are met: 
        <ol>
         <li> <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns "<code>Does Not Restrict Mixed Security Contexts</code>" when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client">client</a>. 
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url-4"><i lang="la">a priori</i> authenticated</a>. 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">url</a>’s <a data-link-type="dfn" href="https://www.w3.org/TR/url#concept-url-origin">origin</a> is <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy">potentially trustworthy</a> <a data-link-type="biblio" href="#biblio-secure-contexts">[SECURE-CONTEXTS]</a>, or its <a data-link-type="dfn" href="https://www.w3.org/TR/url#concept-url-scheme">scheme</a> is "<code>data</code>". 
         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content-4">mixed content</a>, as
             described in <a href="#requirements-user-controls">§7.4 User Controls</a>). 
         <li>
@@ -1840,7 +1846,7 @@ directive-value = ""
        <ol>
         <li> <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns <code>Does Not Restrict
             Mixed Content</code> when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client">client</a>. 
-        <li> <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is <code>modern</code>. 
+        <li> <var>response</var> is not <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response-6">unauthenticated</a>. 
         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content-5">mixed content</a>, as
             described in <a href="#requirements-user-controls">§7.4 User Controls</a>). 
         <li>
@@ -1923,8 +1929,8 @@ directive-value = ""
      <p>If <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns <code>Restricts Mixed
     Content</code> when applied to a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code>'s <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#incumbent-settings-object">incumbent settings
     object</a>, then a user agent MAY choose to warn users of the presence of
-    one or more <a data-link-type="element" href="http://www.w3.org/TR/html5/forms.html#the-form-element">form</a> elements with <a data-link-type="element-attr" href="http://www.w3.org/TR/html5/forms.html#attr-fs-action">action</a> attributes whose values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url-5"><i lang="la">a priori</i> authenticated
-    URLs</a>.</p>
+    one or more <a data-link-type="element" href="http://www.w3.org/TR/html5/forms.html#the-form-element">form</a> elements with <a data-link-type="element-attr" href="http://www.w3.org/TR/html5/forms.html#attr-fs-action">action</a> attributes whose values would be treated as mixed content when loaded in
+    other contexts.</p>
      <p class="note" role="note">Note: Chrome, for example, currently gives the same UI treatment to a page
     with an insecure form action as it does for a page that displays an insecure
     image.</p>
@@ -2065,8 +2071,6 @@ directive-value = ""
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#a-priori-authenticated-url">a priori authenticated</a><span>, in §2</span>
-   <li><a href="#a-priori-authenticated-url">a priori authenticated URL</a><span>, in §2</span>
    <li><a href="#blockable">blockable</a><span>, in §3.2</span>
    <li><a href="#block-all-mixed-content">block-all-mixed-content</a><span>, in §4.2</span>
    <li><a href="#embedding-document">embedding document</a><span>, in §2</span>
@@ -2135,9 +2139,15 @@ directive-value = ""
      <li><a href="https://tools.ietf.org/html/rfc6455#section-7.1.7">fail the websocket connection</a>
     </ul>
    <li>
+    <a data-link-type="biblio">[SECURE-CONTEXTS]</a> defines the following terms:
+    <ul>
+     <li><a href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy">potentially trustworthy</a>
+    </ul>
+   <li>
     <a data-link-type="biblio">[WHATWG-URL]</a> defines the following terms:
     <ul>
-     <li><a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>
+     <li><a href="https://www.w3.org/TR/url#concept-url-origin">origin</a>
+     <li><a href="https://www.w3.org/TR/url#concept-url-scheme">scheme</a>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
@@ -2159,6 +2169,8 @@ directive-value = ""
    <dd>J. Hodges; C. Jackson; A. Barth. <a href="https://tools.ietf.org/html/rfc6797">HTTP Strict Transport Security (HSTS)</a>. November 2012. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6797">https://tools.ietf.org/html/rfc6797</a>
    <dt id="biblio-rfc7762">[RFC7762]
    <dd>M. West. <a href="https://tools.ietf.org/html/rfc7762">Initial Assignment for the Content Security Policy Directives Registry</a>. January 2016. Informational. URL: <a href="https://tools.ietf.org/html/rfc7762">https://tools.ietf.org/html/rfc7762</a>
+   <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec-secure-contexts/">Secure Contexts</a>. 26 April 2016. WD. URL: <a href="https://w3c.github.io/webappsec-secure-contexts/">https://w3c.github.io/webappsec-secure-contexts/</a>
    <dt id="biblio-websockets">[WEBSOCKETS]
    <dd>Ian Hickson. <a href="http://www.w3.org/TR/websockets/">The WebSocket API</a>. 20 September 2012. CR. URL: <a href="http://www.w3.org/TR/websockets/">http://www.w3.org/TR/websockets/</a>
    <dt id="biblio-whatwg-url">[WHATWG-URL]
@@ -2196,18 +2208,6 @@ directive-value = ""
     <li><a href="#ref-for-mixed-content-9">7.6. Further Action</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="a-priori-authenticated-url">
-   <b><a href="#a-priori-authenticated-url">#a-priori-authenticated-url</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-a-priori-authenticated-url-1">2. Key Concepts and Terminology</a>
-    <li><a href="#ref-for-a-priori-authenticated-url-2">5. Insecure Content in Secure Contexts</a>
-    <li><a href="#ref-for-a-priori-authenticated-url-3">5.1. 
-      Does settings prohibit mixed security contexts? </a>
-    <li><a href="#ref-for-a-priori-authenticated-url-4">5.3. 
-      Should fetching request be blocked as mixed content? </a>
-    <li><a href="#ref-for-a-priori-authenticated-url-5">7.2. Form Submission</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="unauthenticated-response">
    <b><a href="#unauthenticated-response">#unauthenticated-response</a></b><b>Referenced in:</b>
    <ul>
@@ -2215,7 +2215,7 @@ directive-value = ""
     <li><a href="#ref-for-unauthenticated-response-2">5. Insecure Content in Secure Contexts</a> <a href="#ref-for-unauthenticated-response-3">(2)</a>
     <li><a href="#ref-for-unauthenticated-response-4">5.4. 
       Should response to request be blocked as mixed
-      content? </a> <a href="#ref-for-unauthenticated-response-5">(2)</a>
+      content? </a> <a href="#ref-for-unauthenticated-response-5">(2)</a> <a href="#ref-for-unauthenticated-response-6">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="embedding-document">
