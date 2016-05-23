@@ -1162,27 +1162,41 @@ Possible extra rowspan handling
             }</style>
 <style>/* style-counters */
 
+            body {
+                counter-reset: example figure issue;
+            }
+            .issue {
+                counter-increment: issue;
+            }
             .issue:not(.no-marker)::before {
                 content: "Issue " counter(issue);
             }
 
+            .example {
+                counter-increment: example;
+            }
             .example:not(.no-marker)::before {
-                content: "Example";
                 content: "Example " counter(example);
             }
             .invalid.example:not(.no-marker)::before,
             .illegal.example:not(.no-marker)::before {
-                content: "Invalid Example";
                 content: "Invalid Example" counter(example);
+            }
+
+            figure {
+                counter-increment: figure;
+            }
+            figcaption:not(.no-marker)::before {
+                content: "Figure " counter(figure);
             }</style>
 <style>/* style-dfn-panel */
 
         .dfn-panel {
-            display: inline-block;
             position: absolute;
             z-index: 35;
             height: auto;
             width: -webkit-fit-content;
+            width: fit-content;
             max-width: 300px;
             max-height: 500px;
             overflow: auto;
@@ -1198,12 +1212,13 @@ Possible extra rowspan handling
         .dfn-panel a { color: black; }
         .dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
         .dfn-panel > b + b { margin-top: 0.25em; }
-        .dfn-panel > span { display: list-item; list-style: inside; }
+        .dfn-panel ul { padding: 0; }
+        .dfn-panel li { list-style: inside; }
         .dfn-panel.activated {
             display: inline-block;
             position: fixed;
             left: .5em;
-            bottom: .5em;
+            bottom: 2em;
             margin: 0 auto;
             max-width: calc(100vw - 1.5em - .4em - .5em);
             max-height: 30vh;
@@ -1323,7 +1338,7 @@ Possible extra rowspan handling
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Mixed Content</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-04-29">29 April 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-05-23">23 May 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1480,10 +1495,7 @@ encrypted and authenticated document.</p>
    <section>
     <h2 class="heading settled" data-level="2" id="terms"><span class="secno">2. </span><span class="content">Key Concepts and Terminology</span><a class="self-link" href="#terms"></a></h2>
     <dl>
-     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="mixed" data-lt="mixed content" id="mixed-content">mixed content<span class="dfn-panel" data-deco=""><b><a href="#mixed-content">#mixed-content</a></b><b>Referenced in:</b><span><a href="#ref-for-mixed-content-1">3. Content Categories</a> <a href="#ref-for-mixed-content-2">(2)</a></span><span><a href="#ref-for-mixed-content-3">3.1. Optionally-blockable Content</a></span><span><a href="#ref-for-mixed-content-4">5.3. 
-      Should fetching request be blocked as mixed content? </a></span><span><a href="#ref-for-mixed-content-5">5.4. 
-      Should response to request be blocked as mixed
-      content? </a></span><span><a href="#ref-for-mixed-content-6">7.3. UI Requirements</a> <a href="#ref-for-mixed-content-7">(2)</a></span><span><a href="#ref-for-mixed-content-8">7.4. User Controls</a></span><span><a href="#ref-for-mixed-content-9">7.6. Further Action</a></span></span></dfn> 
+     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="mixed" id="mixed-content">mixed content</dfn> 
      <dd>
        A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> is <strong>mixed content</strong> if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">url</a> is not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url-1"><i lang="la">a priori</i> authenticated</a>, <strong>and</strong> the context responsible for
       loading it requires prohibits mixed security contexts (see <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> for a normative definition of the latter). 
@@ -1510,23 +1522,18 @@ encrypted and authenticated document.</p>
       concept. This is potentially confusing, but given the term’s near
       ubiquitious usage in a security context across user agents for more than
       a decade, the practical risk of confusion seems low.</p>
-     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="a priori authenticated" data-lt="a priori authenticated URL" id="a-priori-authenticated-url"> <i lang="la">a priori</i> authenticated URL <span class="dfn-panel" data-deco=""><b><a href="#a-priori-authenticated-url">#a-priori-authenticated-url</a></b><b>Referenced in:</b><span><a href="#ref-for-a-priori-authenticated-url-1">2. Key Concepts and Terminology</a></span><span><a href="#ref-for-a-priori-authenticated-url-2">5. Insecure Content in Secure Contexts</a></span><span><a href="#ref-for-a-priori-authenticated-url-3">5.1. 
-      Does settings prohibit mixed security contexts? </a></span><span><a href="#ref-for-a-priori-authenticated-url-4">5.3. 
-      Should fetching request be blocked as mixed content? </a></span><span><a href="#ref-for-a-priori-authenticated-url-5">7.2. Form Submission</a></span></span></dfn> 
+     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="a priori authenticated" data-lt="a priori authenticated URL" id="a-priori-authenticated-url"> <i lang="la">a priori</i> authenticated URL </dfn> 
      <dd> We know <i lang="la">a priori</i> that a request to a particular URL will
       be strongly authenticated if the URL’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a> is
       "<code>https</code>" or "<code>wss</code>", as requests to those schemes will result in network
       errors for unauthenticated responses. 
-     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="unauthenticated" data-lt="unauthenticated response" id="unauthenticated-response"> unauthenticated response <span class="dfn-panel" data-deco=""><b><a href="#unauthenticated-response">#unauthenticated-response</a></b><b>Referenced in:</b><span><a href="#ref-for-unauthenticated-response-1">2. Key Concepts and Terminology</a></span><span><a href="#ref-for-unauthenticated-response-2">5. Insecure Content in Secure Contexts</a> <a href="#ref-for-unauthenticated-response-3">(2)</a></span><span><a href="#ref-for-unauthenticated-response-4">5.4. 
-      Should response to request be blocked as mixed
-      content? </a> <a href="#ref-for-unauthenticated-response-5">(2)</a></span></span></dfn> 
+     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="unauthenticated" data-lt="unauthenticated response" id="unauthenticated-response"> unauthenticated response </dfn> 
      <dd> We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> is
       unauthenticated if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is "<code>deprecated</code>"
       or "<code>none</code>". 
-     <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-lt="embedding document" id="embedding-document">embedding document<span class="dfn-panel" data-deco=""><b><a href="#embedding-document">#embedding-document</a></b><b>Referenced in:</b><span><a href="#ref-for-embedding-document-1">4.3. Inheriting an opt-in</a></span><span><a href="#ref-for-embedding-document-2">5.1. 
-      Does settings prohibit mixed security contexts? </a> <a href="#ref-for-embedding-document-3">(2)</a> <a href="#ref-for-embedding-document-4">(3)</a></span></span></dfn>
+     <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="embedding-document">embedding document</dfn>
      <dd> Given a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> <var>A</var>, the <strong>embedding
-      document</strong> of <var>A</var> is the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context-nested-through">through which</a> <var>A</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
+      document</strong> of <var>A</var> is the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#browsing-context-nested-through">through which</a> <var>A</var>’s <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#browsing-context">browsing
       context</a> is nested <a data-link-type="biblio" href="#biblio-html5">[HTML5]</a>. 
     </dl>
    </section>
@@ -1542,11 +1549,7 @@ encrypted and authenticated document.</p>
   blocked; that is the end goal, but this is the best we can do for now.</p>
     <section>
      <h3 class="heading settled" data-level="3.1" id="category-optionally-blockable"><span class="secno">3.1. </span><span class="content">Optionally-blockable Content</span><a class="self-link" href="#category-optionally-blockable"></a></h3>
-     <p>A resource or <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> is <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="optionally-blockable" data-noexport="" id="optionally-blockable">optionally-blockable<span class="dfn-panel" data-deco=""><b><a href="#optionally-blockable">#optionally-blockable</a></b><b>Referenced in:</b><span><a href="#ref-for-optionally-blockable-1">2. Key Concepts and Terminology</a></span><span><a href="#ref-for-optionally-blockable-2">3.2. Blockable Content</a></span><span><a href="#ref-for-optionally-blockable-3">4. Strict Mixed Content Checking</a></span><span><a href="#ref-for-optionally-blockable-4">4.1. Effects</a></span><span><a href="#ref-for-optionally-blockable-5">5.2. 
-      Is request a passthrough request? </a></span><span><a href="#ref-for-optionally-blockable-6">5.3. 
-      Should fetching request be blocked as mixed content? </a></span><span><a href="#ref-for-optionally-blockable-7">5.4. 
-      Should response to request be blocked as mixed
-      content? </a></span><span><a href="#ref-for-optionally-blockable-8">7.3. UI Requirements</a></span><span><a href="#ref-for-optionally-blockable-9">7.4. User Controls</a></span><span><a href="#ref-for-optionally-blockable-10">7.5. Service Workers</a> <a href="#ref-for-optionally-blockable-11">(2)</a></span><span><a href="#ref-for-optionally-blockable-12">7.6. Further Action</a> <a href="#ref-for-optionally-blockable-13">(2)</a></span></span></dfn> when the risk of allowing its usage as <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content-3">mixed content</a> is outweighed by
+     <p>A resource or <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> is <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="optionally-blockable">optionally-blockable</dfn> when the risk of allowing its usage as <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content-3">mixed content</a> is outweighed by
     the risk of breaking significant portions of the web. This could be because
     mixed usage of the resource type is sufficiently high, and because the
     resource is low-risk in and of itself. The fact that these resource types
@@ -1574,14 +1577,10 @@ encrypted and authenticated document.</p>
     </section>
     <section>
      <h3 class="heading settled" data-level="3.2" id="category-blockable"><span class="secno">3.2. </span><span class="content">Blockable Content</span><a class="self-link" href="#category-blockable"></a></h3>
-     <p>Any resource or <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> that isn’t <a data-link-type="dfn" href="#optionally-blockable" id="ref-for-optionally-blockable-2">optionally-blockable</a> is <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="blockable" data-noexport="" id="blockable">blockable<span class="dfn-panel" data-deco=""><b><a href="#blockable">#blockable</a></b><b>Referenced in:</b><span><a href="#ref-for-blockable-1">2. Key Concepts and Terminology</a></span><span><a href="#ref-for-blockable-2">4. Strict Mixed Content Checking</a></span><span><a href="#ref-for-blockable-3">4.1. Effects</a> <a href="#ref-for-blockable-4">(2)</a></span><span><a href="#ref-for-blockable-5">5.2. 
-      Is request a passthrough request? </a></span><span><a href="#ref-for-blockable-6">5.3. 
-      Should fetching request be blocked as mixed content? </a></span><span><a href="#ref-for-blockable-7">5.4. 
-      Should response to request be blocked as mixed
-      content? </a> <a href="#ref-for-blockable-8">(2)</a></span><span><a href="#ref-for-blockable-9">7.2. Form Submission</a></span><span><a href="#ref-for-blockable-10">7.3. UI Requirements</a></span><span><a href="#ref-for-blockable-11">7.4. User Controls</a> <a href="#ref-for-blockable-12">(2)</a></span><span><a href="#ref-for-blockable-13">7.5. Service Workers</a> <a href="#ref-for-blockable-14">(2)</a></span><span><a href="#ref-for-blockable-15">7.6. Further Action</a> <a href="#ref-for-blockable-16">(2)</a></span></span></dfn>. Typical examples of this kind of content include
-    scripts, <a data-link-type="dfn" href="http://www.w3.org/TR/html5/infrastructure.html#plugin">plugin</a> data, data requested via <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/XMLHttpRequest/#interface-xmlhttprequest">XMLHttpRequest</a></code>, and so
+     <p>Any resource or <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> that isn’t <a data-link-type="dfn" href="#optionally-blockable" id="ref-for-optionally-blockable-2">optionally-blockable</a> is <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="blockable">blockable</dfn>. Typical examples of this kind of content include
+    scripts, <a data-link-type="dfn" href="https://w3c.github.io/html/infrastructure.html#plugin">plugin</a> data, data requested via <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/XMLHttpRequest/#interface-xmlhttprequest">XMLHttpRequest</a></code>, and so
     on.</p>
-     <p class="note" role="note">Note: <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request">Navigation requests</a> might target <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+     <p class="note" role="note">Note: <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request">Navigation requests</a> might target <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#top-level-browsing-context">top-level browsing
     contexts</a>; these are not considered mixed content. See <a href="#should-block-fetch">§5.3 Should fetching request be blocked as mixed content?</a> for details.</p>
      <p class="note" role="note">Note: Note that requests made on behalf of a plugin are blockable. We
     recognize, however, that user agents aren’t always in a position to mediate
@@ -1598,12 +1597,9 @@ encrypted and authenticated document.</p>
   authors may choose to enable a stricter variant of mixed content checking
   which will both block <a data-link-type="dfn" href="#optionally-blockable" id="ref-for-optionally-blockable-3">optionally-blockable</a> and <a data-link-type="dfn" href="#blockable" id="ref-for-blockable-2">blockable</a> mixed
   content, and suppress the user override options discussed in <a href="#requirements-user-controls">§7.4 User Controls</a>.</p>
-    <p>To this end, <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> objects and <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing contexts</a> have a <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="strict mixed content checking flag" data-noexport="" id="strict-mixed-content-checking-flag">strict mixed content checking flag<span class="dfn-panel" data-deco=""><b><a href="#strict-mixed-content-checking-flag">#strict-mixed-content-checking-flag</a></b><b>Referenced in:</b><span><a href="#ref-for-strict-mixed-content-checking-flag-1">4.1. Effects</a></span><span><a href="#ref-for-strict-mixed-content-checking-flag-2">4.2. Opting-in</a></span><span><a href="#ref-for-strict-mixed-content-checking-flag-3">4.3. Inheriting an opt-in</a> <a href="#ref-for-strict-mixed-content-checking-flag-4">(2)</a> <a href="#ref-for-strict-mixed-content-checking-flag-5">(3)</a> <a href="#ref-for-strict-mixed-content-checking-flag-6">(4)</a> <a href="#ref-for-strict-mixed-content-checking-flag-7">(5)</a></span><span><a href="#ref-for-strict-mixed-content-checking-flag-8">5.3. 
-      Should fetching request be blocked as mixed content? </a></span><span><a href="#ref-for-strict-mixed-content-checking-flag-9">5.4. 
-      Should response to request be blocked as mixed
-      content? </a></span></span></dfn> which is set to <code>false</code> unless otherwise specified. This flag is checked in both <a href="#should-block-fetch">§5.3 Should fetching request be blocked as mixed content?</a> and <a href="#should-block-response">§5.4 Should response to request be blocked as mixed
+    <p>To this end, <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> objects and <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#browsing-context">browsing contexts</a> have a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="strict-mixed-content-checking-flag">strict mixed content checking flag</dfn> which is set to <code>false</code> unless otherwise specified. This flag is checked in both <a href="#should-block-fetch">§5.3 Should fetching request be blocked as mixed content?</a> and <a href="#should-block-response">§5.4 Should response to request be blocked as mixed
       content?</a> to determine whether
-  the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> is in <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="strict mode" data-noexport="" id="strict-mode">strict mode<span class="dfn-panel" data-deco=""><b><a href="#strict-mode">#strict-mode</a></b><b>Referenced in:</b><span><a href="#ref-for-strict-mode-1">7.6. Further Action</a></span></span></dfn>.</p>
+  the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> is in <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="strict-mode">strict mode</dfn>.</p>
     <div class="example" id="example-18c2d3f6">
      <a class="self-link" href="#example-18c2d3f6"></a> A <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> may opt itself into strict mode by either delivering a <code>Content-Security-Policy</code> HTTP header, like: 
 <pre>Content-Security-Policy: <a data-link-type="dfn" href="#block-all-mixed-content" id="ref-for-block-all-mixed-content-1">block-all-mixed-content</a>
@@ -1631,31 +1627,30 @@ encrypted and authenticated document.</p>
       page’s context.</p>
       <p class="note" role="note">Note: This requirement does not include developer-facing indicators such
       as console messages.</p>
-     <li> ensure that these requirements are applied to any <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#nested-browsing-context">nested browsing context</a>, as described in <a href="#strict-nesting">§4.3 Inheriting an opt-in</a>. 
+     <li> ensure that these requirements are applied to any <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> in a <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#nested-browsing-context">nested browsing context</a>, as described in <a href="#strict-nesting">§4.3 Inheriting an opt-in</a>. 
     </ol>
     <h3 class="heading settled" data-level="4.2" id="strict-opt-in"><span class="secno">4.2. </span><span class="content">Opting-in</span><a class="self-link" href="#strict-opt-in"></a></h3>
-    <p>Authors may opt a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> into strict mixed content checking via a <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="block-all-mixed-content" data-noexport="" id="block-all-mixed-content">block-all-mixed-content<span class="dfn-panel" data-deco=""><b><a href="#block-all-mixed-content">#block-all-mixed-content</a></b><b>Referenced in:</b><span><a href="#ref-for-block-all-mixed-content-1">4. Strict Mixed Content Checking</a> <a href="#ref-for-block-all-mixed-content-2">(2)</a></span></span></dfn> Content Security Policy directive <a data-link-type="biblio" href="#biblio-csp2">[CSP2]</a>, defined via the following ABNF grammar.</p>
+    <p>Authors may opt a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> into strict mixed content checking via a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="block-all-mixed-content">block-all-mixed-content</dfn> Content Security Policy directive <a data-link-type="biblio" href="#biblio-csp2">[CSP2]</a>, defined via the following ABNF grammar.</p>
 <pre>directive-name  = "block-all-mixed-content"
 directive-value = ""
 </pre>
-    <p>When <a data-link-type="dfn" href="https://w3c.github.io/webappsec/specs/content-security-policy/#enforce">enforcing</a> the <code>block-all-mixed-content</code> directive,
+    <p>When <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#enforce">enforcing</a> the <code>block-all-mixed-content</code> directive,
   set the protected resource’s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-2">strict mixed content checking flag</a> to <code>true</code>.</p>
-    <p>This directive has no effect when <a data-link-type="dfn" href="https://w3c.github.io/webappsec/specs/content-security-policy/#monitor">monitored</a>. This directive’s only
-  effect is to set a policy flag on the protected resource; it will therefore
-  never be violated, and has no reporting requirements.</p>
+    <p>This directive will trigger violation reports for mixed content on a page.
+  Details are found in <a href="#should-block-fetch">§5.3 Should fetching request be blocked as mixed content?</a>.</p>
     <p class="note" role="note">Note: A similar effect may be achieved on a more granular level by setting
   individual directives. For example <code>img-src https:</code> would prevent
   insecure images from loading.</p>
     <h3 class="heading settled" data-level="4.3" id="strict-nesting"><span class="secno">4.3. </span><span class="content">Inheriting an opt-in</span><a class="self-link" href="#strict-nesting"></a></h3>
     <p>If a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code>'s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-3">strict mixed content checking flag</a> is set, the user
-  agent MUST ensure that all <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#nested-browsing-context">nested browsing contexts</a> inherit the setting
+  agent MUST ensure that all <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#nested-browsing-context">nested browsing contexts</a> inherit the setting
   in the following ways:</p>
     <ol>
-     <li> When a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#nested-browsing-context">nested browsing context</a> <var>context</var> is created, set
+     <li> When a <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#nested-browsing-context">nested browsing context</a> <var>context</var> is created, set
       its <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-4">strict mixed content checking flag</a> to <code>true</code> if <var>context</var>’s <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document-1">embedding document</a>’s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-5">strict mixed content
       checking flag</a> is set to <code>true</code>. 
-     <li> When <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#create-a-document-object">creating a new <code>Document</code> object</a>, set its <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-6">strict
-      mixed content checking flag</a> to <code>true</code> if its <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
+     <li> When <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#create-a-document-object">creating a new <code>Document</code> object</a>, set its <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-6">strict
+      mixed content checking flag</a> to <code>true</code> if its <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#browsing-context">browsing
       context</a>’s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-7">strict mixed content checking flag</a> is <code>true</code>. 
     </ol>
    </section>
@@ -1680,17 +1675,17 @@ directive-value = ""
   ought to be blocked.</p>
     <section>
      <h3 class="heading settled" data-level="5.1" id="categorize-settings-object"><span class="secno">5.1. </span><span class="content"> Does <var>settings</var> prohibit mixed security contexts? </span><a class="self-link" href="#categorize-settings-object"></a></h3>
-     <p>Both documents and workers have <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">environment settings objects</a> which
+     <p>Both documents and workers have <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#settings-object">environment settings objects</a> which
     may be examined according to the following algorithm in order to determine
     whether they restrict mixed content. This algorithm returns "<code>Prohibits Mixed Security Contexts</code>" or "<code>Does Not Prohibit Mixed Security Contexts</code>",
     as appropriate.</p>
-     <p>Given an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">environment settings object</a> (<var>settings</var>):</p>
+     <p>Given an <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#settings-object">environment settings object</a> (<var>settings</var>):</p>
      <ol>
       <li data-md="">
        <p>If <var>settings</var>’ <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is not "<code>none</code>", then return
   "<code>Prohibits Mixed Security Contexts</code>".</p>
       <li data-md="">
-       <p>If <var>settings</var> has a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> <var>document</var>, then:</p>
+       <p>If <var>settings</var> has a <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#responsible-document">responsible document</a> <var>document</var>, then:</p>
        <ol>
         <li data-md="">
          <p>While <var>document</var> has an <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document-2">embedding document</a>:</p>
@@ -1698,7 +1693,7 @@ directive-value = ""
           <li data-md="">
            <p>Set <var>document</var> to <var>document</var>’s <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document-3">embedding document</a>.</p>
           <li data-md="">
-           <p>Let <var>embedder settings</var> be <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>.</p>
+           <p>Let <var>embedder settings</var> be <var>document</var>’s <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#global-object">global object</a>’s <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>.</p>
           <li data-md="">
            <p>If <var>embedder settings</var>’ <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is not "<code>None</code>",
   then return "<code>Prohibits Mixed Security Contexts</code>".</p>
@@ -1709,7 +1704,7 @@ directive-value = ""
      </ol>
      <div class="note" role="note">
        If a document has an <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document-4">embedding document</a>, a user agent needs to
-      check not only the document itself, but also the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+      check not only the document itself, but also the <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#top-level-browsing-context">top-level browsing
       context</a> in which the document is nested, as that is the context
       which controls the user’s expectations regarding the security status of
       the resource she’s loaded. For example: 
@@ -1730,11 +1725,8 @@ directive-value = ""
     </section>
     <section>
      <h3 class="heading settled" data-level="5.2" id="is-passthrough"><span class="secno">5.2. </span><span class="content"> Is <var>request</var> a passthrough request? </span><a class="self-link" href="#is-passthrough"></a></h3>
-     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="passthrough request" data-noexport="" id="passthrough-request">passthrough request<span class="dfn-panel" data-deco=""><b><a href="#passthrough-request">#passthrough-request</a></b><b>Referenced in:</b><span><a href="#ref-for-passthrough-request-1">5.3. 
-      Should fetching request be blocked as mixed content? </a></span><span><a href="#ref-for-passthrough-request-2">5.4. 
-      Should response to request be blocked as mixed
-      content? </a></span></span></dfn> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> (<var>request</var>)
-    which is created in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a> (e.g. via an <code><a data-link-type="element" href="http://www.w3.org/TR/html5/embedded-content-0.html#the-img-element">img</a></code> tag in a
+     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="passthrough-request">passthrough request</dfn> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> (<var>request</var>)
+    which is created in a <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#browsing-context">browsing context</a> (e.g. via an <code><a data-link-type="element" href="http://www.w3.org/TR/html5/embedded-content-0.html#the-img-element">img</a></code> tag in a
     document), but serviced by a Service Worker (e.g. by calling <code>fetch(e.request)</code> from within an <code>onfetch</code> event
     handler). As described in <a href="#service-workers">§7.5 Service Workers</a>, we special-case these kinds
     of requests in order to allow web developers to layer service workers on top
@@ -1748,13 +1740,13 @@ directive-value = ""
         ensure that we’re dealing with such a request, but we implicitly rely on <a href="#should-block-fetch">§5.3 Should fetching request be blocked as mixed content?</a> preventing <a data-link-type="dfn" href="#blockable" id="ref-for-blockable-5">blockable</a> requests from
         entering a Service Worker in the first place.</p>
       <li>
-        <var>request</var>’s <code>window</code> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">environment settings
+        <var>request</var>’s <code>window</code> is an <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#settings-object">environment settings
         object</a> (and, therefore, <strong>not</strong> <code>no-window</code>) 
-       <p class="note" role="note">Note: We rely on the <code>window</code> property being properly set by <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> to the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">environment settings object</a> responsible for the
+       <p class="note" role="note">Note: We rely on the <code>window</code> property being properly set by <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> to the <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#settings-object">environment settings object</a> responsible for the
         request in order to ensure that we can render some sort of warning to
         the user (as described in <a href="#requirements-ux">§7.3 UI Requirements</a>).</p>
       <li>
-        <var>request</var>’s <code>client</code>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/service-workers/#service-worker-global-scope">ServiceWorkerGlobalScope</a></code> object. 
+        <var>request</var>’s <code>client</code>’s <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/service-workers/#service-worker-global-scope">ServiceWorkerGlobalScope</a></code> object. 
        <p class="note" role="note">Note: We rely on the <code>client</code> property to reflect the origin
         of the request. Importantly, <var>request</var> is only a passthrough
         request if it originated inside a Service Worker.</p>
@@ -1780,10 +1772,26 @@ directive-value = ""
         <li>
           <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination">destination</a> is
             "<code>document</code>", and <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-target-browsing-context">target browsing
-            context</a> has no <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#parent-browsing-context">parent browsing context</a>. 
+            context</a> has no <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#parent-browsing-context">parent browsing context</a>. 
          <p class="note" role="note">Note: We exclude top-level navigations from mixed content checks,
             but user agents MAY choose to enforce mixed content checks on
             insecure form submissions (see <a href="#further-action">§7.6 Further Action</a>).</p>
+       </ol>
+      <li>
+        For each <var>policy</var> in <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client">client</a>’s <a data-link-type="dfn" href="https://w3c.github.io/html/dom.html#document-csp-list">CSP list</a>: 
+       <ol>
+        <li data-md="">
+         <p>If <var>policy</var>’s <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#policy-directive-set">directive set</a> contains a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#directive">directive</a> whose <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#directive-name">name</a> is
+  "<a data-link-type="dfn" href="#block-all-mixed-content" id="ref-for-block-all-mixed-content-3"><code>block-all-mixed-content</code></a>":</p>
+         <ol>
+          <li data-md="">
+           <p>Let <var>violation</var> be the result of executing <a href="https://w3c.github.io/webappsec-csp/#create-violation-for-global">Content Security Policy §2.3.1 Create a violation object for global, policy, and directive</a> on <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client">client</a>’s global object, <var>policy</var>, and
+  "<code>block-all-mixed-content</code>".</p>
+          <li data-md="">
+           <p>Set <var>violation</var>’s <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#violation-resource">resource</a> to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">url</a>.</p>
+          <li data-md="">
+           <p>Execute <a href="https://w3c.github.io/webappsec-csp/#report-violation">Content Security Policy §5.3 Report a violation</a> on <var>violation</var>.</p>
+         </ol>
        </ol>
       <li>
         Return <strong>blocked</strong> if one or more of the following
@@ -1808,7 +1816,7 @@ directive-value = ""
      <p class="note" role="note">Note: We special-case <code>fetch</code> to allow it as optionally-blockable
     in the event that a Service Worker is making a <code>no-cors</code> request
     in response to a Fetch event generated from a Document. In that case, the
-    request’s <code>client</code> property will be an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">environment settings
+    request’s <code>client</code> property will be an <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#settings-object">environment settings
     object</a> whose global object is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/browsers.html#window">Window</a></code> object (the Service Worker’s
     request’s <code>client</code>, on the other hand, will be a <code>WorkerGlobalScope</code> object.</p>
     </section>
@@ -1837,7 +1845,7 @@ directive-value = ""
         <li>
           <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination">destination</a> is
             "<code>document</code>", and <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-target-browsing-context">target browsing
-            context</a> has no <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#parent-browsing-context">parent browsing context</a>. 
+            context</a> has no <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#parent-browsing-context">parent browsing context</a>. 
          <p class="note" role="note">Note: We exclude top-level navigations from mixed content checks,
             but user agents MAY choose to enforce mixed content checks on
             insecure form submissions (see <a href="#further-action">§7.6 Further Action</a>).</p>
@@ -1878,7 +1886,7 @@ directive-value = ""
       <p>After the current step 1, perform the following step:</p>
       <ol>
        <li data-md="">
-        <p>If <var>secure</var> is <code>false</code>, and the algorithm in <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns "<code>Restricts Mixed Security Context</code>" when applied to <var>client</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>, then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7">fail the
+        <p>If <var>secure</var> is <code>false</code>, and the algorithm in <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns "<code>Restricts Mixed Security Context</code>" when applied to <var>client</var>’s <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#global-object">global object</a>’s <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>, then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7">fail the
   WebSocket connection</a> and abort the connection <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>.</p>
       </ol>
      <li data-md="">
@@ -1912,7 +1920,7 @@ directive-value = ""
     <section>
      <h3 class="heading settled" data-level="7.2" id="requirements-forms"><span class="secno">7.2. </span><span class="content">Form Submission</span><a class="self-link" href="#requirements-forms"></a></h3>
      <p>If <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns <code>Restricts Mixed
-    Content</code> when applied to a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings
+    Content</code> when applied to a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code>'s <a data-link-type="dfn" href="https://w3c.github.io/html/webappapis.html#incumbent-settings-object">incumbent settings
     object</a>, then a user agent MAY choose to warn users of the presence of
     one or more <a data-link-type="element" href="http://www.w3.org/TR/html5/forms.html#the-form-element">form</a> elements with <a data-link-type="element-attr" href="http://www.w3.org/TR/html5/forms.html#attr-fs-action">action</a> attributes whose values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url-5"><i lang="la">a priori</i> authenticated
     URLs</a>.</p>
@@ -1920,11 +1928,11 @@ directive-value = ""
     with an insecure form action as it does for a page that displays an insecure
     image.</p>
      <p>Further, a user agent MAY treat form submissions from such a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> as a <a data-link-type="dfn" href="#blockable" id="ref-for-blockable-9">blockable</a> request, even if the submission occurs in
-    the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing context</a>.</p>
+    the <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#top-level-browsing-context">top-level browsing context</a>.</p>
     </section>
     <section>
      <h3 class="heading settled" data-level="7.3" id="requirements-ux"><span class="secno">7.3. </span><span class="content">UI Requirements</span><a class="self-link" href="#requirements-ux"></a></h3>
-     <p>If a user agent would normally indicate to the user that the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing context</a> is secure, then:</p>
+     <p>If a user agent would normally indicate to the user that the <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#top-level-browsing-context">top-level browsing context</a> is secure, then:</p>
      <ul>
       <li data-md="">
        <p>When the user agent downgrades a context to a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6797#section-12.4">mixed security
@@ -1994,7 +2002,7 @@ directive-value = ""
       <li> Modify requests for <a data-link-type="dfn" href="#optionally-blockable" id="ref-for-optionally-blockable-12">optionally-blockable</a> resources which are <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content-9">mixed content</a> in order to reduce the risk to users: cookies
         and other authentication tokens could be stripped from the requests,
         automatic scheme upgrades could be attempted, and so on. 
-      <li> Treat <a data-link-type="dfn" href="#optionally-blockable" id="ref-for-optionally-blockable-13">optionally-blockable</a> resources inside <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#nested-browsing-context">nested browsing
+      <li> Treat <a data-link-type="dfn" href="#optionally-blockable" id="ref-for-optionally-blockable-13">optionally-blockable</a> resources inside <a data-link-type="dfn" href="https://w3c.github.io/html/browsers.html#nested-browsing-context">nested browsing
         contexts</a> as <a data-link-type="dfn" href="#blockable" id="ref-for-blockable-16">blockable</a>, to allow sites to embed resources
         without fear of introducing mixed content. 
      </ol>
@@ -2062,10 +2070,13 @@ directive-value = ""
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
-    <a data-link-type="biblio">[CSP2]</a> defines the following terms:
+    <a data-link-type="biblio">[CSP1]</a> defines the following terms:
     <ul>
-     <li><a href="https://w3c.github.io/webappsec/specs/content-security-policy/#enforce">enforce</a>
-     <li><a href="https://w3c.github.io/webappsec/specs/content-security-policy/#monitor">monitor</a>
+     <li><a href="https://w3c.github.io/webappsec-csp/#directive">directive</a>
+     <li><a href="https://w3c.github.io/webappsec-csp/#policy-directive-set">directive set</a>
+     <li><a href="https://w3c.github.io/webappsec-csp/#enforce">enforce</a>
+     <li><a href="https://w3c.github.io/webappsec-csp/#directive-name">name</a>
+     <li><a href="https://w3c.github.io/webappsec-csp/#violation-resource">resource</a>
     </ul>
    <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
@@ -2087,22 +2098,23 @@ directive-value = ""
     <ul>
      <li><a href="http://www.w3.org/TR/html5/forms.html#attr-fs-action">action</a>
      <li><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element">audio</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#create-a-document-object">creating a new document object</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#settings-object">environment settings object</a>
+     <li><a href="https://w3c.github.io/html/browsers.html#browsing-context">browsing context</a>
+     <li><a href="https://w3c.github.io/html/browsers.html#create-a-document-object">creating a new document object</a>
+     <li><a href="https://w3c.github.io/html/dom.html#document-csp-list">csp list</a>
+     <li><a href="https://w3c.github.io/html/webappapis.html#settings-object">environment settings object</a>
      <li><a href="http://www.w3.org/TR/html5/forms.html#the-form-element">form</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>
+     <li><a href="https://w3c.github.io/html/webappapis.html#global-object">global object</a>
      <li><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-img-element">img</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a>
+     <li><a href="https://w3c.github.io/html/webappapis.html#incumbent-settings-object">incumbent settings object</a>
      <li><a href="http://www.w3.org/TR/html5/document-metadata.html#the-meta-element">meta</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#nested-browsing-context">nested browsing context</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context-nested-through">nested through</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#parent-browsing-context">parent browsing context</a>
-     <li><a href="http://www.w3.org/TR/html5/infrastructure.html#plugin">plugin</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a>
+     <li><a href="https://w3c.github.io/html/browsers.html#nested-browsing-context">nested browsing context</a>
+     <li><a href="https://w3c.github.io/html/browsers.html#browsing-context-nested-through">nested through</a>
+     <li><a href="https://w3c.github.io/html/browsers.html#parent-browsing-context">parent browsing context</a>
+     <li><a href="https://w3c.github.io/html/infrastructure.html#plugin">plugin</a>
+     <li><a href="https://w3c.github.io/html/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>
+     <li><a href="https://w3c.github.io/html/webappapis.html#responsible-document">responsible document</a>
      <li><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-source-element">source</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing context</a>
+     <li><a href="https://w3c.github.io/html/browsers.html#top-level-browsing-context">top-level browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element">video</a>
     </ul>
    <li>
@@ -2119,6 +2131,8 @@ directive-value = ""
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-csp1">[CSP1]
+   <dd>Brandon Sterne; Adam Barth. <a href="http://dvcs.w3.org/hg/content-security-policy/raw-file/tip/csp-1.0-specification.html">Content Security Policy 1.0</a>. 19 February 2015. NOTE. URL: <a href="http://dvcs.w3.org/hg/content-security-policy/raw-file/tip/csp-1.0-specification.html">http://dvcs.w3.org/hg/content-security-policy/raw-file/tip/csp-1.0-specification.html</a>
    <dt id="biblio-csp2">[CSP2]
    <dd>Mike West; Adam Barth; Daniel Veditz. <a href="https://w3c.github.io/webappsec/specs/CSP2/">Content Security Policy Level 2</a>. 21 July 2015. CR. URL: <a href="https://w3c.github.io/webappsec/specs/CSP2/">https://w3c.github.io/webappsec/specs/CSP2/</a>
    <dt id="biblio-fetch">[FETCH]
@@ -2143,7 +2157,7 @@ directive-value = ""
    <dt id="biblio-rfc6919">[RFC6919]
    <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
    <dt id="biblio-sri">[SRI]
-   <dd>Devdatta Akhawe; et al. <a href="http://www.w3.org/TR/SRI/">Subresource Integrity</a>. 12 November 2015. CR. URL: <a href="http://www.w3.org/TR/SRI/">http://www.w3.org/TR/SRI/</a>
+   <dd>Devdatta Akhawe; et al. <a href="https://w3c.github.io/webappsec-subresource-integrity/">Subresource Integrity</a>. 10 May 2016. PR. URL: <a href="https://w3c.github.io/webappsec-subresource-integrity/">https://w3c.github.io/webappsec-subresource-integrity/</a>
    <dt id="biblio-wsc-ui">[WSC-UI]
    <dd>Thomas Roessler; Anil Saldhana. <a href="http://www.w3.org/TR/wsc-ui/">Web Security Context: User Interface Guidelines</a>. 12 August 2010. REC. URL: <a href="http://www.w3.org/TR/wsc-ui/">http://www.w3.org/TR/wsc-ui/</a>
    <dt id="biblio-xml">[XML]
@@ -2153,6 +2167,128 @@ directive-value = ""
   <div style="counter-reset:issue">
    <div class="issue"> This is super hand-wavey.<a href="#issue-3280c348"> ↵ </a></div>
   </div>
+  <aside class="dfn-panel" data-for="mixed-content">
+   <b><a href="#mixed-content">#mixed-content</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-mixed-content-1">3. Content Categories</a> <a href="#ref-for-mixed-content-2">(2)</a>
+    <li><a href="#ref-for-mixed-content-3">3.1. Optionally-blockable Content</a>
+    <li><a href="#ref-for-mixed-content-4">5.3. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-mixed-content-5">5.4. 
+      Should response to request be blocked as mixed
+      content? </a>
+    <li><a href="#ref-for-mixed-content-6">7.3. UI Requirements</a> <a href="#ref-for-mixed-content-7">(2)</a>
+    <li><a href="#ref-for-mixed-content-8">7.4. User Controls</a>
+    <li><a href="#ref-for-mixed-content-9">7.6. Further Action</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="a-priori-authenticated-url">
+   <b><a href="#a-priori-authenticated-url">#a-priori-authenticated-url</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-a-priori-authenticated-url-1">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-a-priori-authenticated-url-2">5. Insecure Content in Secure Contexts</a>
+    <li><a href="#ref-for-a-priori-authenticated-url-3">5.1. 
+      Does settings prohibit mixed security contexts? </a>
+    <li><a href="#ref-for-a-priori-authenticated-url-4">5.3. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-a-priori-authenticated-url-5">7.2. Form Submission</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="unauthenticated-response">
+   <b><a href="#unauthenticated-response">#unauthenticated-response</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-unauthenticated-response-1">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-unauthenticated-response-2">5. Insecure Content in Secure Contexts</a> <a href="#ref-for-unauthenticated-response-3">(2)</a>
+    <li><a href="#ref-for-unauthenticated-response-4">5.4. 
+      Should response to request be blocked as mixed
+      content? </a> <a href="#ref-for-unauthenticated-response-5">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="embedding-document">
+   <b><a href="#embedding-document">#embedding-document</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-embedding-document-1">4.3. Inheriting an opt-in</a>
+    <li><a href="#ref-for-embedding-document-2">5.1. 
+      Does settings prohibit mixed security contexts? </a> <a href="#ref-for-embedding-document-3">(2)</a> <a href="#ref-for-embedding-document-4">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="optionally-blockable">
+   <b><a href="#optionally-blockable">#optionally-blockable</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-optionally-blockable-1">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-optionally-blockable-2">3.2. Blockable Content</a>
+    <li><a href="#ref-for-optionally-blockable-3">4. Strict Mixed Content Checking</a>
+    <li><a href="#ref-for-optionally-blockable-4">4.1. Effects</a>
+    <li><a href="#ref-for-optionally-blockable-5">5.2. 
+      Is request a passthrough request? </a>
+    <li><a href="#ref-for-optionally-blockable-6">5.3. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-optionally-blockable-7">5.4. 
+      Should response to request be blocked as mixed
+      content? </a>
+    <li><a href="#ref-for-optionally-blockable-8">7.3. UI Requirements</a>
+    <li><a href="#ref-for-optionally-blockable-9">7.4. User Controls</a>
+    <li><a href="#ref-for-optionally-blockable-10">7.5. Service Workers</a> <a href="#ref-for-optionally-blockable-11">(2)</a>
+    <li><a href="#ref-for-optionally-blockable-12">7.6. Further Action</a> <a href="#ref-for-optionally-blockable-13">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="blockable">
+   <b><a href="#blockable">#blockable</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-blockable-1">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-blockable-2">4. Strict Mixed Content Checking</a>
+    <li><a href="#ref-for-blockable-3">4.1. Effects</a> <a href="#ref-for-blockable-4">(2)</a>
+    <li><a href="#ref-for-blockable-5">5.2. 
+      Is request a passthrough request? </a>
+    <li><a href="#ref-for-blockable-6">5.3. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-blockable-7">5.4. 
+      Should response to request be blocked as mixed
+      content? </a> <a href="#ref-for-blockable-8">(2)</a>
+    <li><a href="#ref-for-blockable-9">7.2. Form Submission</a>
+    <li><a href="#ref-for-blockable-10">7.3. UI Requirements</a>
+    <li><a href="#ref-for-blockable-11">7.4. User Controls</a> <a href="#ref-for-blockable-12">(2)</a>
+    <li><a href="#ref-for-blockable-13">7.5. Service Workers</a> <a href="#ref-for-blockable-14">(2)</a>
+    <li><a href="#ref-for-blockable-15">7.6. Further Action</a> <a href="#ref-for-blockable-16">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="strict-mixed-content-checking-flag">
+   <b><a href="#strict-mixed-content-checking-flag">#strict-mixed-content-checking-flag</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-strict-mixed-content-checking-flag-1">4.1. Effects</a>
+    <li><a href="#ref-for-strict-mixed-content-checking-flag-2">4.2. Opting-in</a>
+    <li><a href="#ref-for-strict-mixed-content-checking-flag-3">4.3. Inheriting an opt-in</a> <a href="#ref-for-strict-mixed-content-checking-flag-4">(2)</a> <a href="#ref-for-strict-mixed-content-checking-flag-5">(3)</a> <a href="#ref-for-strict-mixed-content-checking-flag-6">(4)</a> <a href="#ref-for-strict-mixed-content-checking-flag-7">(5)</a>
+    <li><a href="#ref-for-strict-mixed-content-checking-flag-8">5.3. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-strict-mixed-content-checking-flag-9">5.4. 
+      Should response to request be blocked as mixed
+      content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="strict-mode">
+   <b><a href="#strict-mode">#strict-mode</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-strict-mode-1">7.6. Further Action</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="block-all-mixed-content">
+   <b><a href="#block-all-mixed-content">#block-all-mixed-content</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-block-all-mixed-content-1">4. Strict Mixed Content Checking</a> <a href="#ref-for-block-all-mixed-content-2">(2)</a>
+    <li><a href="#ref-for-block-all-mixed-content-3">5.3. 
+      Should fetching request be blocked as mixed content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="passthrough-request">
+   <b><a href="#passthrough-request">#passthrough-request</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-passthrough-request-1">5.3. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-passthrough-request-2">5.4. 
+      Should response to request be blocked as mixed
+      content? </a>
+   </ul>
+  </aside>
 <script>/* script-dfn-panel */
 
         document.body.addEventListener("click", function(e) {
@@ -2160,16 +2296,13 @@ directive-value = ""
             // Find the dfn element or panel, if any, that was clicked on.
             var el = e.target;
             var target;
+            var hitALink = false;
             while(el.parentElement) {
                 if(el.tagName == "A") {
-                    // Clicked on a link; intercept this early in case it was nested in a <dfn>
-                    return true;
+                    // Clicking on a link in a <dfn> shouldn't summon the panel
+                    hitALink = true;
                 }
-                if(el.tagName == "DFN") {
-                    target = "dfn";
-                    break;
-                }
-                if(/H\d/.test(el.tagName) && el.getAttribute('data-dfn-type') != null) {
+                if(el.classList.contains("dfn-paneled")) {
                     target = "dfn";
                     break;
                 }
@@ -2186,15 +2319,29 @@ directive-value = ""
                     el.classList.remove("activated");
                 });
             }
-            if(target == "dfn") {
+            if(target == "dfn" && !hitALink) {
                 // open the panel
-                var dfnPanel = el.querySelector(".dfn-panel");
+                var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
                 if(dfnPanel) {
+                    console.log(dfnPanel);
                     dfnPanel.classList.add("on");
+                    var rect = el.getBoundingClientRect();
+                    dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
+                    dfnPanel.style.top = window.scrollY + rect.top + "px";
+                    var panelRect = dfnPanel.getBoundingClientRect();
+                    var panelWidth = panelRect.right - panelRect.left;
+                    if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
+                        // Reposition, because the panel is overflowing
+                        dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
+                    }
+                } else {
+                    console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
                 }
             } else if(target == "dfn-panel") {
                 // Switch it to "activated" state, which pins it.
                 el.classList.add("activated");
+                el.style.left = null;
+                el.style.top = null;
             }
 
         });

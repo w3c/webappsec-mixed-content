@@ -39,7 +39,7 @@ type: dfn
   urlPrefix: https://tools.ietf.org/html/rfc6797
     text: mixed security context; url: section-12.4
 type: dfn
-  urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
+  urlPrefix: https://w3c.github.io/html/; spec: HTML5
     urlPrefix: embedded-content-0.html
       text: an iframe srcdoc document
     urlPrefix: browsers.html
@@ -67,9 +67,15 @@ type: dfn
       text: responsible document
       text: responsible browsing context
       text: global object
-  urlPrefix: https://w3c.github.io/webappsec/specs/content-security-policy/; spec: CSP2
+    urlPrefix: dom.html
+      text: CSP list; for: Document; url: document-csp-list
+  urlPrefix: https://w3c.github.io/webappsec-csp/; spec: CSP
     text: enforce
     text: monitor
+    text: directive set; for: policy; url: policy-directive-set
+    text: directive
+    text: name; for: directive; url: directive-name
+    text: resource; for: violation; url: violation-resource
   urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
     text: fetching
     text: request; url: concept-request
@@ -458,9 +464,8 @@ type: element-attr
   set the protected resource's <a>strict mixed content checking flag</a> to
   <code>true</code>.
 
-  This directive has no effect when <a>monitored</a>. This directive's only
-  effect is to set a policy flag on the protected resource; it will therefore
-  never be violated, and has no reporting requirements. 
+  This directive will trigger violation reports for mixed content on a page.
+  Details are found in [[#should-block-fetch]].
 
   Note: A similar effect may be achieved on a more granular level by setting
   individual directives. For example <code>img-src https:</code> would prevent
@@ -679,6 +684,24 @@ type: element-attr
             insecure form submissions (see [[#further-action]]).
           </li>
         </ol>
+      </li>
+      <li>
+        For each |policy| in |request|'s <a for="request">client</a>'s
+        <a for="Document">CSP list</a>:
+
+        1.  If |policy|'s <a for="policy">directive set</a> contains a
+            <a>directive</a> whose <a for="directive">name</a> is
+            "<a>`block-all-mixed-content`</a>":
+
+            1.  Let |violation| be the result of executing
+                [[csp-3#create-violation-for-global]] on |request|'s
+                <a for="request">client</a>'s global object, |policy|, and
+                "`block-all-mixed-content`".
+
+            2.  Set |violation|'s <a for="violation">resource</a> to
+                |request|'s <a for="request">url</a>.
+
+            3.  Execute [[csp-3#report-violation]] on |violation|.
       </li>
       <li>
         Return <strong>blocked</strong> if one or more of the following
