@@ -60,14 +60,13 @@ type: dfn
       text: reflect
     urlPrefix: webappapis.html
       text: environment settings object; url: settings-object
-      text: incumbent settings object
-      text: relevant settings object; url: relevant-settings-object-for-a-global-object
+      text: relevant settings object
       text: responsible document
       text: responsible browsing context
       text: global object
     urlPrefix: dom.html
       text: CSP list; for: Document; url: document-csp-list
-  urlPrefix: https://w3c.github.io/webappsec-csp/; spec: CSP
+  urlPrefix: https://w3c.github.io/webappsec-csp/; spec: CSP3
     text: enforce
     text: monitor
     text: directive set; for: policy; url: policy-directive-set
@@ -452,7 +451,7 @@ type: element-attr
 
   Authors may opt a {{Document}} into strict mixed content checking via a
   <dfn>block-all-mixed-content</dfn> Content Security Policy directive
-  [[!CSP2]], defined via the following ABNF grammar.
+  [[!CSP3]], defined via the following ABNF grammar.
 
   <pre>
     directive-name  = "block-all-mixed-content"
@@ -692,15 +691,16 @@ type: element-attr
             <a>directive</a> whose <a for="directive">name</a> is
             "<a>`block-all-mixed-content`</a>":
 
-            1.  Let |violation| be the result of executing
-                [[csp-3#create-violation-for-global]] on |request|'s
-                <a for="request">client</a>'s global object, |policy|, and
-                "`block-all-mixed-content`".
+            1.  Let |violation| be the result of executing the algorithm defined
+                in [[csp-3#create-violation-for-global]] on |request|'s
+                <a for="request">client</a>'s <a>global object</a>, |policy|,
+                and "`block-all-mixed-content`".
 
             2.  Set |violation|'s <a for="violation">resource</a> to
                 |request|'s <a for="request">url</a>.
 
-            3.  Execute [[csp-3#report-violation]] on |violation|.
+            3.  Execute the algorithm defined in [[csp-3#report-violation]] on
+                |violation|.
       </li>
       <li>
         Return <strong>blocked</strong> if one or more of the following
@@ -934,7 +934,7 @@ type: element-attr
     <h3 id="requirements-forms">Form Submission</h3>
 
     If [[#categorize-settings-object]] returns <code>Restricts Mixed
-    Content</code> when applied to a {{Document}}'s <a>incumbent settings
+    Content</code> when applied to a {{Document}}'s <a>relevant settings
     object</a>, then a user agent MAY choose to warn users of the presence of
     one or more <a element>form</a> elements with <a element-attr>action</a>
     attributes whose values are not <a><i lang="la">a priori</i> authenticated

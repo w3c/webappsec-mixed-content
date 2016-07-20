@@ -1640,7 +1640,7 @@ encrypted and authenticated document.</p>
      <li> ensure that these requirements are applied to any <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> in a <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-context">nested browsing context</a>, as described in <a href="#strict-nesting">§4.3 Inheriting an opt-in</a>. 
     </ol>
     <h3 class="heading settled" data-level="4.2" id="strict-opt-in"><span class="secno">4.2. </span><span class="content">Opting-in</span><a class="self-link" href="#strict-opt-in"></a></h3>
-    <p>Authors may opt a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> into strict mixed content checking via a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="block-all-mixed-content">block-all-mixed-content</dfn> Content Security Policy directive <a data-link-type="biblio" href="#biblio-csp2">[CSP2]</a>, defined via the following ABNF grammar.</p>
+    <p>Authors may opt a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> into strict mixed content checking via a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="block-all-mixed-content">block-all-mixed-content</dfn> Content Security Policy directive <a data-link-type="biblio" href="#biblio-csp3">[CSP3]</a>, defined via the following ABNF grammar.</p>
 <pre>directive-name  = "block-all-mixed-content"
 directive-value = ""
 </pre>
@@ -1703,7 +1703,7 @@ directive-value = ""
           <li data-md="">
            <p>Set <var>document</var> to <var>document</var>’s <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document-3">embedding document</a>.</p>
           <li data-md="">
-           <p>Let <var>embedder settings</var> be <var>document</var>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#global-object">global object</a>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>.</p>
+           <p>Let <var>embedder settings</var> be <var>document</var>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#global-object">global object</a>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings object</a>.</p>
           <li data-md="">
            <p>If <var>embedder settings</var>’ <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state">HTTPS state</a> is not "<code>None</code>",
   then return "<code>Prohibits Mixed Security Contexts</code>".</p>
@@ -1795,12 +1795,13 @@ directive-value = ""
   "<a data-link-type="dfn" href="#block-all-mixed-content" id="ref-for-block-all-mixed-content-3"><code>block-all-mixed-content</code></a>":</p>
          <ol>
           <li data-md="">
-           <p>Let <var>violation</var> be the result of executing <a href="https://w3c.github.io/webappsec-csp/#create-violation-for-global">Content Security Policy §2.3.1 Create a violation object for global, policy, and directive</a> on <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client">client</a>’s global object, <var>policy</var>, and
-  "<code>block-all-mixed-content</code>".</p>
+           <p>Let <var>violation</var> be the result of executing the algorithm defined
+  in <a href="https://w3c.github.io/webappsec-csp/#create-violation-for-global">Content Security Policy §2.3.1 Create a violation object for global, policy, and directive</a> on <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client">client</a>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#global-object">global object</a>, <var>policy</var>,
+  and "<code>block-all-mixed-content</code>".</p>
           <li data-md="">
            <p>Set <var>violation</var>’s <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#violation-resource">resource</a> to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url">url</a>.</p>
           <li data-md="">
-           <p>Execute <a href="https://w3c.github.io/webappsec-csp/#report-violation">Content Security Policy §5.3 Report a violation</a> on <var>violation</var>.</p>
+           <p>Execute the algorithm defined in <a href="https://w3c.github.io/webappsec-csp/#report-violation">Content Security Policy §5.3 Report a violation</a> on <var>violation</var>.</p>
          </ol>
        </ol>
       <li>
@@ -1896,7 +1897,7 @@ directive-value = ""
       <p>After the current step 1, perform the following step:</p>
       <ol>
        <li data-md="">
-        <p>If <var>secure</var> is <code>false</code>, and the algorithm in <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns "<code>Restricts Mixed Security Context</code>" when applied to <var>client</var>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#global-object">global object</a>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>, then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7">fail the
+        <p>If <var>secure</var> is <code>false</code>, and the algorithm in <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns "<code>Restricts Mixed Security Context</code>" when applied to <var>client</var>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#global-object">global object</a>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings object</a>, then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7">fail the
   WebSocket connection</a> and abort the connection <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>.</p>
       </ol>
      <li data-md="">
@@ -1930,7 +1931,7 @@ directive-value = ""
     <section>
      <h3 class="heading settled" data-level="7.2" id="requirements-forms"><span class="secno">7.2. </span><span class="content">Form Submission</span><a class="self-link" href="#requirements-forms"></a></h3>
      <p>If <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns <code>Restricts Mixed
-    Content</code> when applied to a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code>'s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#incumbent-settings-object">incumbent settings
+    Content</code> when applied to a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code>'s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings
     object</a>, then a user agent MAY choose to warn users of the presence of
     one or more <a data-link-type="element" href="https://www.w3.org/TR/html51/forms.html#the-form-element">form</a> elements with <a data-link-type="element-attr" href="https://www.w3.org/TR/html51/forms.html#attr-fs-action">action</a> attributes whose values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url-5"><i lang="la">a priori</i> authenticated
     URLs</a>.</p>
@@ -2091,7 +2092,7 @@ directive-value = ""
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
-    <a data-link-type="biblio">[CSP1]</a> defines the following terms:
+    <a data-link-type="biblio">[CSP3]</a> defines the following terms:
     <ul>
      <li><a href="https://w3c.github.io/webappsec-csp/#directive">directive</a>
      <li><a href="https://w3c.github.io/webappsec-csp/#policy-directive-set">directive set</a>
@@ -2126,14 +2127,13 @@ directive-value = ""
      <li><a href="https://www.w3.org/TR/html51/forms.html#the-form-element">form</a>
      <li><a href="https://www.w3.org/TR/html51/webappapis.html#global-object">global object</a>
      <li><a href="https://www.w3.org/TR/html51/semantics-embedded-content.html#the-img-element">img</a>
-     <li><a href="https://www.w3.org/TR/html51/webappapis.html#incumbent-settings-object">incumbent settings object</a>
      <li><a href="https://www.w3.org/TR/html51/document-metadata.html#the-meta-element">meta</a>
      <li><a href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-context">nested browsing context</a>
      <li><a href="https://www.w3.org/TR/html51/browsers.html#browsing-context-nested-through">nested through</a>
      <li><a href="https://www.w3.org/TR/html51/browsers.html#parent-browsing-context">parent browsing context</a>
      <li><a href="https://www.w3.org/TR/html51/semantics-embedded-content.html#the-picture-element">picture</a>
      <li><a href="https://www.w3.org/TR/html51/infrastructure.html#plugin">plugin</a>
-     <li><a href="https://www.w3.org/TR/html51/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>
+     <li><a href="https://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings object</a>
      <li><a href="https://www.w3.org/TR/html51/webappapis.html#responsible-document">responsible document</a>
      <li><a href="https://www.w3.org/TR/html51/semantics-embedded-content.html#the-source-element">source</a>
      <li><a href="https://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">top-level browsing context</a>
@@ -2159,10 +2159,8 @@ directive-value = ""
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
-   <dt id="biblio-csp1">[CSP1]
-   <dd>Brandon Sterne; Adam Barth. <a href="http://dvcs.w3.org/hg/content-security-policy/raw-file/tip/csp-1.0-specification.html">Content Security Policy 1.0</a>. 19 February 2015. NOTE. URL: <a href="http://dvcs.w3.org/hg/content-security-policy/raw-file/tip/csp-1.0-specification.html">http://dvcs.w3.org/hg/content-security-policy/raw-file/tip/csp-1.0-specification.html</a>
-   <dt id="biblio-csp2">[CSP2]
-   <dd>Mike West; Adam Barth; Daniel Veditz. <a href="https://w3c.github.io/webappsec/specs/CSP2/">Content Security Policy Level 2</a>. 21 July 2015. CR. URL: <a href="https://w3c.github.io/webappsec/specs/CSP2/">https://w3c.github.io/webappsec/specs/CSP2/</a>
+   <dt id="biblio-csp3">[CSP3]
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec-csp/">Content Security Policy Level 3</a>. 21 June 2016. WD. URL: <a href="https://w3c.github.io/webappsec-csp/">https://w3c.github.io/webappsec-csp/</a>
    <dt id="biblio-css-backgrounds-3">[CSS-BACKGROUNDS-3]
    <dd>CSS Backgrounds and Borders Module Level 3 URL: <a href="https://drafts.csswg.org/css-backgrounds-3/">https://drafts.csswg.org/css-backgrounds-3/</a>
    <dt id="biblio-fetch">[FETCH]
