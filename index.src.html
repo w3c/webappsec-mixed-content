@@ -4,10 +4,7 @@ Status: ED
 ED: https://w3c.github.io/webappsec-mixed-content/
 Shortname: mixed-content
 TR: http://www.w3.org/TR/mixed-content/
-Previous Version: http://www.w3.org/TR/2015/CR-mixed-content-20150317/
-Previous Version: http://www.w3.org/TR/2014/WD-mixed-content-20141113/
-Previous Version: http://www.w3.org/TR/2014/WD-mixed-content-20140916/
-Previous Version: http://www.w3.org/TR/2014/WD-mixed-content-20140722/
+Previous Version: http://www.w3.org/TR/2015/CR-mixed-content-20151008/
 Level: 1
 Editor: Mike West 56384, Google Inc., mkwst@google.com
 Group: webappsec
@@ -21,6 +18,7 @@ Boilerplate: omit conformance, omit feedback-header
 Indent: 2
 At Risk: The <a>passthrough request</a> concept, and the related carveout in the blocking algorithms.
 Markup Shorthands: markdown on
+Boilerplate: omit conformance, omit feedback-header
 </pre>
 <!--
    ███    ██    ██  ██████  ██     ██  ███████  ████████   ██████ 
@@ -39,7 +37,7 @@ type: dfn
   urlPrefix: https://tools.ietf.org/html/rfc6797
     text: mixed security context; url: section-12.4
 type: dfn
-  urlPrefix: https://w3c.github.io/html/; spec: HTML5
+  urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
     urlPrefix: embedded-content-0.html
       text: an iframe srcdoc document
     urlPrefix: browsers.html
@@ -96,7 +94,7 @@ type: dfn
       text: https state
   urlPrefix: https://tools.ietf.org/html/rfc6455; spec: RFC6455
     text: fail the websocket connection; url: section-7.1.7
-  urlPrefix: http://www.w3.org/TR/url/; spec: URL
+  urlPrefix: https://url.spec.whatwg.org/; spec: WHATWG-URL
     text: url; url: concept-url
 type: method
   text: Fetch; for: GlobalFetch; url: https://fetch.spec.whatwg.org/#dom-global-fetch
@@ -110,12 +108,13 @@ type: interface
   text: Window; url: http://www.w3.org/TR/html5/browsers.html#window
   text: ServiceWorkerGlobalScope; url: http://www.w3.org/TR/service-workers/#service-worker-global-scope
 type: element
-  urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
+  urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
     urlPrefix: document-metadata.html
       text: meta; url: the-meta-element
     urlPrefix: forms.html
       text: form; url: the-form-element
-    urlPrefix: embedded-content-0.html
+    urlPrefix: semantics-embedded-content.html
+      text: picture; url: the-picture-element
       text: audio; url: the-audio-element
       text: iframe; url: the-iframe-element
       text: img; url: the-img-element
@@ -127,7 +126,7 @@ type: element
     urlPrefix: obsolete.html
       text: frame
 type: element-attr
-  urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
+  urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
     urlPrefix: forms.html
       text: action; for: form; url: attr-fs-action
     urlPrefix: embedded-content-0.html
@@ -288,7 +287,7 @@ type: element-attr
       Given a {{Document}} <var>A</var>, the <strong>embedding
       document</strong> of <var>A</var> is the {{Document}}
       <a lt="nested through">through which</a> <var>A</var>'s <a>browsing
-      context</a> is nested [[!HTML5]].
+      context</a> is nested [[!HTML51]].
     </dd>
   </dl>
 </section>
@@ -335,26 +334,26 @@ type: element-attr
 
     <ul>
       <li>
-        Images loaded via <a element>img</a>
+        Images loaded via <{img}> or CSS ('background-image', 'border-image', etc)
 
         Note: This includes SVG documents loaded as images, as they are banned from
-        executing script or loading subresources.
+        executing script or loading subresources. It does <em>not</em> include
+        images loaded via <{picture}>.
       </li>
       <li>
-        Video loaded via <a element>video</a> and <a element>source</a>
+        Video loaded via <{video}> and <{source}>
       </li>
       <li>
-        Audio loaded via <a element>audio</a> and <a element>source</a>
+        Audio loaded via <{audio}> and <{source}>
       </li>
     </ul>
 
     Note: We further limit this category in [[#should-block-fetch]] by
     force-failing any CORS-enabled request. This means that mixed content images
-    loaded via <code>&lt;img crossorigin ...&gt;</code> will be blocked. This is
-    a good example of the general principle that a category of content falls
-    into this category <em>only</em> when it is too widely used to be blocked
-    outright. The Working Group intends to carve out more blockable subsets as
-    time goes on.
+    loaded via `<img crossorigin ...>` will be blocked. This is a good example
+    of the general principle that content falls into this category
+    <em>only</em> when it is too widely used to be blocked outright. The Working
+    Group intends to carve out more blockable subsets as time goes on.
   </section>
 
   <section>
