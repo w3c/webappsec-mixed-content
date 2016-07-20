@@ -78,6 +78,7 @@ type: dfn
     text: request; url: concept-request
     text: url; for: request; url: concept-request-url
     text: response; url: concept-response
+    text: url; for: response; url: concept-response-url
     text: network error; url: concept-network-error
     text: opaque filtered response; url: concept-filtered-response-opaque
     text: initiator; url: concept-request-initiator
@@ -264,10 +265,20 @@ type: element-attr
       </dfn>
     </dt>
     <dd>
-      We know <i lang="la">a priori</i> that a request to a particular URL will
-      be strongly authenticated if the URL's <a for="url">scheme</a> is
-      "`https`" or "`wss`", as requests to those schemes will result in network
-      errors for unauthenticated responses.
+      We know <i lang="la">a priori</i> that a request to a particular URL
+      (|url|) will be delivered in a way that mitigates the risks of
+      interception and modifications if either of the following statements is
+      true:
+
+      1.  The algorithm defined in [[secure-contexts#is-url-trustworthy]]
+          returns "`Potentially Trustworthy`" when executed upon |url|
+          [[!SECURE-CONTEXTS]].
+
+      2.  |url|'s <a for="url">scheme</a> is "`data`".
+
+          Note: We special case `data` URLs here, as we don't consider them
+          particularly trustworthy, but we also don't wish to block them as
+          mixed content, as they never hit the network.
     </dd>
 
     <dt>
@@ -276,9 +287,16 @@ type: element-attr
       </dfn>
     </dt>
     <dd>
-      We know <i lang="la">a posteriori</i> that a <a>response</a> is
-      unauthenticated if its <a for="response">HTTPS state</a> is "`deprecated`"
-      or "`none`".
+      We know <i lang="la">a posteriori</i> that a <a>response</a>
+      (|response|) is unauthenticated if both of the following statements
+      are true:
+
+      1.  |response|'s <a for="response">url</a> is <a><i lang="la">a
+          priori</i> authenticated</a>.
+
+      2.  If |response|'s <a for="response">url</a>'s <a for="url">scheme</a>
+          is "`https`" or "`wss`", |response|'s <a for="response">HTTPS
+          state</a> is "`modern`".
     </dd>
 
     <dt><dfn export>embedding document</dfn></dt>
@@ -587,7 +605,7 @@ type: element-attr
         <code>http://evil.com</code>. In this case, the insecure request to
         <code>evil.com</code> will be blocked, as <code>a.com</code> was loaded
         over a secure connection, even though the framed <code>data:</code> URL
-        is not <a><i lang="la">a priori</i> authenticated</a>.
+        would not block mixed content if loaded in a top-level context.
       </div>
     </div>
   </section>
