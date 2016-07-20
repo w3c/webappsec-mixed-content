@@ -1501,7 +1501,7 @@ encrypted and authenticated document.</p>
   communicate in the clear.</p>
     <p class="note" role="note">Note: Nothing described in this document is really new; everything covered
   here has appeared in one or more user agents over the years: Internet
-  Explorer led the way, alerting users to mixed content since <a href="https://twitter.com/ericlaw/status/469813922908758016">around</a> <a href="https://support2.microsoft.com/default.aspx?scid=kb;EN-US;Q261188">version 4</a>.</p>
+  Explorer led the way, alerting users to mixed content since <a href="https://twitter.com/ericlaw/status/469813922908758016">around</a> <a href="https://support.microsoft.com/en-us/kb/261188">version 4</a>.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="2" id="terms"><span class="secno">2. </span><span class="content">Key Concepts and Terminology</span><a class="self-link" href="#terms"></a></h2>
@@ -1528,8 +1528,8 @@ encrypted and authenticated document.</p>
       <p>If mixed content is loaded into a context that restricts mixed content
       (as in #2 above), that context is considered a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6797#section-12.4">mixed security
       context</a> (as defined in <a data-link-type="biblio" href="#biblio-rfc6797">[RFC6797]</a>).</p>
-      <p class="note" role="note">Note: "Mixed content" was originally defined in <a href="http://www.w3.org/TR/wsc-ui/#securepage">section 5.3</a> of <a data-link-type="biblio" href="#biblio-wsc-ui">[WSC-UI]</a>. This document updates that initial definition.</p>
-      <p class="note" role="note">Note: <a data-link-type="biblio" href="#biblio-xml">[XML]</a> also defines an unrelated <a href="http://www.w3.org/TR/2008/REC-xml-20081126/#sec-mixed-content">"mixed content"</a>.
+      <p class="note" role="note">Note: "Mixed content" was originally defined in <a href="https://www.w3.org/TR/wsc-ui/#securepage">section 5.3</a> of <a data-link-type="biblio" href="#biblio-wsc-ui">[WSC-UI]</a>. This document updates that initial definition.</p>
+      <p class="note" role="note">Note: <a data-link-type="biblio" href="#biblio-xml">[XML]</a> also defines an unrelated <a href="https://www.w3.org/TR/2008/REC-xml-20081126/#sec-mixed-content">"mixed content"</a>.
       concept. This is potentially confusing, but given the term’s near
       ubiquitious usage in a security context across user agents for more than
       a decade, the practical risk of confusion seems low.</p>
@@ -1544,7 +1544,7 @@ encrypted and authenticated document.</p>
       or "<code>none</code>". 
      <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="embedding-document">embedding document</dfn>
      <dd> Given a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> <var>A</var>, the <strong>embedding
-      document</strong> of <var>A</var> is the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#browsing-context-nested-through">through which</a> <var>A</var>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#browsing-context">browsing
+      document</strong> of <var>A</var> is the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#through-which-new-document-is-nested">through which</a> <var>A</var>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#browsing-context">browsing
       context</a> is nested <a data-link-type="biblio" href="#biblio-html51">[HTML51]</a>. 
     </dl>
    </section>
@@ -1637,14 +1637,14 @@ encrypted and authenticated document.</p>
       page’s context.</p>
       <p class="note" role="note">Note: This requirement does not include developer-facing indicators such
       as console messages.</p>
-     <li> ensure that these requirements are applied to any <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> in a <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-context">nested browsing context</a>, as described in <a href="#strict-nesting">§4.3 Inheriting an opt-in</a>. 
+     <li> ensure that these requirements are applied to any <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> in a <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-contexts">nested browsing context</a>, as described in <a href="#strict-nesting">§4.3 Inheriting an opt-in</a>. 
     </ol>
     <h3 class="heading settled" data-level="4.2" id="strict-opt-in"><span class="secno">4.2. </span><span class="content">Opting-in</span><a class="self-link" href="#strict-opt-in"></a></h3>
     <p>Authors may opt a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code> into strict mixed content checking via a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="block-all-mixed-content">block-all-mixed-content</dfn> Content Security Policy directive <a data-link-type="biblio" href="#biblio-csp3">[CSP3]</a>, defined via the following ABNF grammar.</p>
 <pre>directive-name  = "block-all-mixed-content"
 directive-value = ""
 </pre>
-    <p>When <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#enforce">enforcing</a> the <code>block-all-mixed-content</code> directive,
+    <p>When <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#enforced">enforcing</a> the <code>block-all-mixed-content</code> directive,
   set the protected resource’s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-2">strict mixed content checking flag</a> to <code>true</code>.</p>
     <p>This directive will trigger violation reports for mixed content on a page.
   Details are found in <a href="#should-block-fetch">§5.3 Should fetching request be blocked as mixed content?</a>.</p>
@@ -1653,13 +1653,13 @@ directive-value = ""
   insecure images from loading.</p>
     <h3 class="heading settled" data-level="4.3" id="strict-nesting"><span class="secno">4.3. </span><span class="content">Inheriting an opt-in</span><a class="self-link" href="#strict-nesting"></a></h3>
     <p>If a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code>'s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-3">strict mixed content checking flag</a> is set, the user
-  agent MUST ensure that all <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-context">nested browsing contexts</a> inherit the setting
+  agent MUST ensure that all <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-contexts">nested browsing contexts</a> inherit the setting
   in the following ways:</p>
     <ol>
-     <li> When a <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-context">nested browsing context</a> <var>context</var> is created, set
+     <li> When a <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-contexts">nested browsing context</a> <var>context</var> is created, set
       its <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-4">strict mixed content checking flag</a> to <code>true</code> if <var>context</var>’s <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document-1">embedding document</a>’s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-5">strict mixed content
       checking flag</a> is set to <code>true</code>. 
-     <li> When <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#create-a-document-object">creating a new <code>Document</code> object</a>, set its <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-6">strict
+     <li> When <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#initializing-a-new-document-object">initializing a new <code>Document</code> object</a>, set its <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-6">strict
       mixed content checking flag</a> to <code>true</code> if its <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#browsing-context">browsing
       context</a>’s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag-7">strict mixed content checking flag</a> is <code>true</code>. 
     </ol>
@@ -1791,7 +1791,7 @@ directive-value = ""
         For each <var>policy</var> in <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client">client</a>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/dom.html#document-csp-list">CSP list</a>: 
        <ol>
         <li data-md="">
-         <p>If <var>policy</var>’s <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#policy-directive-set">directive set</a> contains a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#directive">directive</a> whose <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#directive-name">name</a> is
+         <p>If <var>policy</var>’s <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#policy-directive-set">directive set</a> contains a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#directives">directive</a> whose <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#directive-name">name</a> is
   "<a data-link-type="dfn" href="#block-all-mixed-content" id="ref-for-block-all-mixed-content-3"><code>block-all-mixed-content</code></a>":</p>
          <ol>
           <li data-md="">
@@ -1933,7 +1933,7 @@ directive-value = ""
      <p>If <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns <code>Restricts Mixed
     Content</code> when applied to a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/dom.html#document">Document</a></code>'s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings
     object</a>, then a user agent MAY choose to warn users of the presence of
-    one or more <a data-link-type="element" href="https://www.w3.org/TR/html51/forms.html#the-form-element">form</a> elements with <a data-link-type="element-attr" href="https://www.w3.org/TR/html51/forms.html#attr-fs-action">action</a> attributes whose values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url-5"><i lang="la">a priori</i> authenticated
+    one or more <a data-link-type="element" href="https://www.w3.org/TR/html51/sec-forms.html#the-form-element">form</a> elements with <a data-link-type="element-attr" href="https://www.w3.org/TR/html51/sec-forms.html#attr-fs-action">action</a> attributes whose values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url-5"><i lang="la">a priori</i> authenticated
     URLs</a>.</p>
      <p class="note" role="note">Note: Chrome, for example, currently gives the same UI treatment to a page
     with an insecure form action as it does for a page that displays an insecure
@@ -2013,7 +2013,7 @@ directive-value = ""
       <li> Modify requests for <a data-link-type="dfn" href="#optionally-blockable" id="ref-for-optionally-blockable-12">optionally-blockable</a> resources which are <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content-9">mixed content</a> in order to reduce the risk to users: cookies
         and other authentication tokens could be stripped from the requests,
         automatic scheme upgrades could be attempted, and so on. 
-      <li> Treat <a data-link-type="dfn" href="#optionally-blockable" id="ref-for-optionally-blockable-13">optionally-blockable</a> resources inside <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-context">nested browsing
+      <li> Treat <a data-link-type="dfn" href="#optionally-blockable" id="ref-for-optionally-blockable-13">optionally-blockable</a> resources inside <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-contexts">nested browsing
         contexts</a> as <a data-link-type="dfn" href="#blockable" id="ref-for-blockable-16">blockable</a>, to allow sites to embed resources
         without fear of introducing mixed content. 
      </ol>
@@ -2094,9 +2094,9 @@ directive-value = ""
    <li>
     <a data-link-type="biblio">[CSP3]</a> defines the following terms:
     <ul>
-     <li><a href="https://w3c.github.io/webappsec-csp/#directive">directive</a>
+     <li><a href="https://w3c.github.io/webappsec-csp/#directives">directive</a>
      <li><a href="https://w3c.github.io/webappsec-csp/#policy-directive-set">directive set</a>
-     <li><a href="https://w3c.github.io/webappsec-csp/#enforce">enforce</a>
+     <li><a href="https://w3c.github.io/webappsec-csp/#enforced">enforce</a>
      <li><a href="https://w3c.github.io/webappsec-csp/#directive-name">name</a>
      <li><a href="https://w3c.github.io/webappsec-csp/#violation-resource">resource</a>
     </ul>
@@ -2118,18 +2118,18 @@ directive-value = ""
    <li>
     <a data-link-type="biblio">[HTML51]</a> defines the following terms:
     <ul>
-     <li><a href="https://www.w3.org/TR/html51/forms.html#attr-fs-action">action</a>
+     <li><a href="https://www.w3.org/TR/html51/sec-forms.html#attr-fs-action">action</a>
      <li><a href="https://www.w3.org/TR/html51/semantics-embedded-content.html#the-audio-element">audio</a>
      <li><a href="https://www.w3.org/TR/html51/browsers.html#browsing-context">browsing context</a>
-     <li><a href="https://www.w3.org/TR/html51/browsers.html#create-a-document-object">creating a new document object</a>
      <li><a href="https://www.w3.org/TR/html51/dom.html#document-csp-list">csp list</a>
      <li><a href="https://www.w3.org/TR/html51/webappapis.html#settings-object">environment settings object</a>
-     <li><a href="https://www.w3.org/TR/html51/forms.html#the-form-element">form</a>
+     <li><a href="https://www.w3.org/TR/html51/sec-forms.html#the-form-element">form</a>
      <li><a href="https://www.w3.org/TR/html51/webappapis.html#global-object">global object</a>
      <li><a href="https://www.w3.org/TR/html51/semantics-embedded-content.html#the-img-element">img</a>
+     <li><a href="https://www.w3.org/TR/html51/browsers.html#initializing-a-new-document-object">initializing a new document object</a>
      <li><a href="https://www.w3.org/TR/html51/document-metadata.html#the-meta-element">meta</a>
-     <li><a href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-context">nested browsing context</a>
-     <li><a href="https://www.w3.org/TR/html51/browsers.html#browsing-context-nested-through">nested through</a>
+     <li><a href="https://www.w3.org/TR/html51/browsers.html#nested-browsing-contexts">nested browsing context</a>
+     <li><a href="https://www.w3.org/TR/html51/browsers.html#through-which-new-document-is-nested">nested through</a>
      <li><a href="https://www.w3.org/TR/html51/browsers.html#parent-browsing-context">parent browsing context</a>
      <li><a href="https://www.w3.org/TR/html51/semantics-embedded-content.html#the-picture-element">picture</a>
      <li><a href="https://www.w3.org/TR/html51/infrastructure.html#plugin">plugin</a>

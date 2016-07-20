@@ -44,11 +44,11 @@ type: dfn
       text: browsing context
       text: browsing context container
       text: child browsing context
-      text: creating a new Document object; url: create-a-document-object
+      text: initializing a new Document object; url: initializing-a-new-document-object
       text: navigated; url: navigate
-      text: nested browsing context
+      text: nested browsing context; url: nested-browsing-contexts
       text: parent browsing context
-      text: nested through; url: browsing-context-nested-through
+      text: nested through; url: through-which-new-document-is-nested 
       text: plugin document
       text: sandboxed origin browsing context flag
       text: sandboxing flag set
@@ -67,10 +67,10 @@ type: dfn
     urlPrefix: dom.html
       text: CSP list; for: Document; url: document-csp-list
   urlPrefix: https://w3c.github.io/webappsec-csp/; spec: CSP3
-    text: enforce
-    text: monitor
+    text: enforce; url: enforced
+    text: monitor; url: monitored
     text: directive set; for: policy; url: policy-directive-set
-    text: directive
+    text: directive; url: directives
     text: name; for: directive; url: directive-name
     text: resource; for: violation; url: violation-resource
   urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
@@ -110,7 +110,7 @@ type: element
   urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
     urlPrefix: document-metadata.html
       text: meta; url: the-meta-element
-    urlPrefix: forms.html
+    urlPrefix: sec-forms.html
       text: form; url: the-form-element
     urlPrefix: semantics-embedded-content.html
       text: picture; url: the-picture-element
@@ -126,7 +126,7 @@ type: element
       text: frame
 type: element-attr
   urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
-    urlPrefix: forms.html
+    urlPrefix: sec-forms.html
       text: action; for: form; url: attr-fs-action
     urlPrefix: embedded-content-0.html
       text: sandbox; for: iframe; url: attr-iframe-sandbox
@@ -197,7 +197,7 @@ type: element-attr
   here has appeared in one or more user agents over the years: Internet
   Explorer led the way, alerting users to mixed content since
   <a href="https://twitter.com/ericlaw/status/469813922908758016">around</a>
-  <a href="https://support2.microsoft.com/default.aspx?scid=kb;EN-US;Q261188">version 4</a>.
+  <a href="https://support.microsoft.com/en-us/kb/261188">version 4</a>.
 </section>
 
 <!--
@@ -248,11 +248,11 @@ type: element-attr
       context</a> (as defined in [[!RFC6797]]).
 
       Note: "Mixed content" was originally defined in
-      <a href="http://www.w3.org/TR/wsc-ui/#securepage">section 5.3</a> of
+      <a href="https://www.w3.org/TR/wsc-ui/#securepage">section 5.3</a> of
       [[WSC-UI]]. This document updates that initial definition.
 
       Note: [[XML]] also defines an unrelated 
-      <a href="http://www.w3.org/TR/2008/REC-xml-20081126/#sec-mixed-content">"mixed content"</a>.
+      <a href="https://www.w3.org/TR/2008/REC-xml-20081126/#sec-mixed-content">"mixed content"</a>.
       concept. This is potentially confusing, but given the term's near
       ubiquitious usage in a security context across user agents for more than
       a decade, the practical risk of confusion seems low.
@@ -483,7 +483,7 @@ type: element-attr
       checking flag</a> is set to <code>true</code>.
     </li>
     <li>
-      When <a>creating a new <code>Document</code> object</a>, set its <a>strict
+      When <a>initializing a new <code>Document</code> object</a>, set its <a>strict
       mixed content checking flag</a> to <code>true</code> if its <a>browsing
       context</a>'s <a>strict mixed content checking flag</a> is
       <code>true</code>.
