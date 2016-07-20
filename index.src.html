@@ -127,7 +127,7 @@ type: element
 type: element-attr
   urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
     urlPrefix: sec-forms.html
-      text: action; for: form; url: attr-fs-action
+      text: action; for: form; url: element-attrdef-form-action
     urlPrefix: embedded-content-0.html
       text: sandbox; for: iframe; url: attr-iframe-sandbox
 </pre>
@@ -936,9 +936,8 @@ type: element-attr
     If [[#categorize-settings-object]] returns <code>Restricts Mixed
     Content</code> when applied to a {{Document}}'s <a>relevant settings
     object</a>, then a user agent MAY choose to warn users of the presence of
-    one or more <a element>form</a> elements with <a element-attr>action</a>
-    attributes whose values are not <a><i lang="la">a priori</i> authenticated
-    URLs</a>.
+    one or more <{form}> elements with <{form/action}> attributes whose values
+    are not <a><i lang="la">a priori</i> authenticated URLs</a>.
 
     Note: Chrome, for example, currently gives the same UI treatment to a page
     with an insecure form action as it does for a page that displays an insecure
