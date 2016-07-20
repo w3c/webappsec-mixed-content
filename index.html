@@ -34,6 +34,7 @@
  *   - .note       for informative notes             (div, p, span, aside, details)
  *   - .example    for informative examples          (div, p, pre, span)
  *   - .issue      for issues                        (div, p, span)
+ *   - .assertion  for assertions                    (div, p, span)
  *   - .advisement for loud normative statements     (div, p, strong)
  *   - .annoying-warning for spec obsoletion notices (div, aside, details)
  *
@@ -408,15 +409,18 @@
 	}
 
 	/* Style for algorithms */
-	ol.algorithm ol:not(.algorithm) {
+	ol.algorithm ol:not(.algorithm),
+	.algorithm > ol ol:not(.algorithm) {
 	 border-left: 0.5em solid #DEF;
 	}
 
 	/* Style for switch/case <dl>s */
-	dl.switch > dd > ol.only {
+	dl.switch > dd > ol.only,
+	dl.switch > dd > .only > ol {
 	 margin-left: 0;
 	}
-	dl.switch > dd > ol.algorithm {
+	dl.switch > dd > ol.algorithm,
+	dl.switch > dd > .algorithm > ol {
 	 margin-left: -2em;
 	}
 	dl.switch {
@@ -594,7 +598,7 @@
 /*                             Colored Boxes                                  */
 /******************************************************************************/
 
-	.issue, .note, .example, .advisement, blockquote {
+	.issue, .note, .example, .assertion, .advisement, blockquote {
 		padding: .5em;
 		border: .5em;
 		border-left-style: solid;
@@ -609,6 +613,7 @@
 	.note,
 	.example,
 	.advisement,
+	.assertion,
 	blockquote {
 		margin: 1em auto;
 	}
@@ -687,6 +692,15 @@
 	details.note[open] > summary {
 		border-bottom: 1px silver solid;
 	}
+
+/** Assertion Box *************************************************************/
+  /*  for assertions in algorithms */
+
+  .assertion {
+		border-color: orange;
+		border-style: none solid;
+		background: #FFEECC;
+  }
 
 /** Advisement Box ************************************************************/
 	/*  for attention-grabbing normative statements */
@@ -962,10 +976,9 @@ Possible extra rowspan handling
 	/* ToC not indented until third level, but font style & margins show hierarchy */
 	.toc > li             { font-weight: bold;   }
 	.toc > li li          { font-weight: normal; }
-	.toc > li li li       { font-style:  italic; }
-	.toc > li li li li    { font-style:  normal; }
-	.toc > li li li li li { font-style:  italic;
-	                        font-size:   85%;    }
+	.toc > li li li       { font-size:   95%;    }
+	.toc > li li li li    { font-size:   90%;    }
+	.toc > li li li li li { font-size:   85%;    }
 
 	.toc > li             { margin: 1.5rem 0;    }
 	.toc > li li          { margin: 0.3rem 0;    }
@@ -1183,11 +1196,11 @@ Possible extra rowspan handling
                 content: "Invalid Example" counter(example);
             }
 
-            figure {
+            figcaption {
                 counter-increment: figure;
             }
             figcaption:not(.no-marker)::before {
-                content: "Figure " counter(figure);
+                content: "Figure " counter(figure) " ";
             }</style>
 <style>/* style-dfn-panel */
 
@@ -1337,8 +1350,8 @@ Possible extra rowspan handling
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
-   <h1 class="p-name no-ref" id="title">Mixed Content</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-05-23">23 May 2016</time></span></h2>
+   <h1>Mixed Content</h1>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-07-20">20 July 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2150,7 +2163,7 @@ directive-value = ""
    <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-html5">[HTML5]
-   <dd>Ian Hickson; et al. <a href="http://www.w3.org/html/wg/drafts/html/master/">HTML5</a>. 28 October 2014. REC. URL: <a href="http://www.w3.org/html/wg/drafts/html/master/">http://www.w3.org/html/wg/drafts/html/master/</a>
+   <dd>Ian Hickson; et al. <a href="https://www.w3.org/html/wg/drafts/html/master/">HTML5</a>. 28 October 2014. REC. URL: <a href="https://www.w3.org/html/wg/drafts/html/master/">https://www.w3.org/html/wg/drafts/html/master/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc6455">[RFC6455]
@@ -2160,9 +2173,9 @@ directive-value = ""
    <dt id="biblio-rfc7762">[RFC7762]
    <dd>M. West. <a href="https://tools.ietf.org/html/rfc7762">Initial Assignment for the Content Security Policy Directives Registry</a>. January 2016. Informational. URL: <a href="https://tools.ietf.org/html/rfc7762">https://tools.ietf.org/html/rfc7762</a>
    <dt id="biblio-websockets">[WEBSOCKETS]
-   <dd>Ian Hickson. <a href="http://www.w3.org/TR/websockets/">The WebSocket API</a>. 20 September 2012. CR. URL: <a href="http://www.w3.org/TR/websockets/">http://www.w3.org/TR/websockets/</a>
+   <dd>Ian Hickson. <a href="https://www.w3.org/TR/websockets/">The WebSocket API</a>. 20 September 2012. CR. URL: <a href="https://www.w3.org/TR/websockets/">https://www.w3.org/TR/websockets/</a>
    <dt id="biblio-whatwg-url">[WHATWG-URL]
-   <dd>Anne van Kesteren; Sam Ruby. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
@@ -2171,11 +2184,11 @@ directive-value = ""
    <dt id="biblio-rfc6919">[RFC6919]
    <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
    <dt id="biblio-sri">[SRI]
-   <dd>Devdatta Akhawe; et al. <a href="https://w3c.github.io/webappsec-subresource-integrity/">Subresource Integrity</a>. 10 May 2016. PR. URL: <a href="https://w3c.github.io/webappsec-subresource-integrity/">https://w3c.github.io/webappsec-subresource-integrity/</a>
+   <dd>Devdatta Akhawe; et al. <a href="https://w3c.github.io/webappsec-subresource-integrity/">Subresource Integrity</a>. 23 June 2016. REC. URL: <a href="https://w3c.github.io/webappsec-subresource-integrity/">https://w3c.github.io/webappsec-subresource-integrity/</a>
    <dt id="biblio-wsc-ui">[WSC-UI]
-   <dd>Thomas Roessler; Anil Saldhana. <a href="http://www.w3.org/TR/wsc-ui/">Web Security Context: User Interface Guidelines</a>. 12 August 2010. REC. URL: <a href="http://www.w3.org/TR/wsc-ui/">http://www.w3.org/TR/wsc-ui/</a>
+   <dd>Thomas Roessler; Anil Saldhana. <a href="https://www.w3.org/TR/wsc-ui/">Web Security Context: User Interface Guidelines</a>. 12 August 2010. REC. URL: <a href="https://www.w3.org/TR/wsc-ui/">https://www.w3.org/TR/wsc-ui/</a>
    <dt id="biblio-xml">[XML]
-   <dd>Tim Bray; et al. <a href="http://www.w3.org/TR/xml">Extensible Markup Language (XML) 1.0 (Fifth Edition)</a>. 26 November 2008. REC. URL: <a href="http://www.w3.org/TR/xml">http://www.w3.org/TR/xml</a>
+   <dd>Tim Bray; et al. <a href="https://www.w3.org/TR/xml">Extensible Markup Language (XML) 1.0 (Fifth Edition)</a>. 26 November 2008. REC. URL: <a href="https://www.w3.org/TR/xml">https://www.w3.org/TR/xml</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
