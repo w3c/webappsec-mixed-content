@@ -3,8 +3,8 @@
 Status: ED
 ED: https://w3c.github.io/webappsec-mixed-content/
 Shortname: mixed-content
-TR: http://www.w3.org/TR/mixed-content/
-Previous Version: http://www.w3.org/TR/2015/CR-mixed-content-20151008/
+TR: https://www.w3.org/TR/mixed-content/
+Previous Version: https://www.w3.org/TR/2015/CR-mixed-content-20151008/
 Level: None
 Editor: Mike West 56384, Google Inc., mkwst@google.com
 Group: webappsec
@@ -94,19 +94,19 @@ type: dfn
       text: https state
   urlPrefix: https://tools.ietf.org/html/rfc6455; spec: RFC6455
     text: fail the websocket connection; url: section-7.1.7
-  urlPrefix: https://url.spec.whatwg.org/; spec: WHATWG-URL
+  urlPrefix: https://tools.ietf.org/html/rfc3986; spec: URI
     text: url; url: concept-url
 type: method
   text: Fetch; for: GlobalFetch; url: https://fetch.spec.whatwg.org/#dom-global-fetch
 type: attribute
-  text: onerror; for: WebSocket; url: http://www.w3.org/TR/websockets/#handler-websocket-onerror
+  text: onerror; for: WebSocket; url: https://www.w3.org/TR/websockets/#handler-websocket-onerror
 type: interface
-  text: WebSocket; url: http://www.w3.org/TR/websockets/#the-websocket-interface
-  text: XMLHttpRequest; url: http://www.w3.org/TR/XMLHttpRequest/#interface-xmlhttprequest
-  text: EventSource; url: http://www.w3.org/TR/eventsource/#the-eventsource-interface
-  text: Document; url: http://www.w3.org/TR/html5/dom.html#document
-  text: Window; url: http://www.w3.org/TR/html5/browsers.html#window
-  text: ServiceWorkerGlobalScope; url: http://www.w3.org/TR/service-workers/#service-worker-global-scope
+  text: WebSocket; url: https://www.w3.org/TR/websockets/#the-websocket-interface
+  text: XMLHttpRequest; url: https://www.w3.org/TR/XMLHttpRequest/#interface-xmlhttprequest
+  text: EventSource; url: https://www.w3.org/TR/eventsource/#the-eventsource-interface
+  text: Document; url: https://www.w3.org/TR/html5/dom.html#document
+  text: Window; url: https://www.w3.org/TR/html5/browsers.html#window
+  text: ServiceWorkerGlobalScope; url: https://www.w3.org/TR/service-workers/#service-worker-global-scope
 type: element
   urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
     urlPrefix: document-metadata.html
@@ -199,7 +199,7 @@ type: element-attr
   here has appeared in one or more user agents over the years: Internet
   Explorer led the way, alerting users to mixed content since
   <a href="https://twitter.com/ericlaw/status/469813922908758016">around</a>
-  <a href="https://support.microsoft.com/en-us/kb/261188">version 4</a>.
+  version 4.
 </section>
 
 <!--
@@ -877,7 +877,7 @@ type: element-attr
 <section>
   <h2 id="websockets-integration">Modifications to WebSockets</h2>
 
-  The <a href="http://www.w3.org/TR/websockets/#the-websocket-interface"><code>WebSocket()</code>
+  The <a href="https://www.w3.org/TR/websockets/#the-websocket-interface"><code>WebSocket()</code>
   constructor algorithm</a> [[!WEBSOCKETS]] is modified as follows:
 
   <ul>
