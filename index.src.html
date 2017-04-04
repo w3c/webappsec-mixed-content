@@ -16,7 +16,6 @@ Version History: https://github.com/w3c/webappsec-mixed-content/commits/master/i
 Boilerplate: omit conformance, omit feedback-header
 !Participate: <a href="https://github.com/w3c/webappsec-mixed-content/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-mixed-content/issues">open issues</a>)
 Indent: 2
-At Risk: The <a>passthrough request</a> concept, and the related carveout in the blocking algorithms.
 Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
 </pre>
@@ -612,53 +611,6 @@ type: element-attr
   </section>
 
   <section>
-    <h3 id="is-passthrough">
-      Is <var>request</var> a passthrough request?
-    </h3>
-
-    A <dfn>passthrough request</dfn> is a <a>request</a> (<var>request</var>)
-    which is created in a <a>browsing context</a> (e.g. via an <{img}> tag in a
-    document), but serviced by a Service Worker (e.g. by calling
-    <code>fetch(e.request)</code> from within an <code>onfetch</code> event
-    handler). As described in [[#service-workers]], we special-case these kinds
-    of requests in order to allow web developers to layer service workers on top
-    of an existing site which relies on requesting <a>optionally-blockable</a>
-    mixed content.
-
-    More formally, <var>request</var> is a passthrough request if the following
-    conditions hold [[!FETCH]]:
-
-    <ol>
-      <li>
-        <var>request</var>'s <a>initiator</a> is <code>fetch</code>
-
-        Note: When a request is copied (as in the <code>fetch(e.response)</code>
-        example above), the original <code>context</code> is lost. Here, we
-        ensure that we're dealing with such a request, but we implicitly rely on
-        [[#should-block-fetch]] preventing <a>blockable</a> requests from
-        entering a Service Worker in the first place.
-      </li>
-      <li>
-        <var>request</var>'s <code>window</code> is an <a>environment settings
-        object</a> (and, therefore, <strong>not</strong> <code>no-window</code>)
-
-        Note: We rely on the <code>window</code> property being properly set by
-        [[!FETCH]] to the <a>environment settings object</a> responsible for the
-        request in order to ensure that we can render some sort of warning to
-        the user (as described in [[#requirements-ux]]).
-      </li>
-      <li>
-        <var>request</var>'s <code>client</code>'s <a>global object</a> is a
-        {{ServiceWorkerGlobalScope}} object.
-
-        Note: We rely on the <code>client</code> property to reflect the origin
-        of the request. Importantly, <var>request</var> is only a passthrough
-        request if it originated inside a Service Worker.
-      </li>
-    </ol>
-  </section>
-
-  <section>
     <h3 id="should-block-fetch">
       Should fetching <var>request</var> be blocked as mixed content?
     </h3>
@@ -745,11 +697,6 @@ type: element-attr
         conditions are met:
 
         <ol>
-          <li>
-            <var>request</var>'s <a>initiator</a> is "<code>fetch</code>" and
-            <a>destination</a> is "<code>subresource</code>", and
-            <var>request</var> is a <a>passthrough request</a>.
-          </li>
           <li>
             <var>request</var>'s <a>type</a> is "<code>image</code>", and
             <a>initiator</a> is not "<code>imageset</code>".
@@ -844,10 +791,6 @@ type: element-attr
         met:
 
         <ol>
-          <li>
-            <var>request</var>'s <a>initiator</a> is "<code>fetch</code>", and
-            <var>request</var> is a <a>passthrough request</a>.
-          </li>
           <li>
             <var>request</var>'s <a>type</a> is "<code>image</code>", and
             <a>initiator</a> is not "<code>imageset</code>".
@@ -1015,37 +958,6 @@ type: element-attr
 
     Any such controls offered by a user agent MUST also be offered through
     accessibility APIs for users of assistive technologies.
-  </section>
-
-  <section>
-    <h3 id="service-workers">Service Workers</h3>
-
-    The fact that Service Workers sit inbetween a document and the network means
-    that we need to special-case requests made in those contexts. In particular,
-    they should be able to cache the results of insecure requests, provided that
-    those requests were triggered from a document (which, presumably, ensures
-    that they'll be used in an <a>optionally-blockable</a> context). Those
-    insecure results, however, cannot be exposed to the Service Worker, nor
-    should the Service Worker be allowed to launder responses to
-    <a>optionally-blockable</a> requests into responses to <a>blockable</a>
-    requests.
-
-    To that end:
-
-    1.  [[#should-block-fetch]] has some carve-outs for the <code>fetch</code>
-        request <a>initiator</a>, with the intent of allowing a Service Worker
-        to copy a request as part of its response to a Fetch event (e.g.
-        <code>fetch(event.response)</code> should be executable inside the
-        event handler.
-
-        <code>fetch</code> will continue to be treated as <a>blockable</a> when
-        executed outside the context of a Fetch event, which of course includes
-        document contexts.
-
-    2.  [[#should-block-response]] verifies that the incoming response has the
-        same security characteristics that were allowed for the request. That
-        is, a Service Worker will not be able to replace a request for a secure
-        script with a cached response for an insecure resource.
   </section>
 
   <section>
