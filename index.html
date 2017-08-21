@@ -1176,7 +1176,7 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 26ea3a45cb5052b41bc87174096f9f0093d5064f" name="generator">
+  <meta content="Bikeshed version 5eac41affc3976771f238ed8f80db1c877b65b40" name="generator">
   <link href="https://www.w3.org/TR/mixed-content/" rel="canonical">
 <style>/* style-md-lists */
 
@@ -1366,7 +1366,7 @@ Possible extra rowspan handling
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Mixed Content</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-04-04">4 April 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-08-21">21 August 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1374,7 +1374,7 @@ Possible extra rowspan handling
      <dt>Latest published version:
      <dd><a href="https://www.w3.org/TR/mixed-content/">https://www.w3.org/TR/mixed-content/</a>
      <dt>Previous Versions:
-     <dd><a href="https://www.w3.org/TR/2015/CR-mixed-content-20151008/" rel="previous">https://www.w3.org/TR/2015/CR-mixed-content-20151008/</a>
+     <dd><a href="https://www.w3.org/TR/2015/CR-mixed-content-20151008/" rel="prev">https://www.w3.org/TR/2015/CR-mixed-content-20151008/</a>
      <dt>Version History:
      <dd><a href="https://github.com/w3c/webappsec-mixed-content/commits/master/index.src.html">https://github.com/w3c/webappsec-mixed-content/commits/master/index.src.html</a>
      <dt>Feedback:
@@ -1389,8 +1389,8 @@ Possible extra rowspan handling
    <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2017 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
-  <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
   <div class="p-summary" data-fill-with="abstract">
+   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
    <p>This specification describes how a user agent should handle fetching of
 
 content over unencrypted or unauthenticated connections in the context of an
@@ -1813,9 +1813,9 @@ directive-value = ""
         Return <strong>allowed</strong> if one or more of the following
         conditions are met: 
        <ol>
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-type">type</a> is "<code>image</code>", and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator">initiator</a> is not "<code>imageset</code>". 
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-type">type</a> is "<code>video</code>". 
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-type">type</a> is "<code>audio</code>". 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination">destination</a> is "<code>image</code>", and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator">initiator</a> is not "<code>imageset</code>". 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination">destination</a> is "<code>video</code>". 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination">destination</a> is "<code>audio</code>". 
        </ol>
       <li> Return <strong>blocked</strong>. 
      </ol>
@@ -1869,9 +1869,9 @@ directive-value = ""
         filtered response</a> and one or more of the following conditions are
         met: 
        <ol>
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-type">type</a> is "<code>image</code>", and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator">initiator</a> is not "<code>imageset</code>". 
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-type">type</a> is "<code>video</code>". 
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-type">type</a> is "<code>audio</code>". 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination">destination</a> is "<code>image</code>", and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator">initiator</a> is not "<code>imageset</code>". 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination">destination</a> is "<code>video</code>". 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination">destination</a> is "<code>audio</code>". 
        </ol>
       <li>Return <strong>blocked</strong>.
      </ol>
@@ -2084,7 +2084,6 @@ directive-value = ""
      <li><a href="https://fetch.spec.whatwg.org/#concept-request">request</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response">response</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-request-target-browsing-context">target browsing context</a>
-     <li><a href="https://fetch.spec.whatwg.org/#concept-request-type">type</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-request-url">url <small>(for request)</small></a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response-url">url <small>(for response)</small></a>
     </ul>
