@@ -335,61 +335,57 @@ type: element-attr
   <section>
     <h3 id="category-optionally-blockable">Optionally-blockable Content</h3>
 
-    A resource or <a>request</a> is <dfn>optionally-blockable</dfn>
-    when the risk of allowing its usage as <a>mixed content</a> is outweighed by
-    the risk of breaking significant portions of the web. This could be because
-    mixed usage of the resource type is sufficiently high, and because the
-    resource is low-risk in and of itself. The fact that these resource types
-    are optionally-blockable does not mean that they are <em>safe</em>, simply
-    that they're less catastrophically dangerous than other resource types. For
-    example, images and icons are often the central UI elements in an
-    application's interface. If an attacker reversed the "Delete email" and
-    "Reply" icons, there would be real impact to users.
+    Mixed content is
+    <dfn export lt="optionally-blockable mixed content" local-lt="optionally-blockable">optionally-blockable</dfn>
+    when the risk of allowing its usage as <a>mixed content</a> is outweighed by the risk of
+    breaking significant portions of the web. This could be because mixed usage of the resource type
+    is sufficiently high, and because the resource is low-risk in and of itself. The fact that these
+    resource types are optionally-blockable does not mean that they are <em>safe</em>, simply that
+    they're less catastrophically dangerous than other resource types. For example, images and icons
+    are often the central UI elements in an application's interface. If an attacker reversed the
+    "Delete email" and "Reply" icons, there would be real impact to users.
 
-    This category of content includes:
+    This category includes:
 
-    <ul>
-      <li>
-        Images loaded via <{img}> or CSS ('background-image', 'border-image', etc)
+    *   Requests whose [=request/initiator=] is the empty string, and whose [=request/destination=]
+        is "`image`".
 
-        Note: This includes SVG documents loaded as images, as they are banned from
-        executing script or loading subresources. It does <em>not</em> include
-        images loaded via <{picture}>.
-      </li>
-      <li>
-        Video loaded via <{video}> and <{source}>
-      </li>
-      <li>
-        Audio loaded via <{audio}> and <{source}>
-      </li>
-    </ul>
+        Note: This corresponds to most images loaded via <{img}> (including SVG documents loaded as
+        images, as those are blocked from executing script or fetching subresources) and CSS
+        ('background-image', 'border-image', etc). It does not include <{img}> elements that [=use
+        `srcset` or `picture`=].
 
-    Note: We further limit this category in [[#should-block-fetch]] by
-    force-failing any CORS-enabled request. This means that mixed content images
-    loaded via `<img crossorigin ...>` will be blocked. This is a good example
-    of the general principle that content falls into this category
-    <em>only</em> when it is too widely used to be blocked outright. The Working
-    Group intends to carve out more blockable subsets as time goes on.
+    *   Requests whose [=request/destination=] is "`video`".
+
+        Note: This corresponds to video loaded via <{video}> and <{source}>.
+
+    *   Requests whose [=request/destination=] is "`audio`".
+
+        Note: This corresponds to audio loaded via <{audio}> and <{source}>.
+
+    We further limit this category in [[#should-block-fetch]] by force-failing any CORS-enabled
+    request. This means, for example, that mixed content images loaded via `<img crossorigin ...>`
+    will be blocked. This is a good example of the general principle that content falls into this
+    category <em>only</em> when it is too widely used to be blocked outright. The Working Group
+    intends to carve out more blockable subsets as time goes on.
   </section>
 
   <section>
     <h3 id="category-blockable">Blockable Content</h3>
 
-    Any resource or <a>request</a> that isn't <a>optionally-blockable</a> is
-    <dfn>blockable</dfn>. Typical examples of this kind of content include
-    scripts, <a>plugin</a> data, data requested via {{XMLHttpRequest}}, and so
-    on.
+    Any mixed content that is not [=optionally-blockable=] as defined above is considered to be
+    <dfn export lt="blockable mixed content" local-lt="blockable">blockable</dfn>. Typical examples
+    of this kind of content include scripts, <a>plugin</a> data, data requested via
+    {{XMLHttpRequest}}, and so on.
 
-    Note: <a>Navigation requests</a> might target <a>top-level browsing
-    contexts</a>; these are not considered mixed content. See
-    [[#should-block-fetch]] for details.
+    Note: <a>Navigation requests</a> might target <a>top-level browsing contexts</a>; these are not
+    considered mixed content. See [[#should-block-fetch]] for details.
 
-    Note: Note that requests made on behalf of a plugin are blockable. We
-    recognize, however, that user agents aren't always in a position to mediate
-    these requests. NPAPI plugins, for instance, often have direct network
-    access, and can generally bypass the user agent entirely. We recommend that
-    plugin vendors implement mixed content checking themselves to mitigate the
-    risks outlined in this document.
+    Note: Note that requests made on behalf of a plugin are blockable. We recognize, however, that
+    user agents aren't always in a position to mediate these requests. NPAPI plugins, for instance,
+    often have direct network access, and can generally bypass the user agent entirely. We recommend
+    that user agents block these requests when possible, and that plugin vendors implement mixed
+    content checking themselves to mitigate the risks outlined in this document.
   </section>
 </section>
 
