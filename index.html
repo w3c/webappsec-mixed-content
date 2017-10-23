@@ -1176,9 +1176,9 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 3ee78e75729309d4dfc4793df74c38e4ae785832" name="generator">
+  <meta content="Bikeshed version 0d6a1c7475b7bb2485f411c7e73d9990fd0cfef5" name="generator">
   <link href="https://www.w3.org/TR/mixed-content/" rel="canonical">
-  <meta content="025b6c392fdf2bb367526cd8e6130a424b4c67de" name="document-revision">
+  <meta content="2ff806843a8e634d7d47484db185b995d2d6a95c" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1367,7 +1367,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Mixed Content</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-10-20">20 October 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-10-23">23 October 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1599,7 +1599,8 @@ encrypted and authenticated document.</p>
        <p>Requests whose <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator" id="ref-for-concept-request-initiator">initiator</a> is the empty string, and whose <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination">destination</a> is "<code>image</code>".</p>
        <p class="note" role="note"><span>Note:</span> This corresponds to most images loaded via <code><a data-link-type="element" href="https://www.w3.org/TR/html51/semantics-embedded-content.html#the-img-element" id="ref-for-the-img-element">img</a></code> (including SVG documents loaded as
   images, as those are blocked from executing script or fetching subresources) and CSS
-  (<a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-backgrounds-3/#propdef-background-image" id="ref-for-propdef-background-image">background-image</a>, <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-backgrounds-3/#propdef-border-image" id="ref-for-propdef-border-image">border-image</a>, etc). It does not include <code><a data-link-type="element" href="https://www.w3.org/TR/html51/semantics-embedded-content.html#the-img-element" id="ref-for-the-img-element①">img</a></code> elements that [=use <code>srcset</code> or <code>picture</code>=].</p>
+  (<a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-backgrounds-3/#propdef-background-image" id="ref-for-propdef-background-image">background-image</a>, <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-backgrounds-3/#propdef-border-image" id="ref-for-propdef-border-image">border-image</a>, etc). It does not include <code><a data-link-type="element" href="https://www.w3.org/TR/html51/semantics-embedded-content.html#the-img-element" id="ref-for-the-img-element①">img</a></code> elements that <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/images.html#use-srcset-or-picture" id="ref-for-use-srcset-or-picture">use
+  srcset or picture</a>.</p>
       <li data-md="">
        <p>Requests whose <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a> is "<code>video</code>".</p>
        <p class="note" role="note"><span>Note:</span> This corresponds to video loaded via <code><a data-link-type="element" href="https://www.w3.org/TR/html51/semantics-embedded-content.html#the-video-element" id="ref-for-the-video-element">video</a></code> and <code><a data-link-type="element" href="https://www.w3.org/TR/html51/semantics-embedded-content.html#the-source-element" id="ref-for-the-source-element">source</a></code>.</p>
@@ -2085,6 +2086,11 @@ directive-value = ""
      <li><a href="https://fetch.spec.whatwg.org/#concept-response-url">url <small>(for response)</small></a>
     </ul>
    <li>
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
+    <ul>
+     <li><a href="https://html.spec.whatwg.org/multipage/images.html#use-srcset-or-picture">use srcset or picture</a>
+    </ul>
+   <li>
     <a data-link-type="biblio">[HTML51]</a> defines the following terms:
     <ul>
      <li><a href="https://www.w3.org/TR/html51/sec-forms.html#element-attrdef-form-action">action</a>
@@ -2126,7 +2132,7 @@ directive-value = ""
    <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-html51">[HTML51]
-   <dd>Steve Faulkner; et al. <a href="https://www.w3.org/TR/html51/">HTML 5.1 2nd Edition</a>. 3 August 2017. PR. URL: <a href="https://www.w3.org/TR/html51/">https://www.w3.org/TR/html51/</a>
+   <dd>Steve Faulkner; et al. <a href="https://www.w3.org/TR/html51/">HTML 5.1 2nd Edition</a>. 3 October 2017. REC. URL: <a href="https://www.w3.org/TR/html51/">https://www.w3.org/TR/html51/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc6455">[RFC6455]
@@ -2148,6 +2154,8 @@ directive-value = ""
    <dd><a href="https://cabforum.org/baseline-requirements-documents/">CA/Browser Forum Baseline Requirements v1.3.7</a>. 8 July, 2016. URL: <a href="https://cabforum.org/baseline-requirements-documents/">https://cabforum.org/baseline-requirements-documents/</a>
    <dt id="biblio-css3-background">[CSS3-BACKGROUND]
    <dd>Bert Bos; Elika Etemad; Brad Kemper. <a href="https://www.w3.org/TR/css3-background/">CSS Backgrounds and Borders Module Level 3</a>. 9 September 2014. CR. URL: <a href="https://www.w3.org/TR/css3-background/">https://www.w3.org/TR/css3-background/</a>
+   <dt id="biblio-html">[HTML]
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-rfc6919">[RFC6919]
    <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
    <dt id="biblio-sri">[SRI]
