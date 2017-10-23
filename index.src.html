@@ -33,105 +33,22 @@ Boilerplate: omit conformance, omit feedback-header
 -->
 <pre class="link-defaults">
 spec:html; type:dfn; for:/; text: use srcset or picture
+spec:html; type:dfn; for:/; text:browsing context
+spec:html; type:dfn; for:/; text:plugin
+spec:html; type:dfn; for:/; text:global object
+spec:fetch; type:dfn; for:/; text:request
+spec:fetch; type:dfn; for:/; text:response
+spec:dom; type:interface; text:Document
 </pre>
 <pre class="anchors">
 type: dfn
   urlPrefix: https://tools.ietf.org/html/rfc6797
     text: mixed security context; url: section-12.4
 type: dfn
-  urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
-    urlPrefix: embedded-content-0.html
-      text: an iframe srcdoc document
-    urlPrefix: browsers.html
-      text: browsing context
-      text: browsing context container
-      text: child browsing context
-      text: initializing a new Document object; url: initializing-a-new-document-object
-      text: navigated; url: navigate
-      text: nested browsing context; url: nested-browsing-contexts
-      text: parent browsing context
-      text: nested through; url: through-which-new-document-is-nested 
-      text: plugin document
-      text: sandboxed origin browsing context flag
-      text: sandboxing flag set
-      text: top-level browsing context; url: top-level-browsing-context
-      text: origin
-      text: opaque identifier; url: origin
-    urlPrefix: infrastructure.html
-      text: plugin
-      text: reflect
-    urlPrefix: webappapis.html
-      text: environment settings object; url: settings-object
-      text: relevant settings object
-      text: responsible document
-      text: responsible browsing context
-      text: global object
-    urlPrefix: dom.html
-      text: CSP list; for: Document; url: document-csp-list
-  urlPrefix: https://w3c.github.io/webappsec-csp/; spec: CSP3
-    text: enforce; url: enforced
-    text: monitor; url: monitored
-    text: directive set; for: policy; url: policy-directive-set
-    text: directive; url: directives
-    text: name; for: directive; url: directive-name
-    text: resource; for: violation; url: violation-resource
-  urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
-    text: fetching
-    text: request; url: concept-request
-    text: url; for: request; url: concept-request-url
-    text: response; url: concept-response
-    text: url; for: response; url: concept-response-url
-    text: network error; url: concept-network-error
-    text: opaque filtered response; url: concept-filtered-response-opaque
-    text: initiator; url: concept-request-initiator
-    text: destination; for: request; url: concept-request-destination
-    text: target browsing context; url: concept-request-target-browsing-context
-    text: navigation request
-    url: concept-request-client; for: request
-      text: request client
-      text: client
-    url: concept-response-https-state; for: response
-      text: response https state;
-      text: https state
   urlPrefix: https://tools.ietf.org/html/rfc6455; spec: RFC6455
     text: fail the websocket connection; url: section-7.1.7
-  urlPrefix: https://tools.ietf.org/html/rfc3986; spec: URI
-    text: url; url: concept-url
-type: method
-  text: Fetch; for: GlobalFetch; url: https://fetch.spec.whatwg.org/#dom-global-fetch
 type: attribute
   text: onerror; for: WebSocket; url: https://www.w3.org/TR/websockets/#handler-websocket-onerror
-type: interface
-  text: WebSocket; url: https://www.w3.org/TR/websockets/#the-websocket-interface
-  text: XMLHttpRequest; url: https://www.w3.org/TR/XMLHttpRequest/#interface-xmlhttprequest
-  text: EventSource; url: https://www.w3.org/TR/eventsource/#the-eventsource-interface
-  text: Document; url: https://www.w3.org/TR/html5/dom.html#document
-  text: Window; url: https://www.w3.org/TR/html5/browsers.html#window
-  text: ServiceWorkerGlobalScope; url: https://www.w3.org/TR/service-workers/#service-worker-global-scope
-type: element
-  urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
-    urlPrefix: document-metadata.html
-      text: meta; url: the-meta-element
-    urlPrefix: sec-forms.html
-      text: form; url: the-form-element
-    urlPrefix: semantics-embedded-content.html
-      text: picture; url: the-picture-element
-      text: audio; url: the-audio-element
-      text: iframe; url: the-iframe-element
-      text: img; url: the-img-element
-      text: video; url: the-video-element
-      text: source; url: the-source-element
-      text: track; url: the-track-element
-    urlPrefix: scripting-1.html
-      text: script; url: the-script-element
-    urlPrefix: obsolete.html
-      text: frame
-type: element-attr
-  urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
-    urlPrefix: sec-forms.html
-      text: action; for: form; url: element-attrdef-form-action
-    urlPrefix: embedded-content-0.html
-      text: sandbox; for: iframe; url: attr-iframe-sandbox
 </pre>
 <pre class="biblio">
 {
@@ -474,16 +391,26 @@ type: element-attr
     directive-value = ""
   </pre>
 
-  When <a>enforcing</a> the <code>block-all-mixed-content</code> directive,
-  set the protected resource's <a>strict mixed content checking flag</a> to
-  <code>true</code>.
-
   This directive will trigger violation reports for mixed content on a page.
   Details are found in [[#should-block-fetch]].
 
   Note: A similar effect may be achieved on a more granular level by setting
   individual directives. For example <code>img-src https:</code> would prevent
   insecure images from loading.
+  
+  <h3 id="directive-initialization">`block-all-mixed-content` Initialization</h3>
+  
+  `block-all-mixed-content`'s [=directive/initialization=] algorithm is as
+  follows:
+
+  Given a {{Document}} or <a for="/">global object</a> (|context|), a <a>response</a>
+  (|response|), and a <a for="/">policy</a> (|policy|):
+
+  1.  Assert: |response| is unused.
+
+  2.  If |policy|'s <a for="policy">disposition</a> is not "`enforce`", then abort this algorithm.
+
+  3.  Set |context|'s [=strict mixed content checking flag=] to `true`.
 
   <h3 id="strict-nesting">Inheriting an opt-in</h3>
 
@@ -547,15 +474,15 @@ type: element-attr
       Does |settings| prohibit mixed security contexts?
     </h3>
 
-    Both documents and workers have <a>environment settings objects</a> which
+    Both documents and workers have [=environment settings objects=] which
     may be examined according to the following algorithm in order to determine
     whether they restrict mixed content. This algorithm returns "`Prohibits
     Mixed Security Contexts`" or "`Does Not Prohibit Mixed Security Contexts`",
     as appropriate.
 
-    Given an <a>environment settings object</a> (|settings|):
+    Given an [=environment settings object=] (|settings|):
     
-    1.  If |settings|' <a>HTTPS state</a> is not "`none`", then return
+    1.  If |settings|' [=environment settings object/HTTPS state=] is not "`none`", then return
         "`Prohibits Mixed Security Contexts`".
 
     2.  If |settings| has a <a>responsible document</a> |document|, then:
@@ -564,10 +491,10 @@ type: element-attr
 
             1.  Set |document| to |document|'s <a>embedding document</a>.
 
-            2.  Let |embedder settings| be |document|'s <a>global object</a>'s
-                <a>relevant settings object</a>.
+            2.  Let |embedder settings| be |document|'s [=global object=]'s
+                [=relevant settings object=].
 
-            3.  If |embedder settings|' <a>HTTPS state</a> is not "`None`",
+            3.  If |embedder settings|' [=environment settings object/HTTPS state=] is not "`None`",
                 then return "`Prohibits Mixed Security Contexts`".
 
     3.  Return "`Does Not Restrict Mixed Security Contexts`".
@@ -743,7 +670,7 @@ type: element-attr
             <a>client</a>.
           </li>
           <li>
-            <var>response</var>'s <a>HTTPS state</a> is <code>modern</code>.
+            <var>response</var>'s [=response/HTTPS state=] is <code>modern</code>.
           </li>
           <li>
             The user agent has been instructed to allow <a>mixed content</a>, as
@@ -852,7 +779,7 @@ type: element-attr
   upon blocking the connection and triggering the <a>fail the WebSocket
   connection</a> algorithm, which developers can catch by hooking a
   {{WebSocket}} object's {{WebSocket/onerror}} handler. This is consistent with
-  the behavior of {{XMLHttpRequest}}, {{EventSource}}, and {{Fetch}}.
+  the behavior of {{XMLHttpRequest}}, {{EventSource}}, and {{fetch()}}.
 </section>
 
 <!--
@@ -885,19 +812,16 @@ type: element-attr
   <section>
     <h3 id="requirements-forms">Form Submission</h3>
 
-    If [[#categorize-settings-object]] returns <code>Restricts Mixed
-    Content</code> when applied to a {{Document}}'s <a>relevant settings
-    object</a>, then a user agent MAY choose to warn users of the presence of
-    one or more <{form}> elements with <{form/action}> attributes whose values
-    are not <a><i lang="la">a priori</i> authenticated URLs</a>.
+    If [[#categorize-settings-object]] returns `Restricts Mixed Content` when applied to a
+    {{Document}}'s [=relevant settings object=], then a user agent MAY choose to warn users of the
+    presence of one or more <{form}> elements with <a element-attr>action</a> attributes whose
+    values are not <a><i lang="la">a priori</i> authenticated URLs</a>.
 
-    Note: Chrome, for example, currently gives the same UI treatment to a page
-    with an insecure form action as it does for a page that displays an insecure
-    image.
+    Note: Chrome, for example, currently gives the same UI treatment to a page with an insecure
+    form action as it does for a page that displays an insecure image.
 
-    Further, a user agent MAY treat form submissions from such a {{Document}}
-    as a <a>blockable</a> request, even if the submission occurs in
-    the <a>top-level browsing context</a>.
+    Further, a user agent MAY treat form submissions from such a {{Document}} as a [=blockable=]
+    request, even if the submission occurs in the [=top-level browsing context=].
   </section>
 
   <section>
