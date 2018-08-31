@@ -1,0 +1,1538 @@
+<!doctype html><html lang="en">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Mixed Content</title>
+  <meta content="PR" name="w3c-status">
+  <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-PR" rel="stylesheet" type="text/css">
+  <meta content="Bikeshed version ee4bd4642f06996491f80990f7b1050ff9dcf622" name="generator">
+  <link href="https://www.w3.org/TR/mixed-content/" rel="canonical">
+  <meta content="983829595a0a3028183fb0f30cee1afce333b66b" name="document-revision">
+<style>/* style-md-lists */
+
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}</style>
+<style>/* style-counters */
+
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
+}
+
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}</style>
+<style>/* style-dfn-panel */
+
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    height: auto;
+    width: -webkit-fit-content;
+    width: fit-content;
+    max-width: 300px;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: #DDDDDD;
+    color: black;
+    border: outset 0.2em;
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: black; }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0; }
+.dfn-panel li { list-style: inside; }
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled { cursor: pointer; }
+</style>
+<style>/* style-selflinks */
+
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: gray;
+    color: white;
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: black;
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }</style>
+<style>/* style-autolinks */
+
+.css.css, .property.property, .descriptor.descriptor {
+    color: #005a9c;
+    font-size: inherit;
+    font-family: inherit;
+}
+.css::before, .property::before, .descriptor::before {
+    content: "‘";
+}
+.css::after, .property::after, .descriptor::after {
+    content: "’";
+}
+.property, .descriptor {
+    /* Don't wrap property and descriptor names */
+    white-space: nowrap;
+}
+.type { /* CSS value <type> */
+    font-style: italic;
+}
+pre .property::before, pre .property::after {
+    content: "";
+}
+[data-link-type="property"]::before,
+[data-link-type="propdesc"]::before,
+[data-link-type="descriptor"]::before,
+[data-link-type="value"]::before,
+[data-link-type="function"]::before,
+[data-link-type="at-rule"]::before,
+[data-link-type="selector"]::before,
+[data-link-type="maybe"]::before {
+    content: "‘";
+}
+[data-link-type="property"]::after,
+[data-link-type="propdesc"]::after,
+[data-link-type="descriptor"]::after,
+[data-link-type="value"]::after,
+[data-link-type="function"]::after,
+[data-link-type="at-rule"]::after,
+[data-link-type="selector"]::after,
+[data-link-type="maybe"]::after {
+    content: "’";
+}
+
+[data-link-type].production::before,
+[data-link-type].production::after,
+.prod [data-link-type]::before,
+.prod [data-link-type]::after {
+    content: "";
+}
+
+[data-link-type=element],
+[data-link-type=element-attr] {
+    font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    font-size: .9em;
+}
+[data-link-type=element]::before { content: "<" }
+[data-link-type=element]::after  { content: ">" }
+
+[data-link-type=biblio] {
+    white-space: pre;
+}</style>
+ <body class="h-entry">
+  <div class="head">
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
+   <h1>Mixed Content</h1>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">W3C Proposed Recommendation, <time class="dt-updated" datetime="2018-08-31">31 August 2018</time></span></h2>
+   <div data-fill-with="spec-metadata">
+    <dl>
+     <dt>This version:
+     <dd><a class="u-url" href="https://www.w3.org/TR/2018/PR-mixed-content-20180831/">https://www.w3.org/TR/2018/PR-mixed-content-20180831/</a>
+     <dt>Latest published version:
+     <dd><a href="https://www.w3.org/TR/mixed-content/">https://www.w3.org/TR/mixed-content/</a>
+     <dt>Editor's Draft:
+     <dd><a href="https://w3c.github.io/webappsec-mixed-content/">https://w3c.github.io/webappsec-mixed-content/</a>
+     <dt>Previous Versions:
+     <dd><a href="https://www.w3.org/TR/2015/CR-mixed-content-20160802/" rel="prev">https://www.w3.org/TR/2015/CR-mixed-content-20160802/</a>
+     <dt>Version History:
+     <dd><a href="https://github.com/w3c/webappsec-mixed-content/commits/master/index.src.html">https://github.com/w3c/webappsec-mixed-content/commits/master/index.src.html</a>
+     <dt>Feedback:
+     <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bmixed-content%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[mixed-content] <i data-lt="">… message topic …</i></kbd>” (<a href="https://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
+     <dt class="editor">Editor:
+     <dd class="editor p-author h-card vcard" data-editor-id="56384"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
+     <dt>Participate:
+     <dd><a href="https://github.com/w3c/webappsec-mixed-content/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-mixed-content/issues">open issues</a>)
+    </dl>
+   </div>
+   <div data-fill-with="warning"></div>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2018 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
+   <hr title="Separator for header">
+  </div>
+  <div class="p-summary" data-fill-with="abstract">
+   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
+   <p>This specification describes how a user agent should handle fetching of
+
+content over unencrypted or unauthenticated connections in the context of an
+encrypted and authenticated document.</p>
+  </div>
+  <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
+  <div data-fill-with="status">
+   <p> <em>This section describes the status of this document at the time of
+  its publication. Other documents may supersede this document. A list of
+  current W3C publications and the latest revision of this technical report
+  can be found in the <a href="https://www.w3.org/TR/">W3C technical reports
+  index at https://www.w3.org/TR/.</a></em> </p>
+   <p> This document was published by the <a href="https://www.w3.org/2011/webappsec/">Web Application Security Working Group</a> as a Proposed Recommendation. This document is intended to become a W3C Recommendation.
+  The W3C Membership and other interested parties are invited to review the document and
+  send comments to <a href="mailto:public-webappsec@w3.org?Subject=%5Bmixed-content%5D%20PUT%20SUBJECT%20HERE">public-webappsec@w3.org</a> (<a href="mailto:public-webappsec-request@w3.org?subject=subscribe">subscribe</a>, <a href="https://lists.w3.org/Archives/Public/public-webappsec/">archives</a>) through <time class="status-deadline" datetime="2018-12-31">31 December 2018</time>.
+  Advisory Committee Representatives should consult their <a href="https://www.w3.org/2002/09/wbs/myQuestionnaires">WBS questionnaires</a>. </p>
+   <p> Publication as a Proposed Recommendation does not imply endorsement by the W3C
+  Membership. This is a draft document and may be updated, replaced or
+  obsoleted by other documents at any time. It is inappropriate to cite this
+  document as other than work in progress. </p>
+   <p> This document was produced by a group operating under
+	the <a href="https://www.w3.org/Consortium/Patent-Policy/">W3C Patent Policy</a>.
+	W3C maintains a <a href="https://www.w3.org/2004/01/pp-impl/49309/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
+	that page also includes instructions for disclosing a patent.
+	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
+   <p> This document is governed by the <a href="https://www.w3.org/2018/Process-20180201/" id="w3c_process_revision">1 February 2018 W3C Process Document</a>. </p>
+   <p></p>
+  </div>
+  <div data-fill-with="at-risk"></div>
+  <nav data-fill-with="table-of-contents" id="toc">
+   <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
+   <ol class="toc" role="directory">
+    <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
+    <li><a href="#terms"><span class="secno">2</span> <span class="content">Key Concepts and Terminology</span></a>
+    <li>
+     <a href="#categories"><span class="secno">3</span> <span class="content">Content Categories</span></a>
+     <ol class="toc">
+      <li><a href="#category-optionally-blockable"><span class="secno">3.1</span> <span class="content">Optionally-blockable Content</span></a>
+      <li><a href="#category-blockable"><span class="secno">3.2</span> <span class="content">Blockable Content</span></a>
+     </ol>
+    <li>
+     <a href="#strict-checking"><span class="secno">4</span> <span class="content">Strict Mixed Content Checking</span></a>
+     <ol class="toc">
+      <li><a href="#strict-effects"><span class="secno">4.1</span> <span class="content">Effects</span></a>
+      <li><a href="#strict-opt-in"><span class="secno">4.2</span> <span class="content">Opting-in</span></a>
+      <li><a href="#directive-initialization"><span class="secno">4.3</span> <span class="content"><code>block-all-mixed-content</code> Initialization</span></a>
+      <li><a href="#strict-nesting"><span class="secno">4.4</span> <span class="content">Inheriting an opt-in</span></a>
+     </ol>
+    <li>
+     <a href="#algorithms"><span class="secno">5</span> <span class="content">Insecure Content in Secure Contexts</span></a>
+     <ol class="toc">
+      <li><a href="#categorize-settings-object"><span class="secno">5.1</span> <span class="content"> Does <var>settings</var> prohibit mixed security contexts? </span></a>
+      <li><a href="#should-block-fetch"><span class="secno">5.2</span> <span class="content"> Should fetching <var>request</var> be blocked as mixed content? </span></a>
+      <li><a href="#should-block-response"><span class="secno">5.3</span> <span class="content"> Should <var>response</var> to <var>request</var> be blocked as mixed
+      content? </span></a>
+     </ol>
+    <li><a href="#websockets-integration"><span class="secno">6</span> <span class="content">Modifications to WebSockets</span></a>
+    <li>
+     <a href="#security-considerations"><span class="secno">7</span> <span class="content">Security and Privacy Considerations</span></a>
+     <ol class="toc">
+      <li><a href="#limitations"><span class="secno">7.1</span> <span class="content">Limitations</span></a>
+      <li><a href="#requirements-forms"><span class="secno">7.2</span> <span class="content">Form Submission</span></a>
+      <li><a href="#requirements-ux"><span class="secno">7.3</span> <span class="content">UI Requirements</span></a>
+      <li><a href="#requirements-user-controls"><span class="secno">7.4</span> <span class="content">User Controls</span></a>
+      <li><a href="#further-action"><span class="secno">7.5</span> <span class="content">Further Action</span></a>
+     </ol>
+    <li><a href="#iana-considerations"><span class="secno">8</span> <span class="content">IANA Considerations</span></a>
+    <li><a href="#acknowledgements"><span class="secno">9</span> <span class="content">Acknowledgements</span></a>
+    <li>
+     <a href="#conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
+     <ol class="toc">
+      <li><a href="#conventions"><span class="secno"></span> <span class="content">Document conventions</span></a>
+      <li><a href="#conformant-algorithms"><span class="secno"></span> <span class="content">Conformant Algorithms</span></a>
+     </ol>
+    <li>
+     <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
+     <ol class="toc">
+      <li><a href="#index-defined-here"><span class="secno"></span> <span class="content">Terms defined by this specification</span></a>
+      <li><a href="#index-defined-elsewhere"><span class="secno"></span> <span class="content">Terms defined by reference</span></a>
+     </ol>
+    <li>
+     <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
+     <ol class="toc">
+      <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
+     </ol>
+   </ol>
+  </nav>
+  <main>
+   <section>
+    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
+    <p><em>This section is not normative.</em></p>
+    <p>When a user successfully loads a resource from example.com over a secure
+  channel (HTTPS, for example), the user agent is able to make three assertions
+  critical to the user’s security and privacy:</p>
+    <ul>
+     <li> The user is communicating with a server that is allowed to claim to be <code>example.com</code>, and not one of the many, many servers through
+      which her request has hopped. The connection can be <strong>authenticated</strong>. 
+     <li> The user’s communications with <code>example.com</code> cannot be
+      trivially eavesdropped upon by middlemen, because the requests she makes
+      and the responses she receives are <strong>encrypted</strong>. 
+     <li> The user’s communications with <code>example.com</code> cannot be
+      trivially modified by middlemen, the encryption and authentication
+      provide a guarantee of <strong>data integrity</strong>. 
+    </ul>
+    <p>Together, these assertions give the user some assurance that <code>example.com</code> is the only entity that can read and respond to her
+  requests (caveat: without shocking amounts of work) and that the bits she’s
+  received are indeed those that <code>example.com</code> actually sent.</p>
+    <p>The strength of these assertions is substantially weakened, however, when
+  the encrypted and authenticated resource requests subresources (scripts,
+  images, etc) over an insecure channel. Those resource requests result in a
+  resource whose status is mixed, as insecure requests are wide open for
+  man-in-the-middle attacks. This scenario is unfortunately quite common.</p>
+    <p>This specification details how a user agent can mitigate these risks to
+  security and privacy by limiting a resource’s ability to inadvertently
+  communicate in the clear.</p>
+    <p class="note" role="note"><span>Note:</span> Nothing described in this document is really new; everything covered
+  here has appeared in one or more user agents over the years: Internet
+  Explorer led the way, alerting users to mixed content since <a href="https://twitter.com/ericlaw/status/469813922908758016">around</a> version 4.</p>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="2" id="terms"><span class="secno">2. </span><span class="content">Key Concepts and Terminology</span><a class="self-link" href="#terms"></a></h2>
+    <dl>
+     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="mixed" id="mixed-content">mixed content</dfn> 
+     <dd>
+       A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">request</a> is <strong>mixed content</strong> if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url">url</a> is not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url"><i lang="la">a priori</i> authenticated</a>, <strong>and</strong> the context responsible for
+      loading it requires prohibits mixed security contexts (see <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> for a normative definition of the latter). 
+      <p>A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response">response</a> is <strong>mixed content</strong> if it is an <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response">unauthenticated response</a>, <strong>and</strong> the context
+      responsible for loading it requires prohibits mixed security contexts.</p>
+      <div class="example" id="example-13a780ee">
+       <a class="self-link" href="#example-13a780ee"></a> Inside a context that restricts mixed content
+        (<code>https://secure.example.com/</code>, for example): 
+       <ol>
+        <li data-md="">
+         <p>A request for the script <code>http://example.com/script.js</code> is <strong>mixed content</strong>. As script <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①">requests</a> are <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content">blockable</a>, the user agent will return a network error rather
+  than loading the resource.</p>
+        <li data-md="">
+         <p>A request for the image <code>http://example.com/image.png</code> is <strong>mixed content</strong>. As image <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request②">requests</a> are <a data-link-type="dfn" href="#optionally-blockable-mixed-content" id="ref-for-optionally-blockable-mixed-content">optionally-blockable</a>, the user agent might load the image, in
+  which case the image resource itself would be <strong>mixed
+  content</strong>.</p>
+       </ol>
+      </div>
+      <p>If mixed content is loaded into a context that restricts mixed content
+      (as in #2 above), that context is considered a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6797#section-12.4" id="ref-for-section-12.4">mixed security
+      context</a> (as defined in <a data-link-type="biblio" href="#biblio-rfc6797">[RFC6797]</a>).</p>
+      <p class="note" role="note"><span>Note:</span> "Mixed content" was originally defined in <a href="https://www.w3.org/TR/wsc-ui/#securepage">section 5.3</a> of <a data-link-type="biblio" href="#biblio-wsc-ui">[WSC-UI]</a>. This document updates that initial definition.</p>
+      <p class="note" role="note"><span>Note:</span> <a data-link-type="biblio" href="#biblio-xml">[XML]</a> also defines an unrelated <a href="https://www.w3.org/TR/2008/REC-xml-20081126/#sec-mixed-content">"mixed content"</a>.
+      concept. This is potentially confusing, but given the term’s near
+      ubiquitious usage in a security context across user agents for more than
+      a decade, the practical risk of confusion seems low.</p>
+     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="a priori authenticated" data-lt="a priori authenticated URL" id="a-priori-authenticated-url"> <i lang="la">a priori</i> authenticated URL <span id="a-priori-insecure-url a-priori-insecure-origin"></span></dfn> 
+     <dd>
+       We know <i lang="la">a priori</i> that a request to a particular URL
+      (<var>url</var>) will be delivered in a way that mitigates the risks of
+      interception and modifications if either of the following statements is
+      true: 
+      <ol>
+       <li data-md="">
+        <p><var>url</var> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url">potentially trustworthy URL</a> <a data-link-type="biblio" href="#biblio-secure-contexts">[SECURE-CONTEXTS]</a>.</p>
+       <li data-md="">
+        <p><var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is "<code>data</code>".</p>
+        <p class="note" role="note"><span>Note:</span> We special case <code>data</code> URLs here, as we don’t consider them
+  particularly trustworthy, but we also don’t wish to block them as
+  mixed content, as they never hit the network.</p>
+      </ol>
+     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="unauthenticated" data-lt="unauthenticated response" id="unauthenticated-response"> unauthenticated response <span id="insecure-origin insecure-url"></span></dfn> 
+     <dd>
+       We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response①">response</a> (<var>response</var>) is unauthenticated if both of the following statements
+      are true: 
+      <ol>
+       <li data-md="">
+        <p><var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url①"><i lang="la">a
+  priori</i> authenticated</a>.</p>
+       <li data-md="">
+        <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url①">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme①">scheme</a> is "<code>https</code>" or "<code>wss</code>", <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state" id="ref-for-concept-response-https-state">HTTPS
+  state</a> is "<code>modern</code>".</p>
+      </ol>
+     <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="embedding-document">embedding document</dfn>
+     <dd> Given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> <var>A</var>, the <strong>embedding
+      document</strong> of <var>A</var> is the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-nested-through" id="ref-for-browsing-context-nested-through">through which</a> <var>A</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context" id="ref-for-browsing-context">browsing
+      context</a> is nested <a data-link-type="biblio" href="#biblio-html">[HTML]</a>. 
+    </dl>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="3" id="categories"><span class="secno">3. </span><span class="content">Content Categories</span><a class="self-link" href="#categories"></a></h2>
+    <p>In a perfect world, each user agent would be required to block all <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content">mixed
+  content</a> without exception. Unfortunately, that is impractical on today’s
+  Internet; a user agent needs to be more nuanced in its restrictions to avoid
+  degrading the experience on a substantial number of websites.</p>
+    <p>With that in mind, we here split mixed content into two categories: <a href="#category-optionally-blockable">§3.1 Optionally-blockable Content</a> and <a href="#category-blockable">§3.2 Blockable Content</a>.</p>
+    <p class="note" role="note"><span>Note:</span> Future versions of this specification will update this categorization
+  with the intent of moving towards a world where all <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content①">mixed</a> content is
+  blocked; that is the end goal, but this is the best we can do for now.</p>
+    <section>
+     <h3 class="heading settled" data-level="3.1" id="category-optionally-blockable"><span class="secno">3.1. </span><span class="content">Optionally-blockable Content</span><a class="self-link" href="#category-optionally-blockable"></a></h3>
+     <p>Mixed content is <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="optionally-blockable" data-lt="optionally-blockable mixed content" id="optionally-blockable-mixed-content">optionally-blockable</dfn> when the risk of allowing its usage as <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content②">mixed content</a> is outweighed by the risk of
+    breaking significant portions of the web. This could be because mixed usage of the resource type
+    is sufficiently high, and because the resource is low-risk in and of itself. The fact that these
+    resource types are optionally-blockable does not mean that they are <em>safe</em>, simply that
+    they’re less catastrophically dangerous than other resource types. For example, images and icons
+    are often the central UI elements in an application’s interface. If an attacker reversed the
+    "Delete email" and "Reply" icons, there would be real impact to users.</p>
+     <p>This category includes:</p>
+     <ul>
+      <li data-md="">
+       <p>Requests whose <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator" id="ref-for-concept-request-initiator">initiator</a> is the empty string, and whose <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination">destination</a> is "<code>image</code>".</p>
+       <p class="note" role="note"><span>Note:</span> This corresponds to most images loaded via <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element" id="ref-for-the-img-element">img</a></code> (including SVG documents loaded as
+  images, as those are blocked from executing script or fetching subresources) and CSS
+  (<a class="property" data-link-type="propdesc" href="https://www.w3.org/TR/css3-background/#propdef-background-image" id="ref-for-propdef-background-image">background-image</a>, <a class="property" data-link-type="propdesc" href="https://www.w3.org/TR/css3-background/#propdef-border-image" id="ref-for-propdef-border-image">border-image</a>, etc). It does not include <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element" id="ref-for-the-img-element①">img</a></code> elements that <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/images.html#use-srcset-or-picture" id="ref-for-use-srcset-or-picture">use
+  srcset or picture</a>.</p>
+      <li data-md="">
+       <p>Requests whose <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a> is "<code>video</code>".</p>
+       <p class="note" role="note"><span>Note:</span> This corresponds to video loaded via <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/media.html#video" id="ref-for-video">video</a></code> and <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-source-element" id="ref-for-the-source-element">source</a></code>.</p>
+      <li data-md="">
+       <p>Requests whose <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination②">destination</a> is "<code>audio</code>".</p>
+       <p class="note" role="note"><span>Note:</span> This corresponds to audio loaded via <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/media.html#audio" id="ref-for-audio">audio</a></code> and <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-source-element" id="ref-for-the-source-element①">source</a></code>.</p>
+     </ul>
+     <p>We further limit this category in <a href="#should-block-fetch">§5.2 Should fetching request be blocked as mixed content?</a> by force-failing any CORS-enabled
+    request. This means, for example, that mixed content images loaded via <code>&lt;img crossorigin ...></code> will be blocked. This is a good example of the general principle that content falls into this
+    category <em>only</em> when it is too widely used to be blocked outright. The Working Group
+    intends to carve out more blockable subsets as time goes on.</p>
+    </section>
+    <section>
+     <h3 class="heading settled" data-level="3.2" id="category-blockable"><span class="secno">3.2. </span><span class="content">Blockable Content</span><a class="self-link" href="#category-blockable"></a></h3>
+     <p>Any mixed content that is not <a data-link-type="dfn" href="#optionally-blockable-mixed-content" id="ref-for-optionally-blockable-mixed-content①">optionally-blockable</a> as defined above is considered to be <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-local-lt="blockable" data-lt="blockable mixed content" id="blockable-mixed-content">blockable</dfn>. Typical examples
+    of this kind of content include scripts, <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#plugin" id="ref-for-plugin">plugin</a> data, data requested via <code class="idl"><a data-link-type="idl" href="https://xhr.spec.whatwg.org/#xmlhttprequest" id="ref-for-xmlhttprequest">XMLHttpRequest</a></code>, and so on.</p>
+     <p class="note" role="note"><span>Note:</span> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">Navigation requests</a> might target <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing contexts</a>; these are not
+    considered mixed content. See <a href="#should-block-fetch">§5.2 Should fetching request be blocked as mixed content?</a> for details.</p>
+     <p class="note" role="note"><span>Note:</span> Note that requests made on behalf of a plugin are blockable. We recognize, however, that
+    user agents aren’t always in a position to mediate these requests. NPAPI plugins, for instance,
+    often have direct network access, and can generally bypass the user agent entirely. We recommend
+    that user agents block these requests when possible, and that plugin vendors implement mixed
+    content checking themselves to mitigate the risks outlined in this document.</p>
+    </section>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="4" id="strict-checking"><span class="secno">4. </span><span class="content">Strict Mixed Content Checking</span><a class="self-link" href="#strict-checking"></a></h2>
+    <p>In order to give authors assurance that mixed content will never degrade the
+  security UI presented to their users (as described in <a href="#requirements-ux">§7.3 UI Requirements</a>),
+  authors may choose to enable a stricter variant of mixed content checking
+  which will both block <a data-link-type="dfn" href="#optionally-blockable-mixed-content" id="ref-for-optionally-blockable-mixed-content②">optionally-blockable</a> and <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content①">blockable</a> mixed
+  content, and suppress the user override options discussed in <a href="#requirements-user-controls">§7.4 User Controls</a>.</p>
+    <p>To this end, <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> objects and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context" id="ref-for-browsing-context①">browsing contexts</a> have a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="strict-mixed-content-checking-flag">strict mixed content checking flag</dfn> which is set to <code>false</code> unless otherwise specified. This flag is checked in both <a href="#should-block-fetch">§5.2 Should fetching request be blocked as mixed content?</a> and <a href="#should-block-response">§5.3 Should response to request be blocked as mixed
+      content?</a> to determine whether
+  the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code> is in <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="strict-mode">strict mode</dfn>.</p>
+    <div class="example" id="example-4aec7880">
+     <a class="self-link" href="#example-4aec7880"></a> A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document④">Document</a></code> may opt itself into strict mode by either delivering a <code>Content-Security-Policy</code> HTTP header, like: 
+<pre>Content-Security-Policy: <a data-link-type="dfn" href="#block-all-mixed-content" id="ref-for-block-all-mixed-content">block-all-mixed-content</a>
+</pre>
+     <p>or by embedding the policy in a <a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#meta" id="ref-for-meta">meta</a> element, like:</p>
+<pre>&lt;meta http-equiv="Content-Security-Policy"
+      content="<a data-link-type="dfn" href="#block-all-mixed-content" id="ref-for-block-all-mixed-content①">block-all-mixed-content</a>">
+</pre>
+    </div>
+    <p class="note" role="note"><span>Note:</span> Strict mixed content checking is inherited by embedded content; if
+  a page opts into strict mode, framed pages will be prevented from loading
+  mixed content, as described in <a href="#strict-nesting">§4.4 Inheriting an opt-in</a>.</p>
+    <h3 class="heading settled" data-level="4.1" id="strict-effects"><span class="secno">4.1. </span><span class="content">Effects</span><a class="self-link" href="#strict-effects"></a></h3>
+    <p>If a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑤">Document</a></code>'s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag">strict mixed content checking flag</a> is set to <code>true</code>, the user agent MUST:</p>
+    <ol>
+     <li> treat <a data-link-type="dfn" href="#optionally-blockable-mixed-content" id="ref-for-optionally-blockable-mixed-content③">optionally-blockable</a> mixed content as though it were <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content②">blockable</a>. 
+     <li>
+       NOT provide users with a mechanism for forcing <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content③">blockable</a> mixed content to load. 
+      <p class="note" role="note"><span>Note:</span> This requirement overrides the suggestion in <a href="#requirements-user-controls">§7.4 User Controls</a>.</p>
+     <li>
+       NOT provide any user-facing indication that mixed content is present. 
+      <p class="note" role="note"><span>Note:</span> This requirement overrides the suggestion in <a href="#requirements-ux">§7.3 UI Requirements</a>,
+      which is safe to do since the combination of the first and second
+      requirements above ensure that mixed content will never load in this
+      page’s context.</p>
+      <p class="note" role="note"><span>Note:</span> This requirement does not include developer-facing indicators such
+      as console messages.</p>
+     <li> ensure that these requirements are applied to any <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑥">Document</a></code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context">nested browsing context</a>, as described in <a href="#strict-nesting">§4.4 Inheriting an opt-in</a>. 
+    </ol>
+    <h3 class="heading settled" data-level="4.2" id="strict-opt-in"><span class="secno">4.2. </span><span class="content">Opting-in</span><a class="self-link" href="#strict-opt-in"></a></h3>
+    <p>Authors may opt a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑦">Document</a></code> into strict mixed content checking via a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="block-all-mixed-content">block-all-mixed-content</dfn> Content Security Policy directive <a data-link-type="biblio" href="#biblio-csp3">[CSP3]</a>, defined via the following ABNF grammar.</p>
+<pre>directive-name  = "block-all-mixed-content"
+directive-value = ""
+</pre>
+    <p>This directive will trigger violation reports for mixed content on a page.
+  Details are found in <a href="#should-block-fetch">§5.2 Should fetching request be blocked as mixed content?</a>.</p>
+    <p class="note" role="note"><span>Note:</span> A similar effect may be achieved on a more granular level by setting
+  individual directives. For example <code>img-src https:</code> would prevent
+  insecure images from loading.</p>
+    <h3 class="heading settled" data-level="4.3" id="directive-initialization"><span class="secno">4.3. </span><span class="content"><code>block-all-mixed-content</code> Initialization</span><a class="self-link" href="#directive-initialization"></a></h3>
+    <p><code>block-all-mixed-content</code>'s <a data-link-type="dfn" href="https://www.w3.org/TR/CSP3/#directive-initialization" id="ref-for-directive-initialization">initialization</a> algorithm is as
+  follows:</p>
+    <p>Given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑧">Document</a></code> or <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object">global object</a> (<var>context</var>), a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response②">response</a> (<var>response</var>), and a <a data-link-type="dfn" href="https://www.w3.org/TR/CSP3/#policy" id="ref-for-policy">policy</a> (<var>policy</var>):</p>
+    <ol>
+     <li data-md="">
+      <p class="assertion">Assert: <var>response</var> is unused.</p>
+     <li data-md="">
+      <p>If <var>policy</var>’s <a data-link-type="dfn" href="https://www.w3.org/TR/CSP3/#policy-disposition" id="ref-for-policy-disposition">disposition</a> is not "<code>enforce</code>", then abort this algorithm.</p>
+     <li data-md="">
+      <p>Set <var>context</var>’s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag①">strict mixed content checking flag</a> to <code>true</code>.</p>
+    </ol>
+    <h3 class="heading settled" data-level="4.4" id="strict-nesting"><span class="secno">4.4. </span><span class="content">Inheriting an opt-in</span><a class="self-link" href="#strict-nesting"></a></h3>
+    <p>If a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑨">Document</a></code>'s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag②">strict mixed content checking flag</a> is set, the user
+  agent MUST ensure that all <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context①">nested browsing contexts</a> inherit the setting
+  in the following ways:</p>
+    <ol>
+     <li> When a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context②">nested browsing context</a> <var>context</var> is created, set
+      its <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag③">strict mixed content checking flag</a> to <code>true</code> if <var>context</var>’s <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document">embedding document</a>’s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag④">strict mixed content
+      checking flag</a> is set to <code>true</code>. 
+     <li> When <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object" id="ref-for-initialise-the-document-object">initializing a new <code>Document</code> object</a>, set its <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag⑤">strict
+      mixed content checking flag</a> to <code>true</code> if its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context" id="ref-for-browsing-context②">browsing
+      context</a>’s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag⑥">strict mixed content checking flag</a> is <code>true</code>. 
+    </ol>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="5" id="algorithms"><span class="secno">5. </span><span class="content">Insecure Content in Secure Contexts</span><a class="self-link" href="#algorithms"></a></h2>
+    <p>At a high level, the following algorithms allow user agents to determine
+  whether particular requests should succeed, or should result in network
+  errors.</p>
+    <p>Fetch calls the algorithm defined in <a href="#should-block-fetch">§5.2 Should fetching request be blocked as mixed content?</a> at the top of
+  the fetching algorithm in order to block network traffic to <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url①">URL</a>s which are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url②"><i lang="la">a priori</i> authenticated</a> <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>. Hooking into Fetch here ensures that we catch
+  not only the initial request, but all redirects as well.</p>
+    <p>Further, Fetch calls the algorithm defined in <a href="#should-block-response">§5.3 Should response to request be blocked as mixed
+      content?</a> at the bottom of the fetching algorithm in order to block <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response①">unauthenticated
+  responses</a>. This hook is necessary to detect resources modified or
+  synthesized by a ServiceWorker, as well as to determine whether a
+  response is <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response②">unauthenticated</a> once the TLS-handshake has finished. See
+  steps 4.1 and 4.2 of the algorithm defined in <a href="#should-block-response">§5.3 Should response to request be blocked as mixed
+      content?</a> for
+  detail.</p>
+    <p>The algorithm defined in <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> is used by both <a href="#should-block-fetch">§5.2 Should fetching request be blocked as mixed content?</a> and <a href="#should-block-response">§5.3 Should response to request be blocked as mixed
+      content?</a>, as well as <a href="#websockets-integration">§6 Modifications to WebSockets</a> in order to determine whether an insecure request
+  ought to be blocked.</p>
+    <section>
+     <h3 class="heading settled" data-level="5.1" id="categorize-settings-object"><span class="secno">5.1. </span><span class="content"> Does <var>settings</var> prohibit mixed security contexts? </span><a class="self-link" href="#categorize-settings-object"></a></h3>
+     <p>Both documents and workers have <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings objects</a> which
+    may be examined according to the following algorithm in order to determine
+    whether they restrict mixed content. This algorithm returns "<code>Prohibits Mixed Security Contexts</code>" or "<code>Does Not Prohibit Mixed Security Contexts</code>",
+    as appropriate.</p>
+     <p>Given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> (<var>settings</var>):</p>
+     <ol>
+      <li data-md="">
+       <p>If <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state" id="ref-for-https-state">HTTPS state</a> is not "<code>none</code>", then return
+  "<code>Prohibits Mixed Security Contexts</code>".</p>
+      <li data-md="">
+       <p>If <var>settings</var> has a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#responsible-document" id="ref-for-responsible-document">responsible document</a> <var>document</var>, then:</p>
+       <ol>
+        <li data-md="">
+         <p>While <var>document</var> has an <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document①">embedding document</a>:</p>
+         <ol>
+          <li data-md="">
+           <p>Set <var>document</var> to <var>document</var>’s <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document②">embedding document</a>.</p>
+          <li data-md="">
+           <p>Let <var>embedder settings</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object①">global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>.</p>
+          <li data-md="">
+           <p>If <var>embedder settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state" id="ref-for-https-state①">HTTPS state</a> is not "<code>None</code>",
+  then return "<code>Prohibits Mixed Security Contexts</code>".</p>
+         </ol>
+       </ol>
+      <li data-md="">
+       <p>Return "<code>Does Not Restrict Mixed Security Contexts</code>".</p>
+     </ol>
+     <div class="note" role="note">
+       If a document has an <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document③">embedding document</a>, a user agent needs to
+      check not only the document itself, but also the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing
+      context</a> in which the document is nested, as that is the context
+      which controls the user’s expectations regarding the security status of
+      the resource she’s loaded. For example: 
+      <div class="example" id="example-4c853e3e"><a class="self-link" href="#example-4c853e3e"></a> <code>http://a.com</code> loads <code>http://evil.com</code>. The
+        insecure request will be allowed, as <code>a.com</code> was not loaded
+        over a secure connection. </div>
+      <div class="example" id="example-c38c3226"><a class="self-link" href="#example-c38c3226"></a> <code>https://a.com</code> loads <code>http://evil.com</code>. The
+        insecure request will be blocked, as <code>a.com</code> was loaded over
+        a secure connection. </div>
+      <div class="example" id="example-1ec6834e"><a class="self-link" href="#example-1ec6834e"></a> <code>http://a.com</code> frames <code>https://b.com</code>, which
+        loads <code>http://evil.com</code>. In this case, the insecure request
+        to <code>evil.com</code> will be blocked, as <code>b.com</code> was
+        loaded over a secure connection, even though <code>a.com</code> was not. </div>
+      <div class="example" id="example-202f3835"><a class="self-link" href="#example-202f3835"></a> <code>https://a.com</code> frames a <code>data:</code> URL, which loads <code>http://evil.com</code>. In this case, the insecure request to <code>evil.com</code> will be blocked, as <code>a.com</code> was loaded
+        over a secure connection, even though the framed <code>data:</code> URL
+        would not block mixed content if loaded in a top-level context. </div>
+     </div>
+    </section>
+    <section>
+     <h3 class="heading settled" data-level="5.2" id="should-block-fetch"><span class="secno">5.2. </span><span class="content"> Should fetching <var>request</var> be blocked as mixed content? </span><a class="self-link" href="#should-block-fetch"></a></h3>
+     <p class="note" role="note"><span>Note:</span> The Fetch specification hooks into this algorithm to determine whether
+    a request should be entirely blocked (e.g. because the request is for <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content④">blockable</a> content, and we can <em>assume</em> that it won’t be
+    loaded over a secure connection).</p>
+     <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request③">Request</a> <var>request</var>, a user agent determines
+    whether the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request④">Request</a> <var>request</var> should proceed or not via the
+    following algorithm:</p>
+     <ol>
+      <li>
+        Return <strong>allowed</strong> if one or more of the following
+        conditions are met: 
+       <ol>
+        <li> <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns "<code>Does Not Restrict Mixed Security Contexts</code>" when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client">client</a>. 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url②">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url③"><i lang="la">a priori</i> authenticated</a>. 
+        <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content③">mixed content</a>, as
+            described in <a href="#requirements-user-controls">§7.4 User Controls</a>). 
+        <li>
+          <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination③">destination</a> is
+            "<code>document</code>", and <var>request</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context" id="ref-for-concept-environment-target-browsing-context">target browsing
+            context</a> has no <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context" id="ref-for-parent-browsing-context">parent browsing context</a>. 
+         <p class="note" role="note"><span>Note:</span> We exclude top-level navigations from mixed content checks,
+            but user agents MAY choose to enforce mixed content checks on
+            insecure form submissions (see <a href="#further-action">§7.5 Further Action</a>).</p>
+       </ol>
+      <li>
+        For each <var>policy</var> in <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client①">client</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/dom.html#concept-document-csp-list" id="ref-for-concept-document-csp-list">CSP list</a>: 
+       <ol>
+        <li data-md="">
+         <p>If <var>policy</var>’s <a data-link-type="dfn" href="https://www.w3.org/TR/CSP3/#policy-directive-set" id="ref-for-policy-directive-set">directive set</a> contains a <a data-link-type="dfn" href="https://www.w3.org/TR/CSP3/#directives" id="ref-for-directives">directive</a> whose <a data-link-type="dfn" href="https://www.w3.org/TR/CSP3/#directive-name" id="ref-for-directive-name">name</a> is
+  "<a data-link-type="dfn" href="#block-all-mixed-content" id="ref-for-block-all-mixed-content②"><code>block-all-mixed-content</code></a>":</p>
+         <ol>
+          <li data-md="">
+           <p>Let <var>violation</var> be the result of executing the algorithm defined
+  in <a href="https://www.w3.org/TR/CSP3/#create-violation-for-global">Content Security Policy §2.3.1 Create a violation object for global, policy, and directive</a> on <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client②">client</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object②">global object</a>, <var>policy</var>,
+  and "<code>block-all-mixed-content</code>".</p>
+          <li data-md="">
+           <p>Set <var>violation</var>’s <a data-link-type="dfn" href="https://www.w3.org/TR/CSP3/#violation-resource" id="ref-for-violation-resource">resource</a> to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url③">url</a>.</p>
+          <li data-md="">
+           <p>Execute the algorithm defined in <a href="https://www.w3.org/TR/CSP3/#report-violation">Content Security Policy §5.3 Report a violation</a> on <var>violation</var>.</p>
+         </ol>
+       </ol>
+      <li>
+        Return <strong>blocked</strong> if one or more of the following
+        conditions are met: 
+       <ol>
+        <li> The user agent is configured to block <a data-link-type="dfn" href="#optionally-blockable-mixed-content" id="ref-for-optionally-blockable-mixed-content④">optionally-blockable</a> mixed content, as described in <a href="#requirements-user-controls">§7.4 User Controls</a>. 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client③">client</a>’s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag⑦">strict mixed content
+            checking flag</a> is <code>true</code>. 
+        <li> <var>request</var>’s <code>mode</code> is <code>CORS</code> or <code>CORS-with-forced-preflight</code>. 
+       </ol>
+      <li>
+        Return <strong>allowed</strong> if one or more of the following
+        conditions are met: 
+       <ol>
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination④">destination</a> is "<code>image</code>", and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator" id="ref-for-concept-request-initiator①">initiator</a> is not "<code>imageset</code>". 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination⑤">destination</a> is "<code>video</code>". 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination⑥">destination</a> is "<code>audio</code>". 
+       </ol>
+      <li> Return <strong>blocked</strong>. 
+     </ol>
+    </section>
+    <section>
+     <h3 class="heading settled" data-level="5.3" id="should-block-response"><span class="secno">5.3. </span><span class="content"> Should <var>response</var> to <var>request</var> be blocked as mixed
+      content? </span><a class="self-link" href="#should-block-response"></a></h3>
+     <p class="note" role="note"><span>Note:</span> <a href="#should-block-fetch">If a request proceeds</a>, we still
+    might want to block the response based on the state of the connection
+    that generated the response (e.g. because the request is <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content⑤">blockable</a>,
+    but the connection is <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response③">unauthenticated</a>), and we also need to ensure
+    that a Service Worker doesn’t accidentally return an <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response④">unauthenticated
+    response</a> for a <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content⑥">blockable</a> request. This algorithm is used to make
+    that determination.</p>
+     <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑤">request</a> <var>request</var> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response③">response</a> <var>response</var>, the user agent determines what response should be
+    returned via the following algorithm:</p>
+     <ol>
+      <li>
+        Return <strong>allowed</strong> if one or more of the following
+        conditions are met: 
+       <ol>
+        <li> <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns <code>Does Not Restrict
+            Mixed Content</code> when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client④">client</a>. 
+        <li> <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state" id="ref-for-concept-response-https-state①">HTTPS state</a> is <code>modern</code>. 
+        <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content④">mixed content</a>, as
+            described in <a href="#requirements-user-controls">§7.4 User Controls</a>). 
+        <li>
+          <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination⑦">destination</a> is
+            "<code>document</code>", and <var>request</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context" id="ref-for-concept-environment-target-browsing-context①">target browsing
+            context</a> has no <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context" id="ref-for-parent-browsing-context①">parent browsing context</a>. 
+         <p class="note" role="note"><span>Note:</span> We exclude top-level navigations from mixed content checks,
+            but user agents MAY choose to enforce mixed content checks on
+            insecure form submissions (see <a href="#further-action">§7.5 Further Action</a>).</p>
+       </ol>
+      <li>
+        Return <strong>blocked</strong> if one or more of the following
+        conditions are met: 
+       <ol>
+        <li> The user agent is configured to block <a data-link-type="dfn" href="#optionally-blockable-mixed-content" id="ref-for-optionally-blockable-mixed-content⑤">optionally-blockable</a> mixed content, as described in <a href="#requirements-user-controls">§7.4 User Controls</a>. 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client⑤">client</a>’s <a data-link-type="dfn" href="#strict-mixed-content-checking-flag" id="ref-for-strict-mixed-content-checking-flag⑧">strict mixed content
+            checking flag</a> is <code>true</code>. 
+       </ol>
+      <li>
+        Return <strong>allowed</strong> if <var>response</var> is an <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-filtered-response-opaque" id="ref-for-concept-filtered-response-opaque">opaque
+        filtered response</a> and one or more of the following conditions are
+        met: 
+       <ol>
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination⑧">destination</a> is "<code>image</code>", and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator" id="ref-for-concept-request-initiator②">initiator</a> is not "<code>imageset</code>". 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination⑨">destination</a> is "<code>video</code>". 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①⓪">destination</a> is "<code>audio</code>". 
+       </ol>
+      <li>Return <strong>blocked</strong>.
+     </ol>
+    </section>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="6" id="websockets-integration"><span class="secno">6. </span><span class="content">Modifications to WebSockets</span><a class="self-link" href="#websockets-integration"></a></h2>
+    <p>The <a href="https://www.w3.org/TR/websockets/#the-websocket-interface"><code>WebSocket()</code> constructor algorithm</a> <a data-link-type="biblio" href="#biblio-websockets">[WEBSOCKETS]</a> is modified as follows:</p>
+    <ul>
+     <li> Remove the current step 2. 
+    </ul>
+    <p class="note" role="note"><span>Note:</span> This suggestion is filed as <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=28841">bug #28841</a> against <a data-link-type="biblio" href="#biblio-websockets">[WEBSOCKETS]</a>.</p>
+    <p>The <a href="http://tools.ietf.org/html/rfc6455#section-4.1">Establish a
+  WebSocket Connection algorithm</a> <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a> is modified as follows:</p>
+    <ol>
+     <li data-md="">
+      <p>After the current step 1, perform the following step:</p>
+      <ol>
+       <li data-md="">
+        <p>If <var>secure</var> is <code>false</code>, and the algorithm in <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns "<code>Restricts Mixed Security Context</code>" when applied to <var>client</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object③">global object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>, then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7" id="ref-for-section-7.1.7">fail the
+  WebSocket connection</a> and abort the connection <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>.</p>
+      </ol>
+     <li data-md="">
+      <p>After the current step 5, perform the following step:</p>
+      <ol start="6">
+       <li data-md="">
+        <p>If <var>secure</var> is <code>true</code>, and the TLS handshake performed in step 5
+  results in an HTTPS state of "<code>deprecated</code>", then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7" id="ref-for-section-7.1.7①">fail the WebSocket connection</a> and abort the connection <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>.</p>
+      </ol>
+    </ol>
+    <p class="note" role="note"><span>Note:</span> Filed as <a href="http://www.rfc-editor.org/errata_search.php?rfc=6455&amp;eid=4398">errata #4398</a> against <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>.</p>
+    <p>These changes together mean that we’ll no longer throw a <code>SecurityError</code> exception directly upon constructing a WebSocket object, but will instead rely
+  upon blocking the connection and triggering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7" id="ref-for-section-7.1.7②">fail the WebSocket
+  connection</a> algorithm, which developers can catch by hooking a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/web-sockets.html#websocket" id="ref-for-websocket">WebSocket</a></code> object’s <code class="idl"><a data-link-type="idl" href="https://www.w3.org/TR/websockets/#handler-websocket-onerror" id="ref-for-handler-websocket-onerror">onerror</a></code> handler. This is consistent with
+  the behavior of <code class="idl"><a data-link-type="idl" href="https://xhr.spec.whatwg.org/#xmlhttprequest" id="ref-for-xmlhttprequest①">XMLHttpRequest</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/server-sent-events.html#eventsource" id="ref-for-eventsource">EventSource</a></code>, and <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#dom-global-fetch" id="ref-for-dom-global-fetch">fetch()</a></code>.</p>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="7" id="security-considerations"><span class="secno">7. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#security-considerations"></a></h2>
+    <section>
+     <h3 class="heading settled" data-level="7.1" id="limitations"><span class="secno">7.1. </span><span class="content">Limitations</span><a class="self-link" href="#limitations"></a></h3>
+     <p>Blocking mixed content allows us to ensure that the guarantees discussed
+    in <a href="#intro">§1 Introduction</a> are upheld. Note, however, that those guarantees <em>only</em> protect developers and users against active network attackers who would
+    otherwise be able to replace critical bits of code or content on the wire
+    as it flows past. They <em>do not</em> protect against a compromised server
+    that itself is coerced into sending corrupted resources.</p>
+     <p>Mechanisms such as Subresource Integrity <a data-link-type="biblio" href="#biblio-sri">[SRI]</a> are designed to deal with
+    this kind of threat, and we recommend that web developers make use of them
+    whenever possible.</p>
+    </section>
+    <section>
+     <h3 class="heading settled" data-level="7.2" id="requirements-forms"><span class="secno">7.2. </span><span class="content">Form Submission</span><a class="self-link" href="#requirements-forms"></a></h3>
+     <p>If <a href="#categorize-settings-object">§5.1 Does settings prohibit mixed security contexts?</a> returns <code>Restricts Mixed Content</code> when applied to a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⓪">Document</a></code>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object②">relevant settings object</a>, then a user agent MAY choose to warn users of the
+    presence of one or more <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element">form</a></code> elements with <a data-link-type="element-attr" href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action" id="ref-for-attr-fs-action">action</a> attributes whose
+    values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url④"><i lang="la">a priori</i> authenticated URLs</a>.</p>
+     <p class="note" role="note"><span>Note:</span> Chrome, for example, currently gives the same UI treatment to a page with an insecure
+    form action as it does for a page that displays an insecure image.</p>
+     <p>Further, a user agent MAY treat form submissions from such a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①①">Document</a></code> as a <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content⑦">blockable</a> request, even if the submission occurs in the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>.</p>
+    </section>
+    <section>
+     <h3 class="heading settled" data-level="7.3" id="requirements-ux"><span class="secno">7.3. </span><span class="content">UI Requirements</span><a class="self-link" href="#requirements-ux"></a></h3>
+     <p>If a user agent would normally indicate to the user that the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context③">top-level browsing context</a> is secure, then:</p>
+     <ul>
+      <li data-md="">
+       <p>When the user agent downgrades a context to a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6797#section-12.4" id="ref-for-section-12.4①">mixed security
+  context</a> by returning a resource in response to a <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content⑤">mixed
+  content</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑥">request</a> (either because the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑦">request</a> is <a data-link-type="dfn" href="#optionally-blockable-mixed-content" id="ref-for-optionally-blockable-mixed-content⑥">optionally-blockable</a>, or because the user agent is configured
+  to allow <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content⑧">blockable</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑧">request</a>s), the user agent MUST NOT
+  provide the user with that same indication.</p>
+       <p>The user agent SHOULD instead give an indication that <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content⑥">mixed
+  content</a> is present.</p>
+     </ul>
+     <p>If a mixed content indication is present, it MUST be made available
+    through accessibility APIs for users of assistive technologies.</p>
+     <p class="note" role="note"><span>Note:</span> This requirement holds even in the context of an <a href="https://cabforum.org/about-ev-ssl/">EV status</a> <a data-link-type="biblio" href="#biblio-cab">[CAB]</a>. An EV
+    certificate’s indicator does not override the necessity to notify
+    users of mixed content violations.</p>
+    </section>
+    <section>
+     <h3 class="heading settled" data-level="7.4" id="requirements-user-controls"><span class="secno">7.4. </span><span class="content">User Controls</span><a class="self-link" href="#requirements-user-controls"></a></h3>
+     <p>A user agent MAY offer users the ability to directly decide whether or not
+    to treat <strong>all</strong> <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content⑦">mixed content</a> as <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content⑨">blockable</a> (meaning that even <a data-link-type="dfn" href="#optionally-blockable-mixed-content" id="ref-for-optionally-blockable-mixed-content⑦">optionally-blockable</a> mixed content would be
+    blocked).</p>
+     <p class="note" role="note"><span>Note:</span> It is <em>strongly recommended</em> that users take advantage of such
+    an option if provided.</p>
+     <p>A user agent MAY offer users the ability to override its decision to block <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content①⓪">blockable</a> mixed content on a particular page.</p>
+     <p class="note" role="note"><span>Note:</span> Practically, a user agent probably can’t get away with not offering
+    such a back door. That said, allowing mixed script is in particular a very
+    dangerous option, and each user agent <a href="http://tools.ietf.org/html/rfc6919#section-3">REALLY SHOULD NOT</a> <a data-link-type="biblio" href="#biblio-rfc6919">[RFC6919]</a> present such a choice to users without careful consideration and
+    communication of the risk involved.</p>
+     <p>Any such controls offered by a user agent MUST also be offered through
+    accessibility APIs for users of assistive technologies.</p>
+    </section>
+    <section>
+     <h3 class="heading settled" data-level="7.5" id="further-action"><span class="secno">7.5. </span><span class="content">Further Action</span><a class="self-link" href="#further-action"></a></h3>
+     <p>A user agent is encouraged to take further action above and beyond the
+    requirements this document outlines in order to discourage developers from
+    embedding mixed content.</p>
+     <p>For instance, a user agent could:</p>
+     <ol>
+      <li> Interpret the presence of a <code>Strict-Transport-Security</code> header field as forcing all content into the <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content①①">blockable</a> category <a data-link-type="biblio" href="#biblio-rfc6797">[RFC6797]</a>, or as a signal to enable <a data-link-type="dfn" href="#strict-mode" id="ref-for-strict-mode">strict mode</a> for mixed
+        content checking. 
+      <li> Modify requests for <a data-link-type="dfn" href="#optionally-blockable-mixed-content" id="ref-for-optionally-blockable-mixed-content⑧">optionally-blockable</a> resources which are <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content⑧">mixed content</a> in order to reduce the risk to users: cookies
+        and other authentication tokens could be stripped from the requests,
+        automatic scheme upgrades could be attempted, and so on. 
+      <li> Treat <a data-link-type="dfn" href="#optionally-blockable-mixed-content" id="ref-for-optionally-blockable-mixed-content⑨">optionally-blockable</a> resources inside <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context③">nested browsing
+        contexts</a> as <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content①②">blockable</a>, to allow sites to embed resources
+        without fear of introducing mixed content. 
+     </ol>
+    </section>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="8" id="iana-considerations"><span class="secno">8. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana-considerations"></a></h2>
+    <p>The Content Security Policy Directive registry should be updated with the
+  following directives and references <a data-link-type="biblio" href="#biblio-rfc7762">[RFC7762]</a>:</p>
+    <dl>
+     <dt data-md=""><a data-link-type="dfn" href="#block-all-mixed-content" id="ref-for-block-all-mixed-content③"><code>block-all-mixed-content</code></a>
+     <dd data-md="">
+      <p>This document (see <a href="#strict-opt-in">§4.2 Opting-in</a>)</p>
+    </dl>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="9" id="acknowledgements"><span class="secno">9. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
+    <p>In addition to the wonderful feedback gathered from the WebAppSec WG, the
+  Chrome security team was invaluable in preparing this specification. In
+  particular, Chris Palmer, Chris Evans, Ryan Sleevi, Michal Zalewski, Ken
+  Buchanan, and Tom Sepez gave lots of early feedback. Anne van Kesteren
+  explained Fetch and helped define the interface to this specification.
+  Brian Smith helped keep the spec focused, trim, and sane.</p>
+   </section>
+  </main>
+  <h2 class="no-ref no-num heading settled" id="conformance"><span class="content">Conformance</span><a class="self-link" href="#conformance"></a></h2>
+  <h3 class="no-ref no-num heading settled" id="conventions"><span class="content">Document conventions</span><a class="self-link" href="#conventions"></a></h3>
+  <p>Conformance requirements are expressed with a combination of
+    descriptive assertions and RFC 2119 terminology. The key words “MUST”,
+    “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”,
+    “RECOMMENDED”, “MAY”, and “OPTIONAL” in the normative parts of this
+    document are to be interpreted as described in RFC 2119.
+    However, for readability, these words do not appear in all uppercase
+    letters in this specification. </p>
+  <p>All of the text of this specification is normative except sections
+    explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a></p>
+  <p>Examples in this specification are introduced with the words “for example”
+    or are set apart from the normative text with <code>class="example"</code>,
+    like this: </p>
+  <div class="example" id="example-ae2b6bc0">
+   <a class="self-link" href="#example-ae2b6bc0"></a> 
+   <p>This is an example of an informative example.</p>
+  </div>
+  <p>Informative notes begin with the word “Note” and are set apart from the
+    normative text with <code>class="note"</code>, like this: </p>
+  <p class="note" role="note">Note, this is an informative note.</p>
+  <h3 class="no-ref no-num heading settled" id="conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#conformant-algorithms"></a></h3>
+  <p>Requirements phrased in the imperative as part of algorithms (such as
+    "strip any leading space characters" or "return false and abort these
+    steps") are to be interpreted with the meaning of the key word ("must",
+    "should", "may", etc) used in introducing the algorithm.</p>
+  <p>Conformance requirements phrased as algorithms or specific steps can be
+    implemented in any manner, so long as the end result is equivalent. In
+    particular, the algorithms defined in this specification are intended to
+    be easy to understand and are not intended to be performant. Implementers
+    are encouraged to optimize.</p>
+<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
+  <ul class="index">
+   <li><a href="#a-priori-authenticated-url">a priori authenticated</a><span>, in §2</span>
+   <li><a href="#a-priori-authenticated-url">a priori authenticated URL</a><span>, in §2</span>
+   <li><a href="#blockable-mixed-content">blockable</a><span>, in §3.2</span>
+   <li><a href="#blockable-mixed-content">blockable mixed content</a><span>, in §3.2</span>
+   <li><a href="#block-all-mixed-content">block-all-mixed-content</a><span>, in §4.2</span>
+   <li><a href="#embedding-document">embedding document</a><span>, in §2</span>
+   <li><a href="#mixed-content">mixed</a><span>, in §2</span>
+   <li><a href="#mixed-content">mixed content</a><span>, in §2</span>
+   <li><a href="#optionally-blockable-mixed-content">optionally-blockable</a><span>, in §3.1</span>
+   <li><a href="#optionally-blockable-mixed-content">optionally-blockable mixed content</a><span>, in §3.1</span>
+   <li><a href="#strict-mixed-content-checking-flag">strict mixed content checking flag</a><span>, in §4</span>
+   <li><a href="#strict-mode">strict mode</a><span>, in §4</span>
+   <li><a href="#unauthenticated-response">unauthenticated</a><span>, in §2</span>
+   <li><a href="#unauthenticated-response">unauthenticated response</a><span>, in §2</span>
+  </ul>
+  <aside class="dfn-panel" data-for="term-for-policy-directive-set">
+   <a href="https://www.w3.org/TR/CSP3/#policy-directive-set">https://www.w3.org/TR/CSP3/#policy-directive-set</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-policy-directive-set">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-directives">
+   <a href="https://www.w3.org/TR/CSP3/#directives">https://www.w3.org/TR/CSP3/#directives</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-directives">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-policy-disposition">
+   <a href="https://www.w3.org/TR/CSP3/#policy-disposition">https://www.w3.org/TR/CSP3/#policy-disposition</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-policy-disposition">4.3. block-all-mixed-content Initialization</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-directive-initialization">
+   <a href="https://www.w3.org/TR/CSP3/#directive-initialization">https://www.w3.org/TR/CSP3/#directive-initialization</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-directive-initialization">4.3. block-all-mixed-content Initialization</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-directive-name">
+   <a href="https://www.w3.org/TR/CSP3/#directive-name">https://www.w3.org/TR/CSP3/#directive-name</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-directive-name">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-policy">
+   <a href="https://www.w3.org/TR/CSP3/#policy">https://www.w3.org/TR/CSP3/#policy</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-policy">4.3. block-all-mixed-content Initialization</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-violation-resource">
+   <a href="https://www.w3.org/TR/CSP3/#violation-resource">https://www.w3.org/TR/CSP3/#violation-resource</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-violation-resource">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-propdef-background-image">
+   <a href="https://www.w3.org/TR/css3-background/#propdef-background-image">https://www.w3.org/TR/css3-background/#propdef-background-image</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-propdef-background-image">3.1. Optionally-blockable Content</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-propdef-border-image">
+   <a href="https://www.w3.org/TR/css3-background/#propdef-border-image">https://www.w3.org/TR/css3-background/#propdef-border-image</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-propdef-border-image">3.1. Optionally-blockable Content</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-document">
+   <a href="https://dom.spec.whatwg.org/#document">https://dom.spec.whatwg.org/#document</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-document">2. Key Concepts and Terminology</a> <a href="#ref-for-document①">(2)</a>
+    <li><a href="#ref-for-document②">4. Strict Mixed Content Checking</a> <a href="#ref-for-document③">(2)</a> <a href="#ref-for-document④">(3)</a>
+    <li><a href="#ref-for-document⑤">4.1. Effects</a> <a href="#ref-for-document⑥">(2)</a>
+    <li><a href="#ref-for-document⑦">4.2. Opting-in</a>
+    <li><a href="#ref-for-document⑧">4.3. block-all-mixed-content Initialization</a>
+    <li><a href="#ref-for-document⑨">4.4. Inheriting an opt-in</a>
+    <li><a href="#ref-for-document①⓪">7.2. Form Submission</a> <a href="#ref-for-document①①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-client">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-client">https://fetch.spec.whatwg.org/#concept-request-client</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-client">5.2. 
+      Should fetching request be blocked as mixed content? </a> <a href="#ref-for-concept-request-client①">(2)</a> <a href="#ref-for-concept-request-client②">(3)</a> <a href="#ref-for-concept-request-client③">(4)</a>
+    <li><a href="#ref-for-concept-request-client④">5.3. 
+      Should response to request be blocked as mixed
+      content? </a> <a href="#ref-for-concept-request-client⑤">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-destination">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-destination">https://fetch.spec.whatwg.org/#concept-request-destination</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-destination">3.1. Optionally-blockable Content</a> <a href="#ref-for-concept-request-destination①">(2)</a> <a href="#ref-for-concept-request-destination②">(3)</a>
+    <li><a href="#ref-for-concept-request-destination③">5.2. 
+      Should fetching request be blocked as mixed content? </a> <a href="#ref-for-concept-request-destination④">(2)</a> <a href="#ref-for-concept-request-destination⑤">(3)</a> <a href="#ref-for-concept-request-destination⑥">(4)</a>
+    <li><a href="#ref-for-concept-request-destination⑦">5.3. 
+      Should response to request be blocked as mixed
+      content? </a> <a href="#ref-for-concept-request-destination⑧">(2)</a> <a href="#ref-for-concept-request-destination⑨">(3)</a> <a href="#ref-for-concept-request-destination①⓪">(4)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-global-fetch">
+   <a href="https://fetch.spec.whatwg.org/#dom-global-fetch">https://fetch.spec.whatwg.org/#dom-global-fetch</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-global-fetch">6. Modifications to WebSockets</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-response-https-state">
+   <a href="https://fetch.spec.whatwg.org/#concept-response-https-state">https://fetch.spec.whatwg.org/#concept-response-https-state</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-response-https-state">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-concept-response-https-state①">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-initiator">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-initiator">https://fetch.spec.whatwg.org/#concept-request-initiator</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-initiator">3.1. Optionally-blockable Content</a>
+    <li><a href="#ref-for-concept-request-initiator①">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-concept-request-initiator②">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-navigation-request">
+   <a href="https://fetch.spec.whatwg.org/#navigation-request">https://fetch.spec.whatwg.org/#navigation-request</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-navigation-request">3.2. Blockable Content</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-filtered-response-opaque">
+   <a href="https://fetch.spec.whatwg.org/#concept-filtered-response-opaque">https://fetch.spec.whatwg.org/#concept-filtered-response-opaque</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-filtered-response-opaque">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request">
+   <a href="https://fetch.spec.whatwg.org/#concept-request">https://fetch.spec.whatwg.org/#concept-request</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request">2. Key Concepts and Terminology</a> <a href="#ref-for-concept-request①">(2)</a> <a href="#ref-for-concept-request②">(3)</a>
+    <li><a href="#ref-for-concept-request③">5.2. 
+      Should fetching request be blocked as mixed content? </a> <a href="#ref-for-concept-request④">(2)</a>
+    <li><a href="#ref-for-concept-request⑤">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
+    <li><a href="#ref-for-concept-request⑥">7.3. UI Requirements</a> <a href="#ref-for-concept-request⑦">(2)</a> <a href="#ref-for-concept-request⑧">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-response">
+   <a href="https://fetch.spec.whatwg.org/#concept-response">https://fetch.spec.whatwg.org/#concept-response</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-response">2. Key Concepts and Terminology</a> <a href="#ref-for-concept-response①">(2)</a>
+    <li><a href="#ref-for-concept-response②">4.3. block-all-mixed-content Initialization</a>
+    <li><a href="#ref-for-concept-response③">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-response-url">
+   <a href="https://fetch.spec.whatwg.org/#concept-response-url">https://fetch.spec.whatwg.org/#concept-response-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-response-url">2. Key Concepts and Terminology</a> <a href="#ref-for-concept-response-url①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-eventsource">
+   <a href="https://html.spec.whatwg.org/multipage/server-sent-events.html#eventsource">https://html.spec.whatwg.org/multipage/server-sent-events.html#eventsource</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-eventsource">6. Modifications to WebSockets</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-websocket">
+   <a href="https://html.spec.whatwg.org/multipage/web-sockets.html#websocket">https://html.spec.whatwg.org/multipage/web-sockets.html#websocket</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-websocket">6. Modifications to WebSockets</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-attr-fs-action">
+   <a href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action">https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-attr-fs-action">7.2. Form Submission</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-audio">
+   <a href="https://html.spec.whatwg.org/multipage/media.html#audio">https://html.spec.whatwg.org/multipage/media.html#audio</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-audio">3.1. Optionally-blockable Content</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-browsing-context">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#browsing-context</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-browsing-context">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-browsing-context①">4. Strict Mixed Content Checking</a>
+    <li><a href="#ref-for-browsing-context②">4.4. Inheriting an opt-in</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-document-csp-list">
+   <a href="https://html.spec.whatwg.org/multipage/dom.html#concept-document-csp-list">https://html.spec.whatwg.org/multipage/dom.html#concept-document-csp-list</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-document-csp-list">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-environment-settings-object">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-environment-settings-object">5.1. 
+      Does settings prohibit mixed security contexts? </a> <a href="#ref-for-environment-settings-object①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-the-form-element">
+   <a href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element">https://html.spec.whatwg.org/multipage/forms.html#the-form-element</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-the-form-element">7.2. Form Submission</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-global-object">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object">https://html.spec.whatwg.org/multipage/webappapis.html#global-object</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-global-object">4.3. block-all-mixed-content Initialization</a>
+    <li><a href="#ref-for-global-object①">5.1. 
+      Does settings prohibit mixed security contexts? </a>
+    <li><a href="#ref-for-global-object②">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-global-object③">6. Modifications to WebSockets</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-https-state">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">https://html.spec.whatwg.org/multipage/webappapis.html#https-state</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-https-state">5.1. 
+      Does settings prohibit mixed security contexts? </a> <a href="#ref-for-https-state①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-the-img-element">
+   <a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element">https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-the-img-element">3.1. Optionally-blockable Content</a> <a href="#ref-for-the-img-element①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-initialise-the-document-object">
+   <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-initialise-the-document-object">4.4. Inheriting an opt-in</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-meta">
+   <a href="https://html.spec.whatwg.org/multipage/semantics.html#meta">https://html.spec.whatwg.org/multipage/semantics.html#meta</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-meta">4. Strict Mixed Content Checking</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-nested-browsing-context">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-nested-browsing-context">4.1. Effects</a>
+    <li><a href="#ref-for-nested-browsing-context①">4.4. Inheriting an opt-in</a> <a href="#ref-for-nested-browsing-context②">(2)</a>
+    <li><a href="#ref-for-nested-browsing-context③">7.5. Further Action</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-browsing-context-nested-through">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-nested-through">https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-nested-through</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-browsing-context-nested-through">2. Key Concepts and Terminology</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-parent-browsing-context">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-parent-browsing-context">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-parent-browsing-context①">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-plugin">
+   <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#plugin">https://html.spec.whatwg.org/multipage/infrastructure.html#plugin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-plugin">3.2. Blockable Content</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-relevant-settings-object">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-relevant-settings-object">5.1. 
+      Does settings prohibit mixed security contexts? </a>
+    <li><a href="#ref-for-relevant-settings-object①">6. Modifications to WebSockets</a>
+    <li><a href="#ref-for-relevant-settings-object②">7.2. Form Submission</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-responsible-document">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#responsible-document">https://html.spec.whatwg.org/multipage/webappapis.html#responsible-document</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-responsible-document">5.1. 
+      Does settings prohibit mixed security contexts? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-the-source-element">
+   <a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-source-element">https://html.spec.whatwg.org/multipage/embedded-content.html#the-source-element</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-the-source-element">3.1. Optionally-blockable Content</a> <a href="#ref-for-the-source-element①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-environment-target-browsing-context">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context">https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-environment-target-browsing-context">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-concept-environment-target-browsing-context①">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-top-level-browsing-context">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-top-level-browsing-context">3.2. Blockable Content</a>
+    <li><a href="#ref-for-top-level-browsing-context①">5.1. 
+      Does settings prohibit mixed security contexts? </a>
+    <li><a href="#ref-for-top-level-browsing-context②">7.2. Form Submission</a>
+    <li><a href="#ref-for-top-level-browsing-context③">7.3. UI Requirements</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-use-srcset-or-picture">
+   <a href="https://html.spec.whatwg.org/multipage/images.html#use-srcset-or-picture">https://html.spec.whatwg.org/multipage/images.html#use-srcset-or-picture</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-use-srcset-or-picture">3.1. Optionally-blockable Content</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-video">
+   <a href="https://html.spec.whatwg.org/multipage/media.html#video">https://html.spec.whatwg.org/multipage/media.html#video</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-video">3.1. Optionally-blockable Content</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-section-7.1.7">
+   <a href="https://tools.ietf.org/html/rfc6455#section-7.1.7">https://tools.ietf.org/html/rfc6455#section-7.1.7</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-section-7.1.7">6. Modifications to WebSockets</a> <a href="#ref-for-section-7.1.7①">(2)</a> <a href="#ref-for-section-7.1.7②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-potentially-trustworthy-url">
+   <a href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url">https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-potentially-trustworthy-url">2. Key Concepts and Terminology</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-url-scheme">
+   <a href="https://url.spec.whatwg.org/#concept-url-scheme">https://url.spec.whatwg.org/#concept-url-scheme</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-url-scheme">2. Key Concepts and Terminology</a> <a href="#ref-for-concept-url-scheme①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-xmlhttprequest">
+   <a href="https://xhr.spec.whatwg.org/#xmlhttprequest">https://xhr.spec.whatwg.org/#xmlhttprequest</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-xmlhttprequest">3.2. Blockable Content</a>
+    <li><a href="#ref-for-xmlhttprequest①">6. Modifications to WebSockets</a>
+   </ul>
+  </aside>
+  <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
+  <ul class="index">
+   <li>
+    <a data-link-type="biblio">[CSP3]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-policy-directive-set" style="color:initial">directive set</span>
+     <li><span class="dfn-paneled" id="term-for-directives" style="color:initial">directives</span>
+     <li><span class="dfn-paneled" id="term-for-policy-disposition" style="color:initial">disposition</span>
+     <li><span class="dfn-paneled" id="term-for-directive-initialization" style="color:initial">initialization</span>
+     <li><span class="dfn-paneled" id="term-for-directive-name" style="color:initial">name</span>
+     <li><span class="dfn-paneled" id="term-for-policy" style="color:initial">policy</span>
+     <li><span class="dfn-paneled" id="term-for-violation-resource" style="color:initial">resource</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[css-backgrounds-3]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-propdef-background-image" style="color:initial">background-image</span>
+     <li><span class="dfn-paneled" id="term-for-propdef-border-image" style="color:initial">border-image</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[DOM]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-document" style="color:initial">Document</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[FETCH]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-concept-request-client" style="color:initial">client</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-destination" style="color:initial">destination</span>
+     <li><span class="dfn-paneled" id="term-for-dom-global-fetch" style="color:initial">fetch(input)</span>
+     <li><span class="dfn-paneled" id="term-for-concept-response-https-state" style="color:initial">https state</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-initiator" style="color:initial">initiator</span>
+     <li><span class="dfn-paneled" id="term-for-navigation-request" style="color:initial">navigation request</span>
+     <li><span class="dfn-paneled" id="term-for-concept-filtered-response-opaque" style="color:initial">opaque filtered response</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request" style="color:initial">request</span>
+     <li><span class="dfn-paneled" id="term-for-concept-response" style="color:initial">response</span>
+     <li><span class="dfn-paneled" id="term-for-concept-response-url" style="color:initial">url <small>(for response)</small></span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-eventsource" style="color:initial">EventSource</span>
+     <li><span class="dfn-paneled" id="term-for-websocket" style="color:initial">WebSocket</span>
+     <li><span class="dfn-paneled" id="term-for-attr-fs-action" style="color:initial">action</span>
+     <li><span class="dfn-paneled" id="term-for-audio" style="color:initial">audio</span>
+     <li><span class="dfn-paneled" id="term-for-browsing-context" style="color:initial">browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-concept-document-csp-list" style="color:initial">csp list</span>
+     <li><span class="dfn-paneled" id="term-for-environment-settings-object" style="color:initial">environment settings object</span>
+     <li><span class="dfn-paneled" id="term-for-the-form-element" style="color:initial">form</span>
+     <li><span class="dfn-paneled" id="term-for-global-object" style="color:initial">global object</span>
+     <li><span class="dfn-paneled" id="term-for-https-state" style="color:initial">https state</span>
+     <li><span class="dfn-paneled" id="term-for-the-img-element" style="color:initial">img</span>
+     <li><span class="dfn-paneled" id="term-for-initialise-the-document-object" style="color:initial">initializing a new document object</span>
+     <li><span class="dfn-paneled" id="term-for-meta" style="color:initial">meta</span>
+     <li><span class="dfn-paneled" id="term-for-nested-browsing-context" style="color:initial">nested browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-browsing-context-nested-through" style="color:initial">nested through</span>
+     <li><span class="dfn-paneled" id="term-for-parent-browsing-context" style="color:initial">parent browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-plugin" style="color:initial">plugin</span>
+     <li><span class="dfn-paneled" id="term-for-relevant-settings-object" style="color:initial">relevant settings object</span>
+     <li><span class="dfn-paneled" id="term-for-responsible-document" style="color:initial">responsible document</span>
+     <li><span class="dfn-paneled" id="term-for-the-source-element" style="color:initial">source</span>
+     <li><span class="dfn-paneled" id="term-for-concept-environment-target-browsing-context" style="color:initial">target browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-use-srcset-or-picture" style="color:initial">use srcset or picture</span>
+     <li><span class="dfn-paneled" id="term-for-video" style="color:initial">video</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[RFC6455]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-section-7.1.7" style="color:initial">fail the websocket connection</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[SECURE-CONTEXTS]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-potentially-trustworthy-url" style="color:initial">potentially trustworthy url</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[URL]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-concept-url-scheme" style="color:initial">scheme</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[XHR]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-xmlhttprequest" style="color:initial">XMLHttpRequest</span>
+    </ul>
+  </ul>
+  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
+  <dl>
+   <dt id="biblio-csp3">[CSP3]
+   <dd>Mike West. <a href="https://www.w3.org/TR/CSP3/">Content Security Policy Level 3</a>. 13 September 2016. WD. URL: <a href="https://www.w3.org/TR/CSP3/">https://www.w3.org/TR/CSP3/</a>
+   <dt id="biblio-dom">[DOM]
+   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
+   <dt id="biblio-fetch">[FETCH]
+   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
+   <dt id="biblio-html">[HTML]
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dt id="biblio-rfc2119">[RFC2119]
+   <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+   <dt id="biblio-rfc6455">[RFC6455]
+   <dd>I. Fette; A. Melnikov. <a href="https://tools.ietf.org/html/rfc6455">The WebSocket Protocol</a>. December 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6455">https://tools.ietf.org/html/rfc6455</a>
+   <dt id="biblio-rfc6797">[RFC6797]
+   <dd>J. Hodges; C. Jackson; A. Barth. <a href="https://tools.ietf.org/html/rfc6797">HTTP Strict Transport Security (HSTS)</a>. November 2012. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6797">https://tools.ietf.org/html/rfc6797</a>
+   <dt id="biblio-rfc7762">[RFC7762]
+   <dd>M. West. <a href="https://tools.ietf.org/html/rfc7762">Initial Assignment for the Content Security Policy Directives Registry</a>. January 2016. Informational. URL: <a href="https://tools.ietf.org/html/rfc7762">https://tools.ietf.org/html/rfc7762</a>
+   <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
+   <dd>Mike West. <a href="https://www.w3.org/TR/secure-contexts/">Secure Contexts</a>. 15 September 2016. CR. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
+   <dt id="biblio-url">[URL]
+   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
+   <dt id="biblio-websockets">[WEBSOCKETS]
+   <dd>Ian Hickson. <a href="https://www.w3.org/TR/websockets/">The WebSocket API</a>. 20 September 2012. CR. URL: <a href="https://www.w3.org/TR/websockets/">https://www.w3.org/TR/websockets/</a>
+   <dt id="biblio-xhr">[XHR]
+   <dd>Anne van Kesteren. <a href="https://xhr.spec.whatwg.org/">XMLHttpRequest Standard</a>. Living Standard. URL: <a href="https://xhr.spec.whatwg.org/">https://xhr.spec.whatwg.org/</a>
+  </dl>
+  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <dl>
+   <dt id="biblio-cab">[CAB]
+   <dd><a href="https://cabforum.org/baseline-requirements-documents/">CA/Browser Forum Baseline Requirements v1.3.7</a>. 8 July, 2016. URL: <a href="https://cabforum.org/baseline-requirements-documents/">https://cabforum.org/baseline-requirements-documents/</a>
+   <dt id="biblio-css-backgrounds-3">[CSS-BACKGROUNDS-3]
+   <dd>Bert Bos; Elika Etemad; Brad Kemper. <a href="https://www.w3.org/TR/css-backgrounds-3/">CSS Backgrounds and Borders Module Level 3</a>. 17 October 2017. CR. URL: <a href="https://www.w3.org/TR/css-backgrounds-3/">https://www.w3.org/TR/css-backgrounds-3/</a>
+   <dt id="biblio-rfc6919">[RFC6919]
+   <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
+   <dt id="biblio-sri">[SRI]
+   <dd>Devdatta Akhawe; et al. <a href="https://www.w3.org/TR/SRI/">Subresource Integrity</a>. 23 June 2016. REC. URL: <a href="https://www.w3.org/TR/SRI/">https://www.w3.org/TR/SRI/</a>
+   <dt id="biblio-wsc-ui">[WSC-UI]
+   <dd>Thomas Roessler; Anil Saldhana. <a href="https://www.w3.org/TR/wsc-ui/">Web Security Context: User Interface Guidelines</a>. 12 August 2010. REC. URL: <a href="https://www.w3.org/TR/wsc-ui/">https://www.w3.org/TR/wsc-ui/</a>
+   <dt id="biblio-xml">[XML]
+   <dd>Tim Bray; et al. <a href="https://www.w3.org/TR/xml/">Extensible Markup Language (XML) 1.0 (Fifth Edition)</a>. 26 November 2008. REC. URL: <a href="https://www.w3.org/TR/xml/">https://www.w3.org/TR/xml/</a>
+  </dl>
+  <aside class="dfn-panel" data-for="mixed-content">
+   <b><a href="#mixed-content">#mixed-content</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-mixed-content">3. Content Categories</a> <a href="#ref-for-mixed-content①">(2)</a>
+    <li><a href="#ref-for-mixed-content②">3.1. Optionally-blockable Content</a>
+    <li><a href="#ref-for-mixed-content③">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-mixed-content④">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
+    <li><a href="#ref-for-mixed-content⑤">7.3. UI Requirements</a> <a href="#ref-for-mixed-content⑥">(2)</a>
+    <li><a href="#ref-for-mixed-content⑦">7.4. User Controls</a>
+    <li><a href="#ref-for-mixed-content⑧">7.5. Further Action</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="a-priori-authenticated-url">
+   <b><a href="#a-priori-authenticated-url">#a-priori-authenticated-url</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-a-priori-authenticated-url">2. Key Concepts and Terminology</a> <a href="#ref-for-a-priori-authenticated-url①">(2)</a>
+    <li><a href="#ref-for-a-priori-authenticated-url②">5. Insecure Content in Secure Contexts</a>
+    <li><a href="#ref-for-a-priori-authenticated-url③">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-a-priori-authenticated-url④">7.2. Form Submission</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="unauthenticated-response">
+   <b><a href="#unauthenticated-response">#unauthenticated-response</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-unauthenticated-response">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-unauthenticated-response①">5. Insecure Content in Secure Contexts</a> <a href="#ref-for-unauthenticated-response②">(2)</a>
+    <li><a href="#ref-for-unauthenticated-response③">5.3. 
+      Should response to request be blocked as mixed
+      content? </a> <a href="#ref-for-unauthenticated-response④">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="embedding-document">
+   <b><a href="#embedding-document">#embedding-document</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-embedding-document">4.4. Inheriting an opt-in</a>
+    <li><a href="#ref-for-embedding-document①">5.1. 
+      Does settings prohibit mixed security contexts? </a> <a href="#ref-for-embedding-document②">(2)</a> <a href="#ref-for-embedding-document③">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="optionally-blockable-mixed-content">
+   <b><a href="#optionally-blockable-mixed-content">#optionally-blockable-mixed-content</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-optionally-blockable-mixed-content">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-optionally-blockable-mixed-content①">3.2. Blockable Content</a>
+    <li><a href="#ref-for-optionally-blockable-mixed-content②">4. Strict Mixed Content Checking</a>
+    <li><a href="#ref-for-optionally-blockable-mixed-content③">4.1. Effects</a>
+    <li><a href="#ref-for-optionally-blockable-mixed-content④">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-optionally-blockable-mixed-content⑤">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
+    <li><a href="#ref-for-optionally-blockable-mixed-content⑥">7.3. UI Requirements</a>
+    <li><a href="#ref-for-optionally-blockable-mixed-content⑦">7.4. User Controls</a>
+    <li><a href="#ref-for-optionally-blockable-mixed-content⑧">7.5. Further Action</a> <a href="#ref-for-optionally-blockable-mixed-content⑨">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="blockable-mixed-content">
+   <b><a href="#blockable-mixed-content">#blockable-mixed-content</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-blockable-mixed-content">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-blockable-mixed-content①">4. Strict Mixed Content Checking</a>
+    <li><a href="#ref-for-blockable-mixed-content②">4.1. Effects</a> <a href="#ref-for-blockable-mixed-content③">(2)</a>
+    <li><a href="#ref-for-blockable-mixed-content④">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-blockable-mixed-content⑤">5.3. 
+      Should response to request be blocked as mixed
+      content? </a> <a href="#ref-for-blockable-mixed-content⑥">(2)</a>
+    <li><a href="#ref-for-blockable-mixed-content⑦">7.2. Form Submission</a>
+    <li><a href="#ref-for-blockable-mixed-content⑧">7.3. UI Requirements</a>
+    <li><a href="#ref-for-blockable-mixed-content⑨">7.4. User Controls</a> <a href="#ref-for-blockable-mixed-content①⓪">(2)</a>
+    <li><a href="#ref-for-blockable-mixed-content①①">7.5. Further Action</a> <a href="#ref-for-blockable-mixed-content①②">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="strict-mixed-content-checking-flag">
+   <b><a href="#strict-mixed-content-checking-flag">#strict-mixed-content-checking-flag</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-strict-mixed-content-checking-flag">4.1. Effects</a>
+    <li><a href="#ref-for-strict-mixed-content-checking-flag①">4.3. block-all-mixed-content Initialization</a>
+    <li><a href="#ref-for-strict-mixed-content-checking-flag②">4.4. Inheriting an opt-in</a> <a href="#ref-for-strict-mixed-content-checking-flag③">(2)</a> <a href="#ref-for-strict-mixed-content-checking-flag④">(3)</a> <a href="#ref-for-strict-mixed-content-checking-flag⑤">(4)</a> <a href="#ref-for-strict-mixed-content-checking-flag⑥">(5)</a>
+    <li><a href="#ref-for-strict-mixed-content-checking-flag⑦">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-strict-mixed-content-checking-flag⑧">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="strict-mode">
+   <b><a href="#strict-mode">#strict-mode</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-strict-mode">7.5. Further Action</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="block-all-mixed-content">
+   <b><a href="#block-all-mixed-content">#block-all-mixed-content</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-block-all-mixed-content">4. Strict Mixed Content Checking</a> <a href="#ref-for-block-all-mixed-content①">(2)</a>
+    <li><a href="#ref-for-block-all-mixed-content②">5.2. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-block-all-mixed-content③">8. IANA Considerations</a>
+   </ul>
+  </aside>
+<script>/* script-dfn-panel */
+
+document.body.addEventListener("click", function(e) {
+    var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
+    // Find the dfn element or panel, if any, that was clicked on.
+    var el = e.target;
+    var target;
+    var hitALink = false;
+    while(el.parentElement) {
+        if(el.tagName == "A") {
+            // Clicking on a link in a <dfn> shouldn't summon the panel
+            hitALink = true;
+        }
+        if(el.classList.contains("dfn-paneled")) {
+            target = "dfn";
+            break;
+        }
+        if(el.classList.contains("dfn-panel")) {
+            target = "dfn-panel";
+            break;
+        }
+        el = el.parentElement;
+    }
+    if(target != "dfn-panel") {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
+            el.classList.remove("on");
+            el.classList.remove("activated");
+        });
+    }
+    if(target == "dfn" && !hitALink) {
+        // open the panel
+        var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
+        if(dfnPanel) {
+            dfnPanel.classList.add("on");
+            var rect = el.getBoundingClientRect();
+            dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
+            dfnPanel.style.top = window.scrollY + rect.top + "px";
+            var panelRect = dfnPanel.getBoundingClientRect();
+            var panelWidth = panelRect.right - panelRect.left;
+            if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
+                // Reposition, because the panel is overflowing
+                dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
+            }
+        } else {
+            console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
+        }
+    } else if(target == "dfn-panel") {
+        // Switch it to "activated" state, which pins it.
+        el.classList.add("activated");
+        el.style.left = null;
+        el.style.top = null;
+    }
+
+});
+</script>
