@@ -1,4 +1,4 @@
-all: index.html
+all: index.html level2.html
 
 force:
 	bikeshed -f spec ./index.src.html
@@ -12,3 +12,5 @@ index.html: index.src.html
 publish:
 	git push origin master master:gh-pages
 
+level2.html: level2.src.html
+	bikeshed -f spec ./level2.src.html
