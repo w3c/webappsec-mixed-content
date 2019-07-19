@@ -1,0 +1,120 @@
+<h1>Mixed Content Level 2</h1>
+<pre class="metadata">
+Status: ED
+ED: https://w3c.github.io/webappsec-mixed-content/level2.html
+Shortname: mixed-content-2
+Level: 2
+Editor: Emily Stark, Google Inc., estark@google.com
+        Mike West, Google Inc., mkwst@google.com
+Group: webappsec
+Abstract:
+  This specification describes how a user agent should handle fetching of
+  content over unencrypted or unauthenticated connections in the context of an
+  encrypted and authenticated document.
+Version History: https://github.com/w3c/webappsec-mixed-content/commits/master/level2.src.html
+Boilerplate: omit conformance, omit feedback-header
+!Participate: <a href="https://github.com/w3c/webappsec-mixed-content/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-mixed-content/issues">open issues</a>)
+Indent: 2
+Markup Shorthands: markdown on
+Boilerplate: omit conformance, omit feedback-header
+</pre>
+<!--
+    HTML Definitions
+-->
+<pre class="link-defaults">
+spec:html; type:dfn; for:/; text: use srcset or picture
+spec:html; type:dfn; for:/; text:browsing context
+spec:html; type:dfn; for:/; text:plugin
+spec:html; type:dfn; for:/; text:global object
+spec:fetch; type:dfn; for:/; text:request
+spec:fetch; type:dfn; for:/; text:response
+spec:dom; type:interface; text:Document
+</pre>
+<pre class="anchors">
+type: dfn
+  urlPrefix: https://tools.ietf.org/html/rfc6797
+    text: mixed security context; url: section-12.4
+type: dfn
+  urlPrefix: https://tools.ietf.org/html/rfc6455; spec: RFC6455
+    text: fail the websocket connection; url: section-7.1.7
+type: attribute
+  text: onerror; for: WebSocket; url: https://www.w3.org/TR/websockets/#handler-websocket-onerror
+</pre>
+
+<section>
+  <h2 id="intro">Introduction</h2>
+
+  <em>This section is not normative.</em>
+
+  When a user successfully loads a webpage from <code>example.com</code> over a
+  secure channel (HTTPS, for example), the user is guaranteed that no entity
+  between the user agent and <code>example.com</code> eavesdropped on or
+  tampered with the data transmitted between them. However, this guarantee is
+  weakened if the webpage loads subresources such as script or images over an
+  insecure connection. For example, an insecurely-loaded script can allow an
+  attacker to read or modify data on behalf of the user. An insecurely-loaded
+  image can allow an attacker to communicate incorrect information to the user
+  (e.g., a fabricated stock chart), mutate client-side state (e.g., set a
+  cookie), or induce the user to take an unintended action (e.g., changing the
+  label on a button). These requests are known as mixed content.
+
+  [[!MIXED-CONTENT]] details how a user agent can mitigate these risks by
+  blocking certain types of mixed content, and behaving more strictly in some
+  contexts. This specification updates and extends [[!MIXED-CONTENT]] to provide
+  better security and privacy guarantees while minimizing breakage.
+
+  The core idea of this specification is <i>mixed content
+  autoupgrading</i>. That is, mixed content that user agents are not already
+  blocking should be autoupgraded to a secure transport. If the request cannot
+  be autoupgraded, it will be blocked. Autoupgrading avoids loading insecure
+  resources on secure webpages, while minimizing the amount of developer effort
+  needed to avoid breakage.
+</section>
+
+<section>
+  <h2 id="terms">Key Concepts and Terminology</h2>
+
+  TODO
+</section>
+
+<section>
+  <h2 id="algorithms">Algorithms</h2>
+
+  <section>
+    <h3 id="upgrade-algorithm">Upgrade |request| to an <i lang="la">a priori</i>
+    authenticated URL as mixed content, if appropriate</h3>
+
+    TODO. This algorithm is called from Fetch before blocking requests as mixed content. It checks if the request is optionally-blockable mixed content, and if so rewrites the scheme to HTTPS.
+  </section>
+
+  <section>
+    <h3 id="modifications">Modifications to existing algorithms</h3>
+
+    TODO. Modify "Should fetching |request| be blocked as mixed content?" and "Should |response| to |request| be blocked as mixed content?" to ignore the optionally-blockable/blockable distinction. (All content that isn't autoupgraded should be blocked.)
+</section>
+
+<section>
+  <h2 id="integration">Integrations</h2>
+
+  TODO. Call the autoupgrading algorithm from Fetch.
+
+  TODO. Something about blocking insecure downloads from secure contexts (integrate with HTML).
+</section>
+
+<section>
+  <h2 id="obsolescences">Obsolescences</h2>
+
+  TODO. block-all-mixed-content is obsolete. Clarify the value of
+  upgrade-insecure-requests (upgrades blockable content as well as
+  optionally-blockable).
+</section>
+
+<section>
+  <h2 id="security-considerations">Security and Privacy Considerations</h2>
+
+  TODO. Discuss the possibility of autoupgrading to an unintended resource that might introduce a security issue.
+</section>
+
+<section>
+  <h2 id="acknowledgements">Acknowledgements</h2>
+</section>
