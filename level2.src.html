@@ -84,29 +84,90 @@ type: attribute
     <h3 id="upgrade-algorithm">Upgrade |request| to an <i lang="la">a priori</i>
     authenticated URL as mixed content, if appropriate</h3>
 
-    TODO. This algorithm is called from Fetch before blocking requests as mixed content. It checks if the request is optionally-blockable mixed content, and if so rewrites the scheme to HTTPS.
+    Note: The Fetch specification will hook into this algorithm to upgrade optionally-blockable
+    mixed content to HTTPS.
+
+    Given a <a>Request</a> <var>request</var>, this algorithm will rewrite
+    its <a for="request">url</a> if the request is deemed to be optionally-blockable mixed content,
+    via the following algorithm:
+
+    <ol>
+      <li>
+        If one or more of the following conditions is met, return without modifying <var>request</var>:
+        <ol>
+          <li>
+            [[mixed-content#categorize-settings-object]] returns "<code>Does Not Restrict Mixed Security
+            Contents</code>" when applied to <var>request</var>'s <a for="request">client</a>.
+          </li>
+          <li>
+            <var>request</var>'s <a for="request">mode</a> is <code>CORS</code>
+            or <code>CORS-with-forced-preflight</code>.
+          </li>
+          <li>
+            <var>request</var>'s <a for="request">destination</a> is not "<code>image</code>",
+            "<code>audio</code>", or "<code>video</code>".
+          </li>
+          <li>
+            <var>request</var>'s <a for="request">destination</a> is "<code>image</code>"
+            and <var>request</var>'s <a for="request">initiator</a> is "<code>imageset</code>".
+          </li>
+          <li>
+            <var>request</var>'s <a for="request">url</a> is an
+            [[mixed-content#a-priori-authenticated-url]].
+          </li>
+        </ol>
+      </li>
+      <li>
+        If <var>request</var>'s <a for="request">url</a>'s <a for="url">scheme</a>
+        is <code>http</code>,
+        set <var>request</var>'s <a for="request">url</a>'s <a for="url">scheme</a>
+        to <code>https</code>, and return.        
+      </li>
+      <li>
+        If <var>request</var>'s <a for="request">url</a>'s <a for="url">port</a> is <code>80</code>,
+        set <var>request</var>'s <a for="request">url</a>'s <a for="url">port</a>
+        to <code>443</code>.
+      </li>
+    </ol>  
+
   </section>
 
   <section>
     <h3 id="modifications">Modifications to existing algorithms</h3>
 
-    TODO. Modify "Should fetching |request| be blocked as mixed content?" and "Should |response| to |request| be blocked as mixed content?" to ignore the optionally-blockable/blockable distinction. (All content that isn't autoupgraded should be blocked.)
+    Note: This section specifies modifications to existing mixed content algorithms to ignore the
+    distinction between optionally-blockable and blockable mixed content, since all
+    optionally-blockable mixed content will now be autoupgraded.
+
+    [[mixed-content#should-block-fetch]] should be modified to remove Steps 3, 4, and 5, replacing
+    them with a single step "Return <strong>blocked</strong>".
+
+    [[mixed-content#should-block-response]] should be modified to remove Steps 2, 3, and 4,
+    replacing them with a single step "Return <strong>blocked</strong>".
 </section>
 
 <section>
   <h2 id="integration">Integrations</h2>
 
-  TODO. Call the autoupgrading algorithm from Fetch.
+  <h3 id="fetch">Modifications to Fetch</h3>
 
-  TODO. Something about blocking insecure downloads from secure contexts (integrate with HTML).
+  [[fetch#main-fetch]] should be modified to call [[#upgrade-algorithm]] on <var>request</var>
+  between steps 3 and 4. That is, optionally-blockable mixed content should be autoupgraded to HTTPS
+  before applying mixed content blocking.
+
 </section>
 
 <section>
   <h2 id="obsolescences">Obsolescences</h2>
 
-  TODO. block-all-mixed-content is obsolete. Clarify the value of
-  upgrade-insecure-requests (upgrades blockable content as well as
-  optionally-blockable).
+  <h3 id="block-all-mixed-content"><code>block-all-mixed-content</code></h3>
+
+  This specification renders the [[mixed-content#block-all-mixed-content]] CSP directive obsolete,
+  because all mixed content is now blocked if it can't be autoupgraded.
+
+  Note: The <code>upgrade-insecure-requests</code> ([[upgrade-insecure-requests]]) directive is not
+  obsolete because it allows developers to upgrade blockable content. This specification only
+  upgrades optionally-blockable content by default.
 </section>
 
 <section>
