@@ -96,12 +96,15 @@ type: attribute
         If one or more of the following conditions is met, return without modifying <var>request</var>:
         <ol>
           <li>
+            <var>request</var>'s <a for="request">url</a> is an
+            [[mixed-content#a-priori-authenticated-url]].
+          </li>
+          <li>
             [[mixed-content#categorize-settings-object]] returns "<code>Does Not Restrict Mixed Security
             Contents</code>" when applied to <var>request</var>'s <a for="request">client</a>.
           </li>
           <li>
-            <var>request</var>'s <a for="request">mode</a> is <code>CORS</code>
-            or <code>CORS-with-forced-preflight</code>.
+            <var>request</var>'s <a for="request">mode</a> is <code>CORS</code>.
           </li>
           <li>
             <var>request</var>'s <a for="request">destination</a> is not "<code>image</code>",
@@ -111,10 +114,6 @@ type: attribute
             <var>request</var>'s <a for="request">destination</a> is "<code>image</code>"
             and <var>request</var>'s <a for="request">initiator</a> is "<code>imageset</code>".
           </li>
-          <li>
-            <var>request</var>'s <a for="request">url</a> is an
-            [[mixed-content#a-priori-authenticated-url]].
-          </li>
         </ol>
       </li>
       <li>
@@ -122,11 +121,6 @@ type: attribute
         is <code>http</code>,
         set <var>request</var>'s <a for="request">url</a>'s <a for="url">scheme</a>
         to <code>https</code>, and return.        
-      </li>
-      <li>
-        If <var>request</var>'s <a for="request">url</a>'s <a for="url">port</a> is <code>80</code>,
-        set <var>request</var>'s <a for="request">url</a>'s <a for="url">port</a>
-        to <code>443</code>.
       </li>
     </ol>  
 
