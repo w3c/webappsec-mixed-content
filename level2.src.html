@@ -120,9 +120,13 @@ type: attribute
         If <var>request</var>'s <a for="request">url</a>'s <a for="url">scheme</a>
         is <code>http</code>,
         set <var>request</var>'s <a for="request">url</a>'s <a for="url">scheme</a>
-        to <code>https</code>, and return.        
+        to <code>https</code>, and return.
+
+        Note: Per [[url]], we do not modify the port because it will be set to null when the scheme
+        is <code>http</code>, and interpreted as 443 once the scheme is changed
+        to <code>https</code>
       </li>
-    </ol>  
+    </ol>
 
   </section>
 
