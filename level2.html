@@ -1214,7 +1214,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version a3b64e58e069c2e8a9ffcadffb76601231663a47" name="generator">
   <link href="https://w3c.github.io/webappsec-mixed-content/level2.html" rel="canonical">
-  <meta content="4df6353a078559c9ec3360176053fe7ed13eb5a1" name="document-revision">
+  <meta content="3d3335503f68736890ea89b9bbdc3ac71533fd01" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1403,7 +1403,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Mixed Content Level 2</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-08-22">22 August 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-09-06">6 September 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1547,8 +1547,12 @@ pre .property::before, pre .property::after {
         <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a> is "<code>image</code>"
             and <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator" id="ref-for-concept-request-initiator">initiator</a> is "<code>imageset</code>". 
        </ol>
-      <li> If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url②">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is <code>http</code>,
+      <li>
+        If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url②">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is <code>http</code>,
         set <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url③">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme①">scheme</a> to <code>https</code>, and return. 
+       <p class="note" role="note"><span>Note:</span> Per <a data-link-type="biblio" href="#biblio-url">[url]</a>, we do not modify the port because it will be set to null when the scheme
+        is <code>http</code>, and interpreted as 443 once the scheme is changed
+        to <code>https</code></p>
      </ol>
     </section>
     <section>
@@ -1579,7 +1583,17 @@ pre .property::before, pre .property::after {
     </section>
     <section>
      <h2 class="heading settled" data-level="6" id="security-considerations"><span class="secno">6. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#security-considerations"></a></h2>
-     <p>TODO. Discuss the possibility of autoupgrading to an unintended resource that might introduce a security issue.</p>
+     <p>Overall, autoupgrading optionally-blockable mixed content is expected to be security- and
+  privacy-positive, by protecting more user traffic from network eavesdropping and tampering.</p>
+     <p>There is a risk of introducing a security or privacy issue in a webpage by loading a resource that
+  the developer did not intend. For example, suppose that a website includes an innocuous image
+  from <code>http://www.example.com/image.jpg</code>, and for some
+  reason <code>https://www.example.com/image.jpg</code> redirects to a tracking site. The browser
+  will now have introduced a privacy issue without the developer’s or user’s explicit
+  consent. However, these cases are expected to be exceedingly rare. The risk is mitigated by
+  autoupgrading only optionally-blockable content, not blockable content as well. Blockable content
+  could present more risk, for example the risk of loading an out-of-date and vulnerable JavaScript
+  library.</p>
     </section>
     <section>
      <h2 class="heading settled" data-level="7" id="acknowledgements"><span class="secno">7. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
@@ -1681,7 +1695,7 @@ pre .property::before, pre .property::after {
      <li><span class="dfn-paneled" id="term-for-concept-request-url" style="color:initial">url</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[URL]</a> defines the following terms:
+    <a data-link-type="biblio">[url]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-concept-url-scheme" style="color:initial">scheme</span>
     </ul>

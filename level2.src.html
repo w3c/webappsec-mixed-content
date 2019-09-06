@@ -171,7 +171,18 @@ type: attribute
 <section>
   <h2 id="security-considerations">Security and Privacy Considerations</h2>
 
-  TODO. Discuss the possibility of autoupgrading to an unintended resource that might introduce a security issue.
+  Overall, autoupgrading optionally-blockable mixed content is expected to be security- and
+  privacy-positive, by protecting more user traffic from network eavesdropping and tampering.
+
+  There is a risk of introducing a security or privacy issue in a webpage by loading a resource that
+  the developer did not intend. For example, suppose that a website includes an innocuous image
+  from <code>http://www.example.com/image.jpg</code>, and for some
+  reason <code>https://www.example.com/image.jpg</code> redirects to a tracking site. The browser
+  will now have introduced a privacy issue without the developer's or user's explicit
+  consent. However, these cases are expected to be exceedingly rare. The risk is mitigated by
+  autoupgrading only optionally-blockable content, not blockable content as well. Blockable content
+  could present more risk, for example the risk of loading an out-of-date and vulnerable JavaScript
+  library.
 </section>
 
 <section>
