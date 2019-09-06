@@ -1214,7 +1214,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version a3b64e58e069c2e8a9ffcadffb76601231663a47" name="generator">
   <link href="https://w3c.github.io/webappsec-mixed-content/level2.html" rel="canonical">
-  <meta content="3d3335503f68736890ea89b9bbdc3ac71533fd01" name="document-revision">
+  <meta content="123c78c9efcac2681ebf114353c50ed22b712c9d" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1412,6 +1412,7 @@ pre .property::before, pre .property::after {
      <dd><a href="https://github.com/w3c/webappsec-mixed-content/commits/master/level2.src.html">https://github.com/w3c/webappsec-mixed-content/commits/master/level2.src.html</a>
      <dt>Feedback:
      <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bmixed-content-2%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[mixed-content-2] <i data-lt>… message topic …</i></kbd>” (<a href="https://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
+     <dd><a href="https://github.com/w3c/webappsec-mixed-content/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-mixed-content/issues">open issues</a>)
      <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:estark@google.com">Emily Stark</a> (<span class="p-org org">Google Inc.</span>)
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
@@ -1512,14 +1513,29 @@ pre .property::before, pre .property::after {
   label on a button). These requests are known as mixed content.</p>
     <p><a data-link-type="biblio" href="#biblio-mixed-content">[MIXED-CONTENT]</a> details how a user agent can mitigate these risks by
   blocking certain types of mixed content, and behaving more strictly in some
-  contexts. This specification updates and extends <a data-link-type="biblio" href="#biblio-mixed-content">[MIXED-CONTENT]</a> to provide
-  better security and privacy guarantees while minimizing breakage.</p>
-    <p>The core idea of this specification is <i>mixed content
-  autoupgrading</i>. That is, mixed content that user agents are not already
-  blocking should be autoupgraded to a secure transport. If the request cannot
-  be autoupgraded, it will be blocked. Autoupgrading avoids loading insecure
-  resources on secure webpages, while minimizing the amount of developer effort
-  needed to avoid breakage.</p>
+  contexts.</p>
+    <p>However, as implemented in today’s web browsers, <a data-link-type="biblio" href="#biblio-mixed-content">[MIXED-CONTENT]</a> does not fully protect the
+  confidentiality and integrity of users' data. Insecure content such as images, audio, and video
+  can currently be loaded by default in secure contexts.</p>
+    <p>Moreover, users do not have a clear security indicator when mixed content is loaded. When a
+  webpage loads mixed content, browsers display an "in-between" security indicator (such as removing
+  the padlock icon), which does not give users a clear indication of whether they should trust the
+  page. This UX has also not proved a sufficient incentive for developers to avoid mixed content,
+  since it is still common for webpages to load mixed content. Blocking all mixed content would
+  provide the user with a simpler mental model -- the webpage is either loaded over a secure
+  transport or it isn’t -- and encourage developers to securely load any mixed content that is
+  necessary for their webpage to function properly.</p>
+    <p>Mixed Content Level 2 therefore updates and extends <a data-link-type="biblio" href="#biblio-mixed-content">[MIXED-CONTENT]</a> to provide users with
+  better security and privacy guarantees and a better security UX, while minimizing
+  breakage. Instead of advising browsers to simply strictly block all mixed content, the core idea
+  of Level 2 is <i>mixed content autoupgrading</i>. That is, mixed content that user agents are not
+  already blocking should be autoupgraded to a secure transport. If the request cannot be
+  autoupgraded, it will be blocked. Autoupgrading avoids loading insecure resources on secure
+  webpages, while minimizing the amount of developer effort needed to avoid breakage.</p>
+    <p>This specification (Level 2) only recommends autoupgrading types of mixed content that are not
+  currently blocked by default, and does not recommend autougprading types of content that are
+  already blocked. This is to minimize the amount of web-visible change; we only want to autoupgrade
+  content if it advances us towards the goal of blocking all mixed content by default.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="2" id="terms"><span class="secno">2. </span><span class="content">Key Concepts and Terminology</span><a class="self-link" href="#terms"></a></h2>

@@ -14,6 +14,7 @@ Abstract:
 Version History: https://github.com/w3c/webappsec-mixed-content/commits/master/level2.src.html
 Boilerplate: omit conformance, omit feedback-header
 !Participate: <a href="https://github.com/w3c/webappsec-mixed-content/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-mixed-content/issues">open issues</a>)
+!Feedback: <a href="https://github.com/w3c/webappsec-mixed-content/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-mixed-content/issues">open issues</a>)
 Indent: 2
 Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
@@ -60,15 +61,33 @@ type: attribute
 
   [[!MIXED-CONTENT]] details how a user agent can mitigate these risks by
   blocking certain types of mixed content, and behaving more strictly in some
-  contexts. This specification updates and extends [[!MIXED-CONTENT]] to provide
-  better security and privacy guarantees while minimizing breakage.
+  contexts.
 
-  The core idea of this specification is <i>mixed content
-  autoupgrading</i>. That is, mixed content that user agents are not already
-  blocking should be autoupgraded to a secure transport. If the request cannot
-  be autoupgraded, it will be blocked. Autoupgrading avoids loading insecure
-  resources on secure webpages, while minimizing the amount of developer effort
-  needed to avoid breakage.
+  However, as implemented in today's web browsers, [[!MIXED-CONTENT]] does not fully protect the
+  confidentiality and integrity of users' data. Insecure content such as images, audio, and video
+  can currently be loaded by default in secure contexts.
+
+  Moreover, users do not have a clear security indicator when mixed content is loaded. When a
+  webpage loads mixed content, browsers display an "in-between" security indicator (such as removing
+  the padlock icon), which does not give users a clear indication of whether they should trust the
+  page. This UX has also not proved a sufficient incentive for developers to avoid mixed content,
+  since it is still common for webpages to load mixed content. Blocking all mixed content would
+  provide the user with a simpler mental model -- the webpage is either loaded over a secure
+  transport or it isn't -- and encourage developers to securely load any mixed content that is
+  necessary for their webpage to function properly.
+
+  Mixed Content Level 2 therefore updates and extends [[!MIXED-CONTENT]] to provide users with
+  better security and privacy guarantees and a better security UX, while minimizing
+  breakage. Instead of advising browsers to simply strictly block all mixed content, the core idea
+  of Level 2 is <i>mixed content autoupgrading</i>. That is, mixed content that user agents are not
+  already blocking should be autoupgraded to a secure transport. If the request cannot be
+  autoupgraded, it will be blocked. Autoupgrading avoids loading insecure resources on secure
+  webpages, while minimizing the amount of developer effort needed to avoid breakage.
+
+  This specification (Level 2) only recommends autoupgrading types of mixed content that are not
+  currently blocked by default, and does not recommend autougprading types of content that are
+  already blocked. This is to minimize the amount of web-visible change; we only want to autoupgrade
+  content if it advances us towards the goal of blocking all mixed content by default.
 </section>
 
 <section>
