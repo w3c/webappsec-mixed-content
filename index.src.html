@@ -36,6 +36,8 @@ spec:html; type:dfn; for:/; text: use srcset or picture
 spec:html; type:dfn; for:/; text:browsing context
 spec:html; type:dfn; for:/; text:plugin
 spec:html; type:dfn; for:/; text:global object
+spec:html; type:dfn; for:/; text:container document
+spec:html; type:dfn; for:/; text:create and initialize a document object
 spec:fetch; type:dfn; for:/; text:request
 spec:fetch; type:dfn; for:/; text:response
 spec:dom; type:interface; text:Document
@@ -48,7 +50,8 @@ type: dfn
   urlPrefix: https://tools.ietf.org/html/rfc6455; spec: RFC6455
     text: fail the websocket connection; url: section-7.1.7
 type: attribute
-  text: onerror; for: WebSocket; url: https://www.w3.org/TR/websockets/#handler-websocket-onerror
+  urlPrefix: https://html.spec.whatwg.org/; spec: HTML
+    for: WebSocket; text: onerror; url: #handler-websocket-onerror
 </pre>
 <pre class="biblio">
 {
@@ -219,9 +222,8 @@ type: attribute
     <dt><dfn export>embedding document</dfn></dt>
     <dd>
       Given a {{Document}} <var>A</var>, the <strong>embedding
-      document</strong> of <var>A</var> is the {{Document}}
-      <a lt="nested through">through which</a> <var>A</var>'s <a>browsing
-      context</a> is nested [[!HTML]].
+      document</strong> of <var>A</var> is |A|'s [=browsing context=]'s
+      [=container document=] [[!HTML]].
     </dd>
   </dl>
 </section>
@@ -402,7 +404,7 @@ type: attribute
   follows:
 
   Given a {{Document}} or <a for="/">global object</a> (|context|), a <a>response</a>
-  (|response|), and a <a for="/">policy</a> (|policy|):
+  (|response|), and a <a for="/">Content Security Policy object</a> (|policy|):
 
   1.  Assert: |response| is unused.
 
@@ -424,10 +426,10 @@ type: attribute
       checking flag</a> is set to <code>true</code>.
     </li>
     <li>
-      When <a>initializing a new <code>Document</code> object</a>, set its <a>strict
-      mixed content checking flag</a> to <code>true</code> if its <a>browsing
-      context</a>'s <a>strict mixed content checking flag</a> is
-      <code>true</code>.
+      When <a lt="create and initialize a Document object">initializing a new
+      <code>Document</code> object</a>, set its <a>strict mixed content checking
+      flag</a> to <code>true</code> if its <a>browsing context</a>'s <a>strict
+      mixed content checking flag</a> is <code>true</code>.
     </li>
   </ol>
 </section>
@@ -586,14 +588,14 @@ type: attribute
             "<a>`block-all-mixed-content`</a>":
 
             1.  Let |violation| be the result of executing the algorithm defined
-                in [[csp-3#create-violation-for-global]] on |request|'s
+                in [[csp#create-violation-for-global]] on |request|'s
                 <a for="request">client</a>'s <a>global object</a>, |policy|,
                 and "`block-all-mixed-content`".
 
             2.  Set |violation|'s <a for="violation">resource</a> to
                 |request|'s <a for="request">url</a>.
 
-            3.  Execute the algorithm defined in [[csp-3#report-violation]] on
+            3.  Execute the algorithm defined in [[csp#report-violation]] on
                 |violation|.
       </li>
       <li>
@@ -606,12 +608,11 @@ type: attribute
             mixed content, as described in [[#requirements-user-controls]].
           </li>
           <li>
-            <var>request</var>'s <a>client</a>'s <a>strict mixed content
+            <var>request</var>'s [=request/client=]'s <a>strict mixed content
             checking flag</a> is <code>true</code>.
           </li>
           <li>
-            <var>request</var>'s <code>mode</code> is <code>CORS</code> or
-            <code>CORS-with-forced-preflight</code>.
+            <var>request</var>'s <code>mode</code> is <code>CORS</code>.
           </li>
         </ol>
       </li>
@@ -665,7 +666,7 @@ type: attribute
           <li>
             [[#categorize-settings-object]] returns <code>Does Not Restrict
             Mixed Content</code> when applied to <var>request</var>'s
-            <a>client</a>.
+            [=request/client=].
           </li>
           <li>
             <var>response</var>'s [=response/HTTPS state=] is <code>modern</code>.
@@ -695,7 +696,7 @@ type: attribute
             mixed content, as described in [[#requirements-user-controls]].
           </li>
           <li>
-            <var>request</var>'s <a>client</a>'s <a>strict mixed content
+            <var>request</var>'s [=request/client=]'s <a>strict mixed content
             checking flag</a> is <code>true</code>.
           </li>
         </ol>
@@ -755,7 +756,7 @@ type: attribute
 
       1.  If |secure| is `false`, and the algorithm in
           [[#categorize-settings-object]] returns "`Restricts Mixed Security
-          Context`" when applied to |client|'s <a>global object</a>'s
+          Context`" when applied to <var ignore>client</var>'s <a>global object</a>'s
           <a>relevant settings object</a>, then the client MUST <a>fail the
           WebSocket connection</a> and abort the connection [[!RFC6455]].
 
