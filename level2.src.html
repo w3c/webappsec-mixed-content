@@ -65,7 +65,8 @@ type: attribute
 
   However, as implemented in today's web browsers, [[!MIXED-CONTENT]] does not fully protect the
   confidentiality and integrity of users' data. Insecure content such as images, audio, and video
-  can currently be loaded by default in secure contexts.
+  can currently be loaded by default in secure contexts. Secure pages can even initiate insecure
+  downloads which escape the user agent's sandbox entirely.
 
   Moreover, users do not have a clear security indicator when mixed content is loaded. When a
   webpage loads mixed content, browsers display an "in-between" security indicator (such as removing
@@ -84,10 +85,18 @@ type: attribute
   autoupgraded, it will be blocked. Autoupgrading avoids loading insecure resources on secure
   webpages, while minimizing the amount of developer effort needed to avoid breakage.
 
-  This specification (Level 2) only recommends autoupgrading types of mixed content that are not
-  currently blocked by default, and does not recommend autougprading types of content that are
-  already blocked. This is to minimize the amount of web-visible change; we only want to autoupgrade
-  content if it advances us towards the goal of blocking all mixed content by default.
+  This specification (Level 2) only recommends autoupgrading types of mixed content subresources
+  that are not currently blocked by default, and does not recommend autougprading types of content
+  that are already blocked. This is to minimize the amount of web-visible change; we only want to
+  autoupgrade content if it advances us towards the goal of blocking all mixed content by default.
+
+  This specification also explicitly introduces the concept of <i>mixed downloads</i>. A mixed
+  download is a resource that a user agent handles as a download, which was initiated by a secure
+  context but is downloaded over an insecure connection. User agents should block mixed downloads
+  because they can escape the user agent's sandbox (in the case of an executable) or contain
+  sensitive information (e.g., a downloaded bank statement). This is especially misleading because
+  user agents typically indicates to the user that they are on a secure page while initiating and
+  completing a mixed download.
 </section>
 
 <section>
@@ -171,6 +180,30 @@ type: attribute
   [[fetch#main-fetch]] should be modified to call [[#upgrade-algorithm]] on <var>request</var>
   between steps 3 and 4. That is, optionally-blockable mixed content should be autoupgraded to HTTPS
   before applying mixed content blocking.
+
+  <h3 id="html">Modifications to HTML</h3>
+
+  <a>Process a navigate response</a> should be modified as follows. Step 3 should abort the download
+  and return if <var>source</var>'s <a>active document</a>'s <a for="Document">url</a> is an
+  [[mixed-content#a-priori-authenticated-url]] and any URL
+  in <var>response</var>'s <a for="response">URL list</a> is not an
+  [[mixed-content#a-priori-authenticated-url]].
+
+  A similar change should be made to <a>downloads a hyperlink</a>. In this algorithm, step 6.2
+  should be modified to return (aborting the download) if <var>subject</var>'s <a>node
+  document</a>'s <a for="Document">url</a> is an [[mixed-content#a-priori-authenticated-url]] and
+  any URL in <var>response</var>'s <a for="response">URL list</a> is not an
+  [[mixed-content#a-priori-authenticated-url]] (where <var>response</var> is the result of
+  fetching <var>request</var>).
+
+  Note: Downloads are not autoupgraded like other types of mixed content, because the user agent
+  does not always know before requesting a resource that it will be downloaded.
+
+  Note: Resources are downloaded before the user agent decides whether to abort them based on an
+  insecure connection. Sensitive information may therefore traverse the network even though the user
+  agent eventually blocks the download. This is generally unavoidable because the user agent may not
+  know that a resource is to be downloaded until it receives the final response, but by blocking the
+  resource, user agents will encourage website operators to serve downloads over secure connections.
 
 </section>
 
