@@ -27,6 +27,7 @@ Boilerplate: omit conformance, omit feedback-header
 <pre class="link-defaults">
 spec:html; type:dfn; for:/; text: use srcset or picture
 spec:html; type:dfn; for:/; text:browsing context
+spec:html; type:dfn; for:/; text:container document
 spec:html; type:dfn; for:/; text:plugin
 spec:html; type:dfn; for:/; text:global object
 spec:fetch; type:dfn; for:/; text:request
@@ -61,11 +62,11 @@ type: attribute
   cookie), or induce the user to take an unintended action (e.g., changing the
   label on a button). These requests are known as mixed content.
 
-  [[!MIXED-CONTENT]] details how a user agent can mitigate these risks by
+  [[!mixed-content]] details how a user agent can mitigate these risks by
   blocking certain types of mixed content, and behaving more strictly in some
   contexts.
 
-  However, as implemented in today's web browsers, [[!MIXED-CONTENT]] does not fully protect the
+  However, as implemented in today's web browsers, [[!mixed-content]] does not fully protect the
   confidentiality and integrity of users' data. Insecure content such as images, audio, and video
   can currently be loaded by default in secure contexts. Secure pages can even initiate insecure
   downloads which escape the user agent's sandbox entirely.
@@ -79,7 +80,7 @@ type: attribute
   transport or it isn't -- and encourage developers to securely load any mixed content that is
   necessary for their webpage to function properly.
 
-  Mixed Content Level 2 therefore updates and extends [[!MIXED-CONTENT]] to provide users with
+  Mixed Content Level 2 therefore updates and extends [[!mixed-content]] to provide users with
   better security and privacy guarantees and a better security UX, while minimizing
   breakage. Instead of advising browsers to simply strictly block all mixed content, the core idea
   of Level 2 is <i>mixed content autoupgrading</i>. That is, mixed content that user agents are not
@@ -104,7 +105,176 @@ type: attribute
 <section>
   <h2 id="terms">Key Concepts and Terminology</h2>
 
-  TODO
+  <dl>
+    <dt>
+      <dfn export local-lt="mixed">mixed content</dfn>
+    </dt>
+    <dd>
+      A <a>request</a> is <strong>mixed content</strong> if its
+      <a for="request">url</a> is not <a><i lang="la">a priori</i>
+      authenticated</a>, <strong>and</strong> the context responsible for
+      loading it requires prohibits mixed security contexts (see
+      [[#categorize-settings-object]] for a normative definition of the latter).
+
+      A <a>response</a> is <strong>mixed content</strong> if it is an
+      <a>unauthenticated response</a>, <strong>and</strong> the context
+      responsible for loading it requires prohibits mixed security contexts.
+
+      <div class="example">
+        Inside a context that restricts mixed content
+        (<code>https://secure.example.com/</code>, for example):
+
+        1.  A request for the script <code>http://example.com/script.js</code>
+            is <strong>mixed content</strong>. As script <a>requests</a> are
+            <a>blockable</a>, the user agent will return a network error rather
+            than loading the resource.
+
+        2.  A request for the image <code>http://example.com/image.png</code> is
+            <strong>mixed content</strong>. As image <a>requests</a> are
+            <a>optionally-blockable</a>, the user agent might load the image, in
+            which case the image resource itself would be <strong>mixed
+            content</strong>.
+      </div>
+
+      If mixed content is loaded into a context that restricts mixed content
+      (as in #2 above), that context is considered a <a>mixed security
+      context</a> (as defined in [[!RFC6797]]).
+
+      Note: "Mixed content" was originally defined in
+      <a href="https://www.w3.org/TR/wsc-ui/#securepage">section 5.3</a> of
+      [[WSC-UI]]. This document updates that initial definition.
+
+      Note: [[XML]] also defines an unrelated 
+      <a href="https://www.w3.org/TR/2008/REC-xml-20081126/#sec-mixed-content">"mixed content"</a>.
+      concept. This is potentially confusing, but given the term's near
+      ubiquitious usage in a security context across user agents for more than
+      a decade, the practical risk of confusion seems low.
+    </dd>
+
+    <dt>
+      <dfn export local-lt="a priori authenticated" oldids="a-priori-insecure-url a-priori-insecure-origin">
+        <i lang="la">a priori</i> authenticated URL
+      </dfn>
+    </dt>
+    <dd>
+      We know <i lang="la">a priori</i> that a request to a particular URL
+      (|url|) will be delivered in a way that mitigates the risks of
+      interception and modifications if either of the following statements is
+      true:
+
+      1.  |url| is a [=potentially trustworthy URL=] [[!SECURE-CONTEXTS]].
+
+      2.  |url|'s <a for="url">scheme</a> is "`data`".
+
+          Note: We special case `data` URLs here, as we don't consider them
+          particularly trustworthy, but we also don't wish to block them as
+          mixed content, as they never hit the network.
+    </dd>
+
+    <dt>
+      <dfn export local-lt="unauthenticated" oldids="insecure-origin insecure-url">
+        unauthenticated response
+      </dfn>
+    </dt>
+    <dd>
+      We know <i lang="la">a posteriori</i> that a <a>response</a>
+      (|response|) is unauthenticated if either of the following statements
+      is false:
+
+      1.  |response|'s <a for="response">url</a> is <a><i lang="la">a
+          priori</i> authenticated</a>.
+
+      2.  If |response|'s <a for="response">url</a>'s <a for="url">scheme</a>
+          is "`https`" or "`wss`", |response|'s <a for="response">HTTPS
+          state</a> is "`modern`".
+    </dd>
+
+    <dt><dfn export>embedding document</dfn></dt>
+    <dd>
+      Given a {{Document}} <var>A</var>, the <strong>embedding
+      document</strong> of <var>A</var> is |A|'s [=browsing context=]'s
+      [=container document=] [[!HTML]].
+    </dd>
+
+    <dt><dfn export>mixed download</dfn></dt>
+    <dd>
+      A mixed download is a resource that a user agent handles as a download,
+      which was initiated by a secure context but is downloaded over an
+      insecure connection.
+    </dd>
+  </dl>
+</section>
+
+<section>
+  <h2 id="categories">Content Categories</h2>
+
+  In a perfect world, each user agent would be required to block all <a>mixed
+  content</a> without exception. Unfortunately, that is impractical on today's
+  Internet; a user agent needs to be more nuanced in its restrictions to avoid
+  degrading the experience on a substantial number of websites.
+
+  With that in mind, we here split mixed content into two categories:
+  [[#category-optionally-blockable]] and [[#category-blockable]].
+
+  Note: Future versions of this specification will update this categorization
+  with the intent of moving towards a world where all <a>mixed</a> content is
+  blocked; that is the end goal, but this is the best we can do for now.
+
+  <section>
+    <h3 id="category-optionally-blockable">Optionally-blockable Content</h3>
+
+    Mixed content is
+    <dfn export lt="optionally-blockable mixed content" local-lt="optionally-blockable">optionally-blockable</dfn>
+    when the risk of allowing its usage as <a>mixed content</a> is outweighed by the risk of
+    breaking significant portions of the web. This could be because mixed usage of the resource type
+    is sufficiently high, and because the resource is low-risk in and of itself. The fact that these
+    resource types are optionally-blockable does not mean that they are <em>safe</em>, simply that
+    they're less catastrophically dangerous than other resource types. For example, images and icons
+    are often the central UI elements in an application's interface. If an attacker reversed the
+    "Delete email" and "Reply" icons, there would be real impact to users.
+
+    This category includes:
+
+    *   Requests whose [=request/initiator=] is the empty string, and whose [=request/destination=]
+        is "`image`".
+
+        Note: This corresponds to most images loaded via <{img}> (including SVG documents loaded as
+        images, as those are blocked from executing script or fetching subresources) and CSS
+        ('background-image', 'border-image', etc). It does not include <{img}> elements that [=use
+        srcset or picture=].
+
+    *   Requests whose [=request/destination=] is "`video`".
+
+        Note: This corresponds to video loaded via <{video}> and <{source}>.
+
+    *   Requests whose [=request/destination=] is "`audio`".
+
+        Note: This corresponds to audio loaded via <{audio}> and <{source}>.
+
+    We further limit this category in [[#should-block-fetch]] by force-failing any CORS-enabled
+    request. This means, for example, that mixed content images loaded via `<img crossorigin ...>`
+    will be blocked. This is a good example of the general principle that content falls into this
+    category <em>only</em> when it is too widely used to be blocked outright. The Working Group
+    intends to carve out more blockable subsets as time goes on.
+  </section>
+
+  <section>
+    <h3 id="category-blockable">Blockable Content</h3>
+
+    Any mixed content that is not [=optionally-blockable=] as defined above is considered to be
+    <dfn export lt="blockable mixed content" local-lt="blockable">blockable</dfn>. Typical examples
+    of this kind of content include scripts, <a>plugin</a> data, data requested via
+    {{XMLHttpRequest}}, and so on.
+
+    Note: <a>Navigation requests</a> might target <a>top-level browsing contexts</a>; these are not
+    considered mixed content. See [[#should-block-fetch]] for details.
+
+    Note: Note that requests made on behalf of a plugin are blockable. We recognize, however, that
+    user agents aren't always in a position to mediate these requests. NPAPI plugins, for instance,
+    often have direct network access, and can generally bypass the user agent entirely. We recommend
+    that user agents block these requests when possible, and that plugin vendors implement mixed
+    content checking themselves to mitigate the risks o utlined in this document.
+  </section>
 </section>
 
 <section>
@@ -127,10 +297,10 @@ type: attribute
         <ol>
           <li>
             <var>request</var>'s <a for="request">url</a> is an
-            [[mixed-content#a-priori-authenticated-url]].
+            <a><i lang="la">a priori</i> authenticated URLs</a>
           </li>
           <li>
-            [[mixed-content#categorize-settings-object]] returns "<code>Does Not Restrict Mixed Security
+            [[#categorize-settings-object]] returns "<code>Does Not Restrict Mixed Security
             Contents</code>" when applied to <var>request</var>'s <a for="request">client</a>.
           </li>
           <li>
@@ -161,19 +331,184 @@ type: attribute
   </section>
 
   <section>
-    <h3 id="modifications">Modifications to existing algorithms</h3>
+    <h3 id="existing-mix-algorithms">Existing Mixed Content Algorithms and Modifications</h3>
 
     Note: This section specifies modifications to existing mixed content algorithms to ignore the
     distinction between optionally-blockable and blockable mixed content, since all
     optionally-blockable mixed content will now be autoupgraded.
+    [[mixed-content#should-block-fetch]] and [[mixed-content#should-block-response]] are
+    replaced by the versions below, while [[mixed-content#categorize-settings-object]] is left
+    unmodified (but included below since this will replace the [[mixed-content]] spec). 
 
-    [[mixed-content#should-block-fetch]] should be modified to remove Steps 3, 4, and 5, replacing
-    them with a single step "Return <strong>blocked</strong>".
 
-    [[mixed-content#should-block-response]] should be modified to remove Steps 2, 3, and 4,
-    replacing them with a single step "Return <strong>blocked</strong>".
+    section>
+    <h3 id="categorize-settings-object">
+      Does |settings| prohibit mixed security contexts?
+    </h3>
+
+    Both documents and workers have [=environment settings objects=] which
+    may be examined according to the following algorithm in order to determine
+    whether they restrict mixed content. This algorithm returns "`Prohibits
+    Mixed Security Contexts`" or "`Does Not Prohibit Mixed Security Contexts`",
+    as appropriate.
+
+    Given an [=environment settings object=] (|settings|):
+    
+    1.  If |settings|' [=environment settings object/HTTPS state=] is not "`none`", then return
+        "`Prohibits Mixed Security Contexts`".
+
+    2.  If |settings| has a <a>responsible document</a> |document|, then:
+
+        1.  While |document| has an <a>embedding document</a>:
+
+            1.  Set |document| to |document|'s <a>embedding document</a>.
+
+            2.  Let |embedder settings| be |document|'s [=global object=]'s
+                [=relevant settings object=].
+
+            3.  If |embedder settings|' [=environment settings object/HTTPS state=] is not "`None`",
+                then return "`Prohibits Mixed Security Contexts`".
+
+    3.  Return "`Does Not Restrict Mixed Security Contexts`".
+
+    <div class="note">
+      If a document has an <a>embedding document</a>, a user agent needs to
+      check not only the document itself, but also the <a>top-level browsing
+      context</a> in which the document is nested, as that is the context
+      which controls the user's expectations regarding the security status of
+      the resource she's loaded. For example:
+
+      <div class="example">
+        <code>http://a.com</code> loads <code>http://evil.com</code>. The
+        insecure request will be allowed, as <code>a.com</code> was not loaded
+        over a secure connection.
+      </div>
+
+      <div class="example">
+        <code>https://a.com</code> loads <code>http://evil.com</code>. The
+        insecure request will be blocked, as <code>a.com</code> was loaded over
+        a secure connection.
+      </div>
+
+      <div class="example">
+        <code>http://a.com</code> frames <code>https://b.com</code>, which
+        loads <code>http://evil.com</code>. In this case, the insecure request
+        to <code>evil.com</code> will be blocked, as <code>b.com</code> was
+        loaded over a secure connection, even though <code>a.com</code> was not.
+      </div>
+
+      <div class="example">
+        <code>https://a.com</code> frames a <code>data:</code> URL, which loads
+        <code>http://evil.com</code>. In this case, the insecure request to
+        <code>evil.com</code> will be blocked, as <code>a.com</code> was loaded
+        over a secure connection, even though the framed <code>data:</code> URL
+        would not block mixed content if loaded in a top-level context.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3 id="should-block-fetch">
+      Should fetching <var>request</var> be blocked as mixed content?
+    </h3>
+
+    Note: The Fetch specification hooks into this algorithm to determine whether
+    a request should be entirely blocked (e.g. because the request is for
+    <a>blockable</a> content, and we can <em>assume</em> that it won't be
+    loaded over a secure connection).
+
+    Given a <a>Request</a> <var>request</var>, a user agent determines
+    whether the <a>Request</a> <var>request</var> should proceed or not via the
+    following algorithm:
+
+    <ol>
+      <li>
+        Return <strong>allowed</strong> if one or more of the following
+        conditions are met:
+
+        <ol>
+          <li>
+            [[#categorize-settings-object]] returns "`Does Not Restrict Mixed
+            Security Contexts`" when applied to |request|'s
+            <a for="request">client</a>.
+          </li>
+          <li>
+            |request|'s <a for="request">url</a> is <a><i lang="la">a priori</i>
+            authenticated</a>.
+          </li>
+          <li>
+            The user agent has been instructed to allow <a>mixed content</a>, as
+            described in [[#requirements-user-controls]]).
+          </li>
+          <li>
+            <var>request</var>'s <a for="request">destination</a> is
+            "<code>document</code>", and <var>request</var>'s <a>target browsing
+            context</a> has no <a>parent browsing context</a>.
+
+            Note: We exclude top-level navigations from mixed content checks,
+            but user agents MAY choose to enforce mixed content checks on
+            insecure form submissions (see [[#requirements-forms]]).
+          </li>
+        </ol>
+      </li>
+      <li>
+        Return <strong>blocked</strong>.
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h3 id="should-block-response">
+      Should <var>response</var> to <var>request</var> be blocked as mixed
+      content?
+    </h3>
+
+    Note: <a href="#should-block-fetch">If a request proceeds</a>, we still
+    might want to block the response based on the state of the connection
+    that generated the response (e.g. because the request is <a>blockable</a>,
+    but the connection is <a>unauthenticated</a>), and we also need to ensure
+    that a Service Worker doesn't accidentally return an <a>unauthenticated
+    response</a> for a <a>blockable</a> request. This algorithm is used to make
+    that determination.
+
+    Given a <a>request</a> <var>request</var> and <a>response</a>
+    <var>response</var>, the user agent determines what response should be
+    returned via the following algorithm:
+
+    <ol>
+      <li>
+        Return <strong>allowed</strong> if one or more of the following
+        conditions are met:
+
+        <ol>
+          <li>
+            [[#categorize-settings-object]] returns <code>Does Not Restrict
+            Mixed Content</code> when applied to <var>request</var>'s
+            [=request/client=].
+          </li>
+          <li>
+            <var>response</var>'s [=response/HTTPS state=] is <code>modern</code>.
+          </li>
+          <li>
+            The user agent has been instructed to allow <a>mixed content</a>, as
+            described in [[#requirements-user-controls]]).
+          </li>
+          <li>
+            <var>request</var>'s <a for="request">destination</a> is
+            "<code>document</code>", and <var>request</var>'s <a>target browsing
+            context</a> has no <a>parent browsing context</a>.
+
+            Note: We exclude top-level navigations from mixed content checks,
+            but user agents MAY choose to enforce mixed content checks on
+            insecure form submissions (see [[#requirements-forms]]).
+          </li>
+        </ol>
+      </li>
+      <li>Return <strong>blocked</strong>.</li>
+    </ol>
+  </section>
+  </section>
 </section>
-
 <section>
   <h2 id="integration">Integrations</h2>
 
@@ -187,15 +522,15 @@ type: attribute
 
   <a>Process a navigate response</a> should be modified as follows. Step 3 should abort the download
   and return if <var>source</var>'s <a>active document</a>'s <a for="Document">url</a> is an
-  [[mixed-content#a-priori-authenticated-url]] and any URL
+  <a><i lang="la">a priori</i> authenticated URLs</a> and any URL
   in <var>response</var>'s <a for="response">URL list</a> is not an
-  [[mixed-content#a-priori-authenticated-url]].
+  <a><i lang="la">a priori</i> authenticated URLs</a>.
 
   A similar change should be made to <a>downloads a hyperlink</a>. In this algorithm, step 6.2
   should be modified to return (aborting the download) if <var>subject</var>'s <a>node
-  document</a>'s <a for="Document">url</a> is an [[mixed-content#a-priori-authenticated-url]] and
+  document</a>'s <a for="Document">url</a> is an <a><i lang="la">a priori</i> authenticated URLs</a> and
   any URL in <var>response</var>'s <a for="response">URL list</a> is not an
-  [[mixed-content#a-priori-authenticated-url]] (where <var>response</var> is the result of
+  <a><i lang="la">a priori</i> authenticated URLs</a> (where <var>response</var> is the result of
   fetching <var>request</var>).
 
   Note: Downloads are not autoupgraded like other types of mixed content, because the user agent
@@ -220,6 +555,57 @@ type: attribute
   Note: The <code>upgrade-insecure-requests</code> ([[upgrade-insecure-requests]]) directive is not
   obsolete because it allows developers to upgrade blockable content. This specification only
   upgrades optionally-blockable content by default.
+
+  <h3 id="mixed-content-1"><code>Mixed Content</code></h3>
+
+  This specification renders the [[mixed-content]] specification obsolete,
+  and replaces it.
+</section>
+
+<section>
+  <h2 id="websockets-integration">Modifications to WebSockets</h2>
+
+  The <a href="https://www.w3.org/TR/websockets/#the-websocket-interface"><code>WebSocket()</code>
+  constructor algorithm</a> [[!WEBSOCKETS]] is modified as follows:
+
+  <ul>
+    <li>
+      Remove the current step 2.
+    </li>
+  </ul>
+
+  Note: This suggestion is filed as
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=28841">bug #28841</a>
+  against [[WEBSOCKETS]].
+
+  The <a href="http://tools.ietf.org/html/rfc6455#section-4.1">Establish a
+  WebSocket Connection algorithm</a> [[!RFC6455]] is modified as follows:
+
+  1.  After the current step 1, perform the following step:
+
+      1.  If |secure| is `false`, and the algorithm in
+          [[#categorize-settings-object]] returns "`Restricts Mixed Security
+          Context`" when applied to <var ignore>client</var>'s <a>global object</a>'s
+          <a>relevant settings object</a>, then the client MUST <a>fail the
+          WebSocket connection</a> and abort the connection [[!RFC6455]].
+
+  2.  After the current step 5, perform the following step:
+
+      6.  If |secure| is `true`, and the TLS handshake performed in step 5
+          results in an HTTPS state of "`deprecated`", then the client MUST
+          <a>fail the WebSocket connection</a> and abort the connection
+          [[!RFC6455]].
+
+  Note: Filed as
+  <a href="http://www.rfc-editor.org/errata_search.php?rfc=6455&eid=4398">errata #4398</a>
+  against [[RFC6455]].
+
+  These changes together mean that we'll no longer throw a `SecurityError`
+  exception directly upon constructing a WebSocket object, but will instead rely
+  upon blocking the connection and triggering the <a>fail the WebSocket
+  connection</a> algorithm, which developers can catch by hooking a
+  {{WebSocket}} object's {{WebSocket/onerror}} handler. This is consistent with
+  the behavior of {{XMLHttpRequest}}, {{EventSource}}, and {{fetch()}}.
 </section>
 
 <section>
@@ -237,7 +623,52 @@ type: attribute
   autoupgrading only optionally-blockable content, not blockable content as well. Blockable content
   could present more risk, for example the risk of loading an out-of-date and vulnerable JavaScript
   library.
+
+  <section>
+    <h3 id="requirements-forms">Form Submission</h3>
+
+    If [[#categorize-settings-object]] returns `Restricts Mixed Content` when applied to a
+    {{Document}}'s [=relevant settings object=], then a user agent MAY choose to warn users of the
+    presence of one or more <{form}> elements with <a element-attr>action</a> attributes whose
+    values are not <a><i lang="la">a priori</i> authenticated URLs</a>
+
+    A user agent MAY choose to warn users on submission of a <{form}> element with 
+    <a element-attr>action</a> attributes whose values are not <a><i lang="la">a priori</i>
+    authenticated URLs</a> and allow users to abort the submission.
+
+    Further, a user agent MAY treat form submissions from such a {{Document}} as a [=blockable=]
+    request, even if the submission occurs in the [=top-level browsing context=].
+  </section>
 </section>
+
+<section>
+    <h3 id="requirements-user-controls">User Controls</h3>
+
+    A user agent MAY offer users the ability to directly decide whether or not
+    to treat <strong>all</strong> <a>mixed content</a> as <a>blockable</a>
+    (meaning that even <a>optionally-blockable</a> mixed content would be
+    blocked).
+
+    Note: It is <em>strongly recommended</em> that users take advantage of such
+    an option if provided.
+
+    A user agent MAY offer users the ability to override its decision to block
+    <a>blockable</a> mixed content on a particular page.
+
+    Note: Practically, a user agent probably can't get away with not offering
+    such a back door. That said, allowing mixed script is in particular a very
+    dangerous option, and each user agent
+    <a href="http://tools.ietf.org/html/rfc6919#section-3">REALLY SHOULD NOT</a>
+    [[RFC6919]] present such a choice to users without careful consideration and
+    communication of the risk involved.
+
+    A user agent MAY offer users the ability to override its decision to
+    automatically upgrade <a>optionally-blockable</a> mixed content on a
+    particular page.
+
+    Any such controls offered by a user agent MUST also be offered through
+    accessibility APIs for users of assistive technologies.
+  </section>
 
 <section>
   <h2 id="acknowledgements">Acknowledgements</h2>
