@@ -131,14 +131,10 @@ type: attribute
 
         2.  A request for the image <code>http://example.com/image.png</code> is
             <strong>mixed content</strong>. As image <a>requests</a> are
-            <a>optionally-blockable</a>, the user agent might load the image, in
-            which case the image resource itself would be <strong>mixed
-            content</strong>.
+            <a>upgradeable</a>, the user agent might rewrite the URL as
+            <code>http://example.com/image.png</code>, otherwise it will block
+            the load.
       </div>
-
-      If mixed content is loaded into a context that restricts mixed content
-      (as in #2 above), that context is considered a <a>mixed security
-      context</a> (as defined in [[!RFC6797]]).
 
       Note: "Mixed content" was originally defined in
       <a href="https://www.w3.org/TR/wsc-ui/#securepage">section 5.3</a> of
@@ -214,21 +210,20 @@ type: attribute
   degrading the experience on a substantial number of websites.
 
   With that in mind, we here split mixed content into two categories:
-  [[#category-optionally-blockable]] and [[#category-blockable]].
-
-  Note: Future versions of this specification will update this categorization
-  with the intent of moving towards a world where all <a>mixed</a> content is
-  blocked; that is the end goal, but this is the best we can do for now.
+  [[#category-upgradeable]] and [[#category-blockable]].
 
   <section>
-    <h3 id="category-optionally-blockable">Optionally-blockable Content</h3>
+    <h3 id="category-upgradeable">Upgradeable Content</h3>
+
+    <note>Upgradeable content was previously referred as optionally-blockable in
+    [[mixed-content]]</note>
 
     Mixed content is
-    <dfn export lt="optionally-blockable mixed content" local-lt="optionally-blockable">optionally-blockable</dfn>
+    <dfn export lt="upgradeable mixed content" local-lt="upgradeable">upgradeable</dfn>
     when the risk of allowing its usage as <a>mixed content</a> is outweighed by the risk of
     breaking significant portions of the web. This could be because mixed usage of the resource type
     is sufficiently high, and because the resource is low-risk in and of itself. The fact that these
-    resource types are optionally-blockable does not mean that they are <em>safe</em>, simply that
+    resource types are upgradeable does not mean that they are <em>safe</em>, simply that
     they're less catastrophically dangerous than other resource types. For example, images and icons
     are often the central UI elements in an application's interface. If an attacker reversed the
     "Delete email" and "Reply" icons, there would be real impact to users.
@@ -261,7 +256,7 @@ type: attribute
   <section>
     <h3 id="category-blockable">Blockable Content</h3>
 
-    Any mixed content that is not [=optionally-blockable=] as defined above is considered to be
+    Any mixed content that is not [=upgradeable=] as defined above is considered to be
     <dfn export lt="blockable mixed content" local-lt="blockable">blockable</dfn>. Typical examples
     of this kind of content include scripts, <a>plugin</a> data, data requested via
     {{XMLHttpRequest}}, and so on.
@@ -273,7 +268,7 @@ type: attribute
     user agents aren't always in a position to mediate these requests. NPAPI plugins, for instance,
     often have direct network access, and can generally bypass the user agent entirely. We recommend
     that user agents block these requests when possible, and that plugin vendors implement mixed
-    content checking themselves to mitigate the risks o utlined in this document.
+    content checking themselves to mitigate the risks outlined in this document.
   </section>
 </section>
 
@@ -284,11 +279,11 @@ type: attribute
     <h3 id="upgrade-algorithm">Upgrade |request| to an <i lang="la">a priori</i>
     authenticated URL as mixed content, if appropriate</h3>
 
-    Note: The Fetch specification will hook into this algorithm to upgrade optionally-blockable
+    Note: The Fetch specification will hook into this algorithm to upgrade upgradeable
     mixed content to HTTPS.
 
     Given a <a>Request</a> <var>request</var>, this algorithm will rewrite
-    its <a for="request">url</a> if the request is deemed to be optionally-blockable mixed content,
+    its <a for="request">url</a> if the request is deemed to be upgradeable mixed content,
     via the following algorithm:
 
     <ol>
@@ -297,7 +292,7 @@ type: attribute
         <ol>
           <li>
             <var>request</var>'s <a for="request">url</a> is an
-            <a><i lang="la">a priori</i> authenticated URLs</a>
+            <a><i lang="la">a priori</i> authenticated URL</a>
           </li>
           <li>
             [[#categorize-settings-object]] returns "<code>Does Not Restrict Mixed Security
@@ -515,7 +510,7 @@ type: attribute
   <h3 id="fetch">Modifications to Fetch</h3>
 
   [[fetch#main-fetch]] should be modified to call [[#upgrade-algorithm]] on <var>request</var>
-  between steps 3 and 4. That is, optionally-blockable mixed content should be autoupgraded to HTTPS
+  between steps 3 and 4. That is, upgradeable mixed content should be autoupgraded to HTTPS
   before applying mixed content blocking.
 
   <h3 id="html">Modifications to HTML</h3>
@@ -554,7 +549,7 @@ type: attribute
 
   Note: The <code>upgrade-insecure-requests</code> ([[upgrade-insecure-requests]]) directive is not
   obsolete because it allows developers to upgrade blockable content. This specification only
-  upgrades optionally-blockable content by default.
+  upgrades upgradeable content by default.
 
   <h3 id="mixed-content-1"><code>Mixed Content</code></h3>
 
@@ -563,55 +558,9 @@ type: attribute
 </section>
 
 <section>
-  <h2 id="websockets-integration">Modifications to WebSockets</h2>
-
-  The <a href="https://www.w3.org/TR/websockets/#the-websocket-interface"><code>WebSocket()</code>
-  constructor algorithm</a> [[!WEBSOCKETS]] is modified as follows:
-
-  <ul>
-    <li>
-      Remove the current step 2.
-    </li>
-  </ul>
-
-  Note: This suggestion is filed as
-  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=28841">bug #28841</a>
-  against [[WEBSOCKETS]].
-
-  The <a href="http://tools.ietf.org/html/rfc6455#section-4.1">Establish a
-  WebSocket Connection algorithm</a> [[!RFC6455]] is modified as follows:
-
-  1.  After the current step 1, perform the following step:
-
-      1.  If |secure| is `false`, and the algorithm in
-          [[#categorize-settings-object]] returns "`Restricts Mixed Security
-          Context`" when applied to <var ignore>client</var>'s <a>global object</a>'s
-          <a>relevant settings object</a>, then the client MUST <a>fail the
-          WebSocket connection</a> and abort the connection [[!RFC6455]].
-
-  2.  After the current step 5, perform the following step:
-
-      6.  If |secure| is `true`, and the TLS handshake performed in step 5
-          results in an HTTPS state of "`deprecated`", then the client MUST
-          <a>fail the WebSocket connection</a> and abort the connection
-          [[!RFC6455]].
-
-  Note: Filed as
-  <a href="http://www.rfc-editor.org/errata_search.php?rfc=6455&eid=4398">errata #4398</a>
-  against [[RFC6455]].
-
-  These changes together mean that we'll no longer throw a `SecurityError`
-  exception directly upon constructing a WebSocket object, but will instead rely
-  upon blocking the connection and triggering the <a>fail the WebSocket
-  connection</a> algorithm, which developers can catch by hooking a
-  {{WebSocket}} object's {{WebSocket/onerror}} handler. This is consistent with
-  the behavior of {{XMLHttpRequest}}, {{EventSource}}, and {{fetch()}}.
-</section>
-
-<section>
   <h2 id="security-considerations">Security and Privacy Considerations</h2>
 
-  Overall, autoupgrading optionally-blockable mixed content is expected to be security- and
+  Overall, autoupgrading upgradeable mixed content is expected to be security- and
   privacy-positive, by protecting more user traffic from network eavesdropping and tampering.
 
   There is a risk of introducing a security or privacy issue in a webpage by loading a resource that
@@ -620,7 +569,7 @@ type: attribute
   reason <code>https://www.example.com/image.jpg</code> redirects to a tracking site. The browser
   will now have introduced a privacy issue without the developer's or user's explicit
   consent. However, these cases are expected to be exceedingly rare. The risk is mitigated by
-  autoupgrading only optionally-blockable content, not blockable content as well. Blockable content
+  autoupgrading only upgradeable content, not blockable content as well. Blockable content
   could present more risk, for example the risk of loading an out-of-date and vulnerable JavaScript
   library.
 
@@ -643,15 +592,6 @@ type: attribute
 
 <section>
     <h3 id="requirements-user-controls">User Controls</h3>
-
-    A user agent MAY offer users the ability to directly decide whether or not
-    to treat <strong>all</strong> <a>mixed content</a> as <a>blockable</a>
-    (meaning that even <a>optionally-blockable</a> mixed content would be
-    blocked).
-
-    Note: It is <em>strongly recommended</em> that users take advantage of such
-    an option if provided.
-
     A user agent MAY offer users the ability to override its decision to block
     <a>blockable</a> mixed content on a particular page.
 
@@ -663,7 +603,7 @@ type: attribute
     communication of the risk involved.
 
     A user agent MAY offer users the ability to override its decision to
-    automatically upgrade <a>optionally-blockable</a> mixed content on a
+    automatically upgrade <a>upgradeable</a> mixed content on a
     particular page.
 
     Any such controls offered by a user agent MUST also be offered through
