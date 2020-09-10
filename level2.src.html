@@ -113,7 +113,7 @@ type: attribute
       A <a>request</a> is <strong>mixed content</strong> if its
       <a for="request">url</a> is not <a><i lang="la">a priori</i>
       authenticated</a>, <strong>and</strong> the context responsible for
-      loading it requires prohibits mixed security contexts (see
+      loading it prohibits mixed security contexts (see
       [[#categorize-settings-object]] for a normative definition of the latter).
 
       A <a>response</a> is <strong>mixed content</strong> if it is an
@@ -174,15 +174,9 @@ type: attribute
     </dt>
     <dd>
       We know <i lang="la">a posteriori</i> that a <a>response</a>
-      (|response|) is unauthenticated if either of the following statements
-      is false:
-
-      1.  |response|'s <a for="response">url</a> is <a><i lang="la">a
-          priori</i> authenticated</a>.
-
-      2.  If |response|'s <a for="response">url</a>'s <a for="url">scheme</a>
-          is "`https`" or "`wss`", |response|'s <a for="response">HTTPS
-          state</a> is "`modern`".
+      (|response|) is unauthenticated if |response|'s
+      <a for="response">url</a> is not <a><i lang="la">a priori</i>
+      authenticated</a>.
     </dd>
 
     <dt><dfn export>embedding document</dfn></dt>
@@ -349,7 +343,8 @@ type: attribute
 
     Given an [=environment settings object=] (|settings|):
     
-    1.  If |settings|' [=environment settings object/HTTPS state=] is not "`none`", then return
+    1.  If |settings|' [=environment settings object/origin=] is
+        <a><i lang="la">a priori</i> authenticated</a>., then return
         "`Prohibits Mixed Security Contexts`".
 
     2.  If |settings| has a <a>responsible document</a> |document|, then:
@@ -361,8 +356,10 @@ type: attribute
             2.  Let |embedder settings| be |document|'s [=global object=]'s
                 [=relevant settings object=].
 
-            3.  If |embedder settings|' [=environment settings object/HTTPS state=] is not "`None`",
-                then return "`Prohibits Mixed Security Contexts`".
+            3.  If |embedder settings|'
+                [=environment settings object/origin=] is <a><i lang="la">
+                a priori</i> authenticated</a>., then return
+                "`Prohibits Mixed Security Contexts`".
 
     3.  Return "`Does Not Restrict Mixed Security Contexts`".
 
@@ -482,8 +479,8 @@ type: attribute
             [=request/client=].
           </li>
           <li>
-            <var>response</var>'s [=response/HTTPS state=] is <code>modern</code>.
-          </li>
+            |request|'s <a for="request">url</a> is <a><i lang="la">a priori</i>
+            authenticated</a>.
           <li>
             The user agent has been instructed to allow <a>mixed content</a>, as
             described in [[#requirements-user-controls]]).
@@ -542,9 +539,10 @@ type: attribute
 <section>
   <h2 id="obsolescences">Obsolescences</h2>
 
-  <h3 id="block-all-mixed-content"><code>block-all-mixed-content</code></h3>
+  <h3 id="strict-checking"><code>Strict Mixed Content Checking</code></h3>
 
-  This specification renders the [[mixed-content#block-all-mixed-content]] CSP directive obsolete,
+  This specification renders the [[mixed-content#strict-checking]] mode and
+  the <code>block-all-mixed-content</code> CSP directive obsolete,
   because all mixed content is now blocked if it can't be autoupgraded.
 
   Note: The <code>upgrade-insecure-requests</code> ([[upgrade-insecure-requests]]) directive is not
