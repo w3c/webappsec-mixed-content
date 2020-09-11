@@ -5,18 +5,70 @@
   <title>Mixed Content Level 2</title>
   <meta content="WD" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-WD" rel="stylesheet" type="text/css">
-  <meta content="Bikeshed version e1a165f1c2fb1cc2aceb87e110984a42830c36fa" name="generator">
+  <meta content="Bikeshed version e2e6e5d1, updated Fri Sep 4 10:16:46 2020 -0700" name="generator">
   <link href="https://www.w3.org/TR/mixed-content-2/" rel="canonical">
-  <meta content="08fce07e15a85e78b6ee96a116c02790aab035ef" name="document-revision">
-<style>/* style-md-lists */
+  <meta content="8616a6bf09809ae9ad31f4ddc15bd0534cd394f3" name="document-revision">
+<style>/* style-autolinks */
 
-/* This is a weird hack for me not yet following the commonmark spec
-   regarding paragraph and lists. */
-[data-md] > :first-child {
-    margin-top: 0;
+.css.css, .property.property, .descriptor.descriptor {
+    color: #005a9c;
+    font-size: inherit;
+    font-family: inherit;
 }
-[data-md] > :last-child {
-    margin-bottom: 0;
+.css::before, .property::before, .descriptor::before {
+    content: "‘";
+}
+.css::after, .property::after, .descriptor::after {
+    content: "’";
+}
+.property, .descriptor {
+    /* Don't wrap property and descriptor names */
+    white-space: nowrap;
+}
+.type { /* CSS value <type> */
+    font-style: italic;
+}
+pre .property::before, pre .property::after {
+    content: "";
+}
+[data-link-type="property"]::before,
+[data-link-type="propdesc"]::before,
+[data-link-type="descriptor"]::before,
+[data-link-type="value"]::before,
+[data-link-type="function"]::before,
+[data-link-type="at-rule"]::before,
+[data-link-type="selector"]::before,
+[data-link-type="maybe"]::before {
+    content: "‘";
+}
+[data-link-type="property"]::after,
+[data-link-type="propdesc"]::after,
+[data-link-type="descriptor"]::after,
+[data-link-type="value"]::after,
+[data-link-type="function"]::after,
+[data-link-type="at-rule"]::after,
+[data-link-type="selector"]::after,
+[data-link-type="maybe"]::after {
+    content: "’";
+}
+
+[data-link-type].production::before,
+[data-link-type].production::after,
+.prod [data-link-type]::before,
+.prod [data-link-type]::after {
+    content: "";
+}
+
+[data-link-type=element],
+[data-link-type=element-attr] {
+    font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    font-size: .9em;
+}
+[data-link-type=element]::before { content: "<" }
+[data-link-type=element]::after  { content: ">" }
+
+[data-link-type=biblio] {
+    white-space: pre;
 }</style>
 <style>/* style-counters */
 
@@ -84,6 +136,16 @@ figcaption:not(.no-marker)::before {
 
 .dfn-paneled { cursor: pointer; }
 </style>
+<style>/* style-md-lists */
+
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}</style>
 <style>/* style-selflinks */
 
 .heading, .issue, .note, .example, li, dt {
@@ -130,77 +192,15 @@ dfn > a.self-link:hover {
 a.self-link::before            { content: "¶"; }
 .heading > a.self-link::before { content: "§"; }
 dfn > a.self-link::before      { content: "#"; }</style>
-<style>/* style-autolinks */
-
-.css.css, .property.property, .descriptor.descriptor {
-    color: #005a9c;
-    font-size: inherit;
-    font-family: inherit;
-}
-.css::before, .property::before, .descriptor::before {
-    content: "‘";
-}
-.css::after, .property::after, .descriptor::after {
-    content: "’";
-}
-.property, .descriptor {
-    /* Don't wrap property and descriptor names */
-    white-space: nowrap;
-}
-.type { /* CSS value <type> */
-    font-style: italic;
-}
-pre .property::before, pre .property::after {
-    content: "";
-}
-[data-link-type="property"]::before,
-[data-link-type="propdesc"]::before,
-[data-link-type="descriptor"]::before,
-[data-link-type="value"]::before,
-[data-link-type="function"]::before,
-[data-link-type="at-rule"]::before,
-[data-link-type="selector"]::before,
-[data-link-type="maybe"]::before {
-    content: "‘";
-}
-[data-link-type="property"]::after,
-[data-link-type="propdesc"]::after,
-[data-link-type="descriptor"]::after,
-[data-link-type="value"]::after,
-[data-link-type="function"]::after,
-[data-link-type="at-rule"]::after,
-[data-link-type="selector"]::after,
-[data-link-type="maybe"]::after {
-    content: "’";
-}
-
-[data-link-type].production::before,
-[data-link-type].production::after,
-.prod [data-link-type]::before,
-.prod [data-link-type]::after {
-    content: "";
-}
-
-[data-link-type=element],
-[data-link-type=element-attr] {
-    font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
-    font-size: .9em;
-}
-[data-link-type=element]::before { content: "<" }
-[data-link-type=element]::after  { content: ">" }
-
-[data-link-type=biblio] {
-    white-space: pre;
-}</style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Mixed Content Level 2</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">W3C First Public Working Draft, <time class="dt-updated" datetime="2020-03-25">25 March 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">W3C First Public Working Draft, <time class="dt-updated" datetime="2020-09-10">10 September 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
-     <dd><a class="u-url" href="https://www.w3.org/TR/2020/WD-mixed-content-2-2-20200325/">https://www.w3.org/TR/2020/WD-mixed-content-2-2-20200325/</a>
+     <dd><a class="u-url" href="https://www.w3.org/TR/2020/WD-mixed-content-2-2-20200910/">https://www.w3.org/TR/2020/WD-mixed-content-2-2-20200910/</a>
      <dt>Latest published version:
      <dd><a href="https://www.w3.org/TR/mixed-content-2/">https://www.w3.org/TR/mixed-content-2/</a>
      <dt>Editor's Draft:
@@ -288,7 +288,7 @@ pre .property::before, pre .property::after {
     <li>
      <a href="#obsolescences"><span class="secno">6</span> <span class="content">Obsolescences</span></a>
      <ol class="toc">
-      <li><a href="#block-all-mixed-content"><span class="secno">6.1</span> <span class="content"><code>block-all-mixed-content</code></span></a>
+      <li><a href="#strict-checking"><span class="secno">6.1</span> <span class="content"><code>Strict Mixed Content Checking</code></span></a>
       <li><a href="#mixed-content-1"><span class="secno">6.2</span> <span class="content"><code>Mixed Content</code></span></a>
      </ol>
     <li>
@@ -373,7 +373,7 @@ pre .property::before, pre .property::after {
      <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="mixed" id="mixed-content">mixed content</dfn> 
      <dd>
        A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">request</a> is <strong>mixed content</strong> if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url">url</a> is not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url"><i lang="la">a priori</i> authenticated</a>, <strong>and</strong> the context responsible for
-      loading it requires prohibits mixed security contexts (see <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> for a normative definition of the latter). 
+      loading it prohibits mixed security contexts (see <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> for a normative definition of the latter). 
       <p>A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response">response</a> is <strong>mixed content</strong> if it is an <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response">unauthenticated response</a>, <strong>and</strong> the context
       responsible for loading it requires prohibits mixed security contexts.</p>
       <div class="example" id="example-14c50224">
@@ -409,17 +409,7 @@ pre .property::before, pre .property::after {
   mixed content, as they never hit the network.</p>
       </ol>
      <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="unauthenticated" data-lt="unauthenticated response" id="unauthenticated-response"> unauthenticated response <span id="insecure-origin insecure-url"></span></dfn> 
-     <dd>
-       We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response①">response</a> (<var>response</var>) is unauthenticated if either of the following statements
-      is false: 
-      <ol>
-       <li data-md>
-        <p><var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url①"><i lang="la">a
-  priori</i> authenticated</a>.</p>
-       <li data-md>
-        <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url①">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme①">scheme</a> is "<code>https</code>" or "<code>wss</code>", <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state" id="ref-for-concept-response-https-state">HTTPS
-  state</a> is "<code>modern</code>".</p>
-      </ol>
+     <dd> We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response①">response</a> (<var>response</var>) is unauthenticated if <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">url</a> is not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url①"><i lang="la">a priori</i> authenticated</a>. 
      <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="embedding-document">embedding document</dfn>
      <dd> Given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> <var>A</var>, the <strong>embedding
       document</strong> of <var>A</var> is <var>A</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context" id="ref-for-browsing-context">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#bc-container-document" id="ref-for-bc-container-document">container document</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a>. 
@@ -452,7 +442,7 @@ pre .property::before, pre .property::after {
        <p>Requests whose <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator" id="ref-for-concept-request-initiator">initiator</a> is the empty string, and whose <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination">destination</a> is "<code>image</code>".</p>
        <p class="note" role="note"><span>Note:</span> This corresponds to most images loaded via <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element" id="ref-for-the-img-element">img</a></code> (including SVG documents loaded as
   images, as those are blocked from executing script or fetching subresources) and CSS
-  (<a class="property" data-link-type="propdesc" href="https://www.w3.org/TR/css3-background/#propdef-background-image" id="ref-for-propdef-background-image">background-image</a>, <a class="property" data-link-type="propdesc" href="https://www.w3.org/TR/css3-background/#propdef-border-image" id="ref-for-propdef-border-image">border-image</a>, etc). It does not include <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element" id="ref-for-the-img-element①">img</a></code> elements that <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/images.html#use-srcset-or-picture" id="ref-for-use-srcset-or-picture">use
+  (<a class="property" data-link-type="propdesc" href="https://www.w3.org/TR/css-backgrounds-3/#propdef-background-image" id="ref-for-propdef-background-image">background-image</a>, <a class="property" data-link-type="propdesc" href="https://www.w3.org/TR/css-backgrounds-3/#propdef-border-image" id="ref-for-propdef-border-image">border-image</a>, etc). It does not include <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element" id="ref-for-the-img-element①">img</a></code> elements that <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/images.html#use-srcset-or-picture" id="ref-for-use-srcset-or-picture">use
   srcset or picture</a>.</p>
       <li data-md>
        <p>Requests whose <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a> is "<code>video</code>".</p>
@@ -502,8 +492,8 @@ pre .property::before, pre .property::after {
             and <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator" id="ref-for-concept-request-initiator①">initiator</a> is "<code>imageset</code>". 
        </ol>
       <li>
-        If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url③">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme②">scheme</a> is <code>http</code>,
-        set <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url④">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme③">scheme</a> to <code>https</code>, and return. 
+        If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url③">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme①">scheme</a> is <code>http</code>,
+        set <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url④">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme②">scheme</a> to <code>https</code>, and return. 
        <p class="note" role="note"><span>Note:</span> Per <a data-link-type="biblio" href="#biblio-url">[url]</a>, we do not modify the port because it will be set to null when the scheme
         is <code>http</code>, and interpreted as 443 once the scheme is changed
         to <code>https</code></p>
@@ -513,8 +503,8 @@ pre .property::before, pre .property::after {
      <h3 class="heading settled" data-level="4.2" id="existing-mix-algorithms"><span class="secno">4.2. </span><span class="content">Existing Mixed Content Algorithms and Modifications</span><a class="self-link" href="#existing-mix-algorithms"></a></h3>
      <p class="note" role="note"><span>Note:</span> This section specifies modifications to existing mixed content algorithms to ignore the
     distinction between optionally-blockable and blockable mixed content, since all
-    optionally-blockable mixed content will now be autoupgraded. <a href="https://www.w3.org/TR/mixed-content/#should-block-fetch">Mixed Content §should-block-fetch</a> and <a href="https://www.w3.org/TR/mixed-content/#should-block-response">Mixed Content §should-block-response</a> are
-    replaced by the versions below, while <a href="https://www.w3.org/TR/mixed-content/#categorize-settings-object">Mixed Content §categorize-settings-object</a> is left
+    optionally-blockable mixed content will now be autoupgraded. <a href="http://www.w3.org/TR/mixed-content/#should-block-fetch">Mixed Content §5.3 Should fetching request be blocked as mixed content?</a> and <a href="http://www.w3.org/TR/mixed-content/#should-block-response">Mixed Content §5.4 Should response to request be blocked as mixed content?</a> are
+    replaced by the versions below, while <a href="http://www.w3.org/TR/mixed-content/#categorize-settings-object">Mixed Content §5.1 Does settings prohibit mixed security contexts?</a> is left
     unmodified (but included below since this will replace the <a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a> spec).</p>
      <p>section></p>
      <h3 class="heading settled" data-level="4.3" id="categorize-settings-object"><span class="secno">4.3. </span><span class="content"> Does <var>settings</var> prohibit mixed security contexts? </span><a class="self-link" href="#categorize-settings-object"></a></h3>
@@ -525,7 +515,7 @@ pre .property::before, pre .property::after {
      <p>Given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> (<var>settings</var>):</p>
      <ol>
       <li data-md>
-       <p>If <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state" id="ref-for-https-state">HTTPS state</a> is not "<code>none</code>", then return
+       <p>If <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url③"><i lang="la">a priori</i> authenticated</a>., then return
   "<code>Prohibits Mixed Security Contexts</code>".</p>
       <li data-md>
        <p>If <var>settings</var> has a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#responsible-document" id="ref-for-responsible-document">responsible document</a> <var>document</var>, then:</p>
@@ -538,8 +528,8 @@ pre .property::before, pre .property::after {
           <li data-md>
            <p>Let <var>embedder settings</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object">global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>.</p>
           <li data-md>
-           <p>If <var>embedder settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state" id="ref-for-https-state①">HTTPS state</a> is not "<code>None</code>",
-  then return "<code>Prohibits Mixed Security Contexts</code>".</p>
+           <p>If <var>embedder settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin①">origin</a> is <a data-link-type="dfn"><i lang="la"> a priori</i> authenticated</a>., then return
+  "<code>Prohibits Mixed Security Contexts</code>".</p>
          </ol>
        </ol>
       <li data-md>
@@ -580,7 +570,7 @@ pre .property::before, pre .property::after {
         conditions are met: 
        <ol>
         <li> <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> returns "<code>Does Not Restrict Mixed Security Contexts</code>" when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client①">client</a>. 
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url⑤">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url③"><i lang="la">a priori</i> authenticated</a>. 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url⑤">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url④"><i lang="la">a priori</i> authenticated</a>. 
         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content②">mixed content</a>, as
             described in <a href="#requirements-user-controls">§ 7.2 User Controls</a>). 
         <li>
@@ -613,7 +603,7 @@ pre .property::before, pre .property::after {
        <ol>
         <li> <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> returns <code>Does Not Restrict
             Mixed Content</code> when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client②">client</a>. 
-        <li> <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state" id="ref-for-concept-response-https-state①">HTTPS state</a> is <code>modern</code>. 
+        <li> <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url①">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑤"><i lang="la">a priori</i> authenticated</a> 
         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content③">mixed content</a>, as
             described in <a href="#requirements-user-controls">§ 7.2 User Controls</a>). 
         <li>
@@ -636,12 +626,12 @@ pre .property::before, pre .property::after {
   before applying mixed content blocking.</p>
     <h3 class="heading settled" data-level="5.2" id="html"><span class="secno">5.2. </span><span class="content">Modifications to HTML</span><a class="self-link" href="#html"></a></h3>
     <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-response" id="ref-for-process-a-navigate-response">Process a navigate response</a> should be modified as follows. Step 3 should abort the download
-  and return if <var>source</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document-url" id="ref-for-concept-document-url">url</a> is an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url④"><i lang="la">a priori</i> authenticated URLs</a> and any URL
-  in <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url-list" id="ref-for-concept-response-url-list">URL list</a> is not an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑤"><i lang="la">a priori</i> authenticated URLs</a>.</p>
+  and return if <var>source</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document-url" id="ref-for-concept-document-url">url</a> is an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑥"><i lang="la">a priori</i> authenticated URLs</a> and any URL
+  in <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url-list" id="ref-for-concept-response-url-list">URL list</a> is not an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑦"><i lang="la">a priori</i> authenticated URLs</a>.</p>
     <p>A similar change should be made to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/links.html#downloading-hyperlinks" id="ref-for-downloading-hyperlinks">downloads a hyperlink</a>. In this algorithm, step 6.2
   should be modified to return (aborting the download) if <var>subject</var>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-document" id="ref-for-concept-node-document">node
-  document</a>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document-url" id="ref-for-concept-document-url①">url</a> is an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑥"><i lang="la">a priori</i> authenticated URLs</a> and
-  any URL in <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url-list" id="ref-for-concept-response-url-list①">URL list</a> is not an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑦"><i lang="la">a priori</i> authenticated URLs</a> (where <var>response</var> is the result of
+  document</a>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document-url" id="ref-for-concept-document-url①">url</a> is an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑧"><i lang="la">a priori</i> authenticated URLs</a> and
+  any URL in <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url-list" id="ref-for-concept-response-url-list①">URL list</a> is not an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑨"><i lang="la">a priori</i> authenticated URLs</a> (where <var>response</var> is the result of
   fetching <var>request</var>).</p>
     <p class="note" role="note"><span>Note:</span> Downloads are not autoupgraded like other types of mixed content, because the user agent
   does not always know before requesting a resource that it will be downloaded.</p>
@@ -653,8 +643,9 @@ pre .property::before, pre .property::after {
    </section>
    <section>
     <h2 class="heading settled" data-level="6" id="obsolescences"><span class="secno">6. </span><span class="content">Obsolescences</span><a class="self-link" href="#obsolescences"></a></h2>
-    <h3 class="heading settled" data-level="6.1" id="block-all-mixed-content"><span class="secno">6.1. </span><span class="content"><code>block-all-mixed-content</code></span><a class="self-link" href="#block-all-mixed-content"></a></h3>
-    <p>This specification renders the <a href="https://www.w3.org/TR/mixed-content/#block-all-mixed-content">Mixed Content §block-all-mixed-content</a> CSP directive obsolete,
+    <h3 class="heading settled" data-level="6.1" id="strict-checking"><span class="secno">6.1. </span><span class="content"><code>Strict Mixed Content Checking</code></span><a class="self-link" href="#strict-checking"></a></h3>
+    <p>This specification renders the <a href="http://www.w3.org/TR/mixed-content/#strict-checking">Mixed Content §4 Strict Mixed Content Checking</a> mode and
+  the <code>block-all-mixed-content</code> CSP directive obsolete,
   because all mixed content is now blocked if it can’t be autoupgraded.</p>
     <p class="note" role="note"><span>Note:</span> The <code>upgrade-insecure-requests</code> (<a data-link-type="biblio" href="#biblio-upgrade-insecure-requests">[upgrade-insecure-requests]</a>) directive is not
   obsolete because it allows developers to upgrade blockable content. This specification only
@@ -680,8 +671,8 @@ pre .property::before, pre .property::after {
      <h3 class="heading settled" data-level="7.1" id="requirements-forms"><span class="secno">7.1. </span><span class="content">Form Submission</span><a class="self-link" href="#requirements-forms"></a></h3>
      <p>If <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> returns <code>Restricts Mixed Content</code> when applied to a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>, then a user agent MAY choose to warn users of the
     presence of one or more <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element">form</a></code> elements with <a data-link-type="element-attr" href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action" id="ref-for-attr-fs-action">action</a> attributes whose
-    values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑧"><i lang="la">a priori</i> authenticated URLs</a></p>
-     <p>A user agent MAY choose to warn users on submission of a <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element①">form</a></code> element with <a data-link-type="element-attr" href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action" id="ref-for-attr-fs-action①">action</a> attributes whose values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑨"><i lang="la">a priori</i> authenticated URLs</a> and allow users to abort the submission.</p>
+    values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url①⓪"><i lang="la">a priori</i> authenticated URLs</a></p>
+     <p>A user agent MAY choose to warn users on submission of a <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element①">form</a></code> element with <a data-link-type="element-attr" href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action" id="ref-for-attr-fs-action①">action</a> attributes whose values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url①①"><i lang="la">a priori</i> authenticated URLs</a> and allow users to abort the submission.</p>
      <p>Further, a user agent MAY treat form submissions from such a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> as a <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content④">blockable</a> request, even if the submission occurs in the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>.</p>
     </section>
    </section>
@@ -700,6 +691,13 @@ pre .property::before, pre .property::after {
    </section>
    <section>
     <h2 class="heading settled" data-level="8" id="acknowledgements"><span class="secno">8. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
+    <p>In addition to the wonderful feedback gathered from the WebAppSec WG, the
+  Chrome security team was invaluable in preparing this specification. In
+  particular, Chris Palmer, Chris Evans, Ryan Sleevi, Michal Zalewski, Ken
+  Buchanan, and Tom Sepez gave lots of early feedback. Anne van Kesteren
+  explained Fetch, helped define the interface to this specification,
+  and provided valuable feedback on the Level 2 update.
+  Brian Smith helped keep the spec focused, trim, and sane.</p>
    </section>
   </main>
   <h2 class="no-ref no-num heading settled" id="conformance"><span class="content">Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -751,13 +749,13 @@ pre .property::before, pre .property::after {
    <li><a href="#upgradeable-mixed-content">upgradeable mixed content</a><span>, in §3.1</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-propdef-background-image">
-   <a href="https://www.w3.org/TR/css3-background/#propdef-background-image">https://www.w3.org/TR/css3-background/#propdef-background-image</a><b>Referenced in:</b>
+   <a href="https://www.w3.org/TR/css-backgrounds-3/#propdef-background-image">https://www.w3.org/TR/css-backgrounds-3/#propdef-background-image</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-propdef-background-image">3.1. Upgradeable Content</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-propdef-border-image">
-   <a href="https://www.w3.org/TR/css3-background/#propdef-border-image">https://www.w3.org/TR/css3-background/#propdef-border-image</a><b>Referenced in:</b>
+   <a href="https://www.w3.org/TR/css-backgrounds-3/#propdef-border-image">https://www.w3.org/TR/css-backgrounds-3/#propdef-border-image</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-propdef-border-image">3.1. Upgradeable Content</a>
    </ul>
@@ -802,15 +800,6 @@ pre .property::before, pre .property::after {
     <li><a href="#ref-for-concept-request-destination⑤">4.4. 
       Should fetching request be blocked as mixed content? </a>
     <li><a href="#ref-for-concept-request-destination⑥">4.5. 
-      Should response to request be blocked as mixed
-      content? </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-response-https-state">
-   <a href="https://fetch.spec.whatwg.org/#concept-response-https-state">https://fetch.spec.whatwg.org/#concept-response-https-state</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-response-https-state">2. Key Concepts and Terminology</a>
-    <li><a href="#ref-for-concept-response-https-state①">4.5. 
       Should response to request be blocked as mixed
       content? </a>
    </ul>
@@ -861,7 +850,10 @@ pre .property::before, pre .property::after {
   <aside class="dfn-panel" data-for="term-for-concept-response-url">
    <a href="https://fetch.spec.whatwg.org/#concept-response-url">https://fetch.spec.whatwg.org/#concept-response-url</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-response-url">2. Key Concepts and Terminology</a> <a href="#ref-for-concept-response-url①">(2)</a>
+    <li><a href="#ref-for-concept-response-url">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-concept-response-url①">4.5. 
+      Should response to request be blocked as mixed
+      content? </a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-response-url-list">
@@ -926,17 +918,17 @@ pre .property::before, pre .property::after {
       Does settings prohibit mixed security contexts? </a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-https-state">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">https://html.spec.whatwg.org/multipage/webappapis.html#https-state</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-https-state">4.3. 
-      Does settings prohibit mixed security contexts? </a> <a href="#ref-for-https-state①">(2)</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-the-img-element">
    <a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element">https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-the-img-element">3.1. Upgradeable Content</a> <a href="#ref-for-the-img-element①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-settings-object-origin">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin">https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-settings-object-origin">4.3. 
+      Does settings prohibit mixed security contexts? </a> <a href="#ref-for-concept-settings-object-origin①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-parent-browsing-context">
@@ -1022,9 +1014,9 @@ pre .property::before, pre .property::after {
   <aside class="dfn-panel" data-for="term-for-concept-url-scheme">
    <a href="https://url.spec.whatwg.org/#concept-url-scheme">https://url.spec.whatwg.org/#concept-url-scheme</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-url-scheme">2. Key Concepts and Terminology</a> <a href="#ref-for-concept-url-scheme①">(2)</a>
-    <li><a href="#ref-for-concept-url-scheme②">4.1. Upgrade request to an a priori
-    authenticated URL as mixed content, if appropriate</a> <a href="#ref-for-concept-url-scheme③">(2)</a>
+    <li><a href="#ref-for-concept-url-scheme">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-concept-url-scheme①">4.1. Upgrade request to an a priori
+    authenticated URL as mixed content, if appropriate</a> <a href="#ref-for-concept-url-scheme②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-xmlhttprequest">
@@ -1053,7 +1045,6 @@ pre .property::before, pre .property::after {
     <ul>
      <li><span class="dfn-paneled" id="term-for-concept-request-client" style="color:initial">client</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-destination" style="color:initial">destination</span>
-     <li><span class="dfn-paneled" id="term-for-concept-response-https-state" style="color:initial">https state</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-initiator" style="color:initial">initiator</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-mode" style="color:initial">mode</span>
      <li><span class="dfn-paneled" id="term-for-navigation-request" style="color:initial">navigation request</span>
@@ -1074,8 +1065,8 @@ pre .property::before, pre .property::after {
      <li><span class="dfn-paneled" id="term-for-environment-settings-object" style="color:initial">environment settings object</span>
      <li><span class="dfn-paneled" id="term-for-the-form-element" style="color:initial">form</span>
      <li><span class="dfn-paneled" id="term-for-global-object" style="color:initial">global object</span>
-     <li><span class="dfn-paneled" id="term-for-https-state" style="color:initial">https state</span>
      <li><span class="dfn-paneled" id="term-for-the-img-element" style="color:initial">img</span>
+     <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin" style="color:initial">origin</span>
      <li><span class="dfn-paneled" id="term-for-parent-browsing-context" style="color:initial">parent browsing context</span>
      <li><span class="dfn-paneled" id="term-for-plugin" style="color:initial">plugin</span>
      <li><span class="dfn-paneled" id="term-for-process-a-navigate-response" style="color:initial">process a navigate response</span>
@@ -1154,10 +1145,15 @@ pre .property::before, pre .property::after {
     <li><a href="#ref-for-a-priori-authenticated-url">2. Key Concepts and Terminology</a> <a href="#ref-for-a-priori-authenticated-url①">(2)</a>
     <li><a href="#ref-for-a-priori-authenticated-url②">4.1. Upgrade request to an a priori
     authenticated URL as mixed content, if appropriate</a>
-    <li><a href="#ref-for-a-priori-authenticated-url③">4.4. 
+    <li><a href="#ref-for-a-priori-authenticated-url③">4.3. 
+      Does settings prohibit mixed security contexts? </a>
+    <li><a href="#ref-for-a-priori-authenticated-url④">4.4. 
       Should fetching request be blocked as mixed content? </a>
-    <li><a href="#ref-for-a-priori-authenticated-url④">5.2. Modifications to HTML</a> <a href="#ref-for-a-priori-authenticated-url⑤">(2)</a> <a href="#ref-for-a-priori-authenticated-url⑥">(3)</a> <a href="#ref-for-a-priori-authenticated-url⑦">(4)</a>
-    <li><a href="#ref-for-a-priori-authenticated-url⑧">7.1. Form Submission</a> <a href="#ref-for-a-priori-authenticated-url⑨">(2)</a>
+    <li><a href="#ref-for-a-priori-authenticated-url⑤">4.5. 
+      Should response to request be blocked as mixed
+      content? </a>
+    <li><a href="#ref-for-a-priori-authenticated-url⑥">5.2. Modifications to HTML</a> <a href="#ref-for-a-priori-authenticated-url⑦">(2)</a> <a href="#ref-for-a-priori-authenticated-url⑧">(3)</a> <a href="#ref-for-a-priori-authenticated-url⑨">(4)</a>
+    <li><a href="#ref-for-a-priori-authenticated-url①⓪">7.1. Form Submission</a> <a href="#ref-for-a-priori-authenticated-url①①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="unauthenticated-response">

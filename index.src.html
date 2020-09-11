@@ -208,15 +208,9 @@ type: attribute
     </dt>
     <dd>
       We know <i lang="la">a posteriori</i> that a <a>response</a>
-      (|response|) is unauthenticated if either of the following statements
-      is false:
-
-      1.  |response|'s <a for="response">url</a> is <a><i lang="la">a
-          priori</i> authenticated</a>.
-
-      2.  If |response|'s <a for="response">url</a>'s <a for="url">scheme</a>
-          is "`https`" or "`wss`", |response|'s <a for="response">HTTPS
-          state</a> is "`modern`".
+      (|response|) is unauthenticated if |response|'s
+      <a for="response">url</a> is not <a><i lang="la">a priori</i>
+      authenticated</a>.
     </dd>
 
     <dt><dfn export>embedding document</dfn></dt>
@@ -482,7 +476,8 @@ type: attribute
 
     Given an [=environment settings object=] (|settings|):
     
-    1.  If |settings|' [=environment settings object/HTTPS state=] is not "`none`", then return
+    1.  If |settings|' [=environment settings object/origin=] is
+        <a><i lang="la">a priori</i> authenticated</a>., then return
         "`Prohibits Mixed Security Contexts`".
 
     2.  If |settings| has a <a>responsible document</a> |document|, then:
@@ -494,8 +489,10 @@ type: attribute
             2.  Let |embedder settings| be |document|'s [=global object=]'s
                 [=relevant settings object=].
 
-            3.  If |embedder settings|' [=environment settings object/HTTPS state=] is not "`None`",
-                then return "`Prohibits Mixed Security Contexts`".
+            3.  If |embedder settings|'
+                [=environment settings object/origin=] is <a><i lang="la">
+                a priori</i> authenticated</a>, then return
+                "`Prohibits Mixed Security Contexts`".
 
     3.  Return "`Does Not Restrict Mixed Security Contexts`".
 
@@ -669,7 +666,8 @@ type: attribute
             [=request/client=].
           </li>
           <li>
-            <var>response</var>'s [=response/HTTPS state=] is <code>modern</code>.
+            <var>response</var>'s [=response/url=] is
+            <a><i lang="la">a priori</i> authenticated</a>
           </li>
           <li>
             The user agent has been instructed to allow <a>mixed content</a>, as
@@ -759,13 +757,6 @@ type: attribute
           Context`" when applied to <var ignore>client</var>'s <a>global object</a>'s
           <a>relevant settings object</a>, then the client MUST <a>fail the
           WebSocket connection</a> and abort the connection [[!RFC6455]].
-
-  2.  After the current step 5, perform the following step:
-
-      6.  If |secure| is `true`, and the TLS handshake performed in step 5
-          results in an HTTPS state of "`deprecated`", then the client MUST
-          <a>fail the WebSocket connection</a> and abort the connection
-          [[!RFC6455]].
 
   Note: Filed as
   <a href="http://www.rfc-editor.org/errata_search.php?rfc=6455&eid=4398">errata #4398</a>

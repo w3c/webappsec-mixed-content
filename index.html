@@ -1167,6 +1167,18 @@ Possible extra rowspan handling
 		margin-left: auto;
 		margin-right: auto;
 	}
+	.overlarge {
+		/* Magic to create good table positioning:
+		   "content column" is 50ems wide at max; less on smaller screens.
+		   Extra space (after ToC + content) is empty on the right.
+
+		   1. When table < content column, centers table in column.
+		   2. When content < table < available, left-aligns.
+		   3. When table > available, fills available + scroll bar.
+		*/
+		display: grid;
+		grid-template-columns: minmax(0, 50em);
+	}
 	.overlarge > table {
 		/* limit preferred width of table */
 		max-width: 50em;
@@ -1176,7 +1188,6 @@ Possible extra rowspan handling
 
 	@media (min-width: 55em) {
 		.overlarge {
-			margin-left: calc(13px + 26.5rem - 50vw);
 			margin-right: calc(13px + 26.5rem - 50vw);
 			max-width: none;
 		}
@@ -1184,14 +1195,12 @@ Possible extra rowspan handling
 	@media screen and (min-width: 78em) {
 		body:not(.toc-inline) .overlarge {
 			/* 30.5em body padding 50em content area */
-			margin-left: calc(40em - 50vw) !important;
 			margin-right: calc(40em - 50vw) !important;
 		}
 	}
 	@media screen and (min-width: 90em) {
 		body:not(.toc-inline) .overlarge {
 			/* 4em html margin 30.5em body padding 50em content area */
-			margin-left: 0 !important;
 			margin-right: calc(84.5em - 100vw) !important;
 		}
 	}
@@ -1212,18 +1221,70 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 83d3ceadc5400c8422976bbcbe49615aace9cf1e" name="generator">
+  <meta content="Bikeshed version e2e6e5d1, updated Fri Sep 4 10:16:46 2020 -0700" name="generator">
   <link href="https://www.w3.org/TR/mixed-content/" rel="canonical">
-  <meta content="8ce96e12c70d6efa745b3612292bfc79f997476c" name="document-revision">
-<style>/* style-md-lists */
+  <meta content="aed23ee27fe6c44c364298216bc638d3c61f432d" name="document-revision">
+<style>/* style-autolinks */
 
-/* This is a weird hack for me not yet following the commonmark spec
-   regarding paragraph and lists. */
-[data-md] > :first-child {
-    margin-top: 0;
+.css.css, .property.property, .descriptor.descriptor {
+    color: #005a9c;
+    font-size: inherit;
+    font-family: inherit;
 }
-[data-md] > :last-child {
-    margin-bottom: 0;
+.css::before, .property::before, .descriptor::before {
+    content: "‘";
+}
+.css::after, .property::after, .descriptor::after {
+    content: "’";
+}
+.property, .descriptor {
+    /* Don't wrap property and descriptor names */
+    white-space: nowrap;
+}
+.type { /* CSS value <type> */
+    font-style: italic;
+}
+pre .property::before, pre .property::after {
+    content: "";
+}
+[data-link-type="property"]::before,
+[data-link-type="propdesc"]::before,
+[data-link-type="descriptor"]::before,
+[data-link-type="value"]::before,
+[data-link-type="function"]::before,
+[data-link-type="at-rule"]::before,
+[data-link-type="selector"]::before,
+[data-link-type="maybe"]::before {
+    content: "‘";
+}
+[data-link-type="property"]::after,
+[data-link-type="propdesc"]::after,
+[data-link-type="descriptor"]::after,
+[data-link-type="value"]::after,
+[data-link-type="function"]::after,
+[data-link-type="at-rule"]::after,
+[data-link-type="selector"]::after,
+[data-link-type="maybe"]::after {
+    content: "’";
+}
+
+[data-link-type].production::before,
+[data-link-type].production::after,
+.prod [data-link-type]::before,
+.prod [data-link-type]::after {
+    content: "";
+}
+
+[data-link-type=element],
+[data-link-type=element-attr] {
+    font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    font-size: .9em;
+}
+[data-link-type=element]::before { content: "<" }
+[data-link-type=element]::after  { content: ">" }
+
+[data-link-type=biblio] {
+    white-space: pre;
 }</style>
 <style>/* style-counters */
 
@@ -1291,6 +1352,72 @@ figcaption:not(.no-marker)::before {
 
 .dfn-paneled { cursor: pointer; }
 </style>
+<style>/* style-md-lists */
+
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}</style>
+<style>/* style-mdn-anno */
+
+            @media (max-width: 767px) { .mdn-anno { opacity: .1 } }
+            .mdn-anno { font: 1em sans-serif; padding: 0.3em; position: absolute; z-index: 8; right: 0.3em; background: #EEE; color: black; box-shadow: 0 0 3px #999; overflow: hidden; border-collapse: initial; border-spacing: initial; min-width: 9em; max-width: min-content; white-space: nowrap; word-wrap: normal; hyphens: none}
+            .mdn-anno:not(.wrapped) { opacity: 1}
+            .mdn-anno:hover { z-index: 9 }
+            .mdn-anno.wrapped { min-width: 0 }
+            .mdn-anno.wrapped > :not(button) { display: none; }
+            .mdn-anno > .mdn-anno-btn { cursor: pointer; border: none; color: #000; background: transparent; margin: -8px; float: right; padding: 10px 8px 8px 8px; outline: none; }
+            .mdn-anno > .mdn-anno-btn > .less-than-two-engines-flag { color: red; padding-right: 2px; }
+            .mdn-anno > .mdn-anno-btn > .all-engines-flag { color: green; padding-right: 2px; }
+            .mdn-anno > .mdn-anno-btn > span { color: #fff; background-color: #000; font-weight: normal; font-family: zillaslab, Palatino, "Palatino Linotype", serif; padding: 2px 3px 0px 3px; line-height: 1.3em; vertical-align: top; }
+            .mdn-anno > .feature { margin-top: 20px; }
+            .mdn-anno > .feature:not(:first-of-type) { border-top: 1px solid #999; margin-top: 6px; padding-top: 2px; }
+            .mdn-anno > .feature > .less-than-two-engines-text { color: red }
+            .mdn-anno > .feature > .all-engines-text { color: green }
+            .mdn-anno > .feature > p { font-size: .75em; margin-top: 6px; margin-bottom: 0; }
+            .mdn-anno > .feature > p + p { margin-top: 3px; }
+            .mdn-anno > .feature > .support { display: block; font-size: 0.6em; margin: 0; padding: 0; margin-top: 2px }
+            .mdn-anno > .feature > .support + div { padding-top: 0.5em; }
+            .mdn-anno > .feature > .support > hr { display: block; border: none; border-top: 1px dotted #999; padding: 3px 0px 0px 0px; margin: 2px 3px 0px 3px; }
+            .mdn-anno > .feature > .support > hr::before { content: ""; }
+            .mdn-anno > .feature > .support > span { padding: 0.2em 0; display: block; display: table; }
+            .mdn-anno > .feature > .support > span.no { color: #CCCCCC; filter: grayscale(100%); }
+            .mdn-anno > .feature > .support > span.no::before { opacity: 0.5; }
+            .mdn-anno > .feature > .support > span:first-of-type { padding-top: 0.5em; }
+            .mdn-anno > .feature > .support > span > span { padding: 0 0.5em; display: table-cell; }
+            .mdn-anno > .feature > .support > span > span:first-child { width: 100%; }
+            .mdn-anno > .feature > .support > span > span:last-child { width: 100%; white-space: pre; padding: 0; }
+            .mdn-anno > .feature > .support > span::before { content: ' '; display: table-cell; min-width: 1.5em; height: 1.5em; background: no-repeat center center; background-size: contain; text-align: right; font-size: 0.75em; font-weight: bold; }
+            .mdn-anno > .feature > .support > .chrome_android::before { background-image: url(https://resources.whatwg.org/browser-logos/chrome.svg); }
+            .mdn-anno > .feature > .support > .firefox_android::before { background-image: url(https://resources.whatwg.org/browser-logos/firefox.png); }
+            .mdn-anno > .feature > .support > .chrome::before { background-image: url(https://resources.whatwg.org/browser-logos/chrome.svg); }
+            .mdn-anno > .feature > .support > .edge_blink::before { background-image: url(https://resources.whatwg.org/browser-logos/edge.svg); }
+            .mdn-anno > .feature > .support > .edge::before { background-image: url(https://resources.whatwg.org/browser-logos/edge_legacy.svg); }
+            .mdn-anno > .feature > .support > .firefox::before { background-image: url(https://resources.whatwg.org/browser-logos/firefox.png); }
+            .mdn-anno > .feature > .support > .ie::before { background-image: url(https://resources.whatwg.org/browser-logos/ie.png); }
+            .mdn-anno > .feature > .support > .safari_ios::before { background-image: url(https://resources.whatwg.org/browser-logos/safari-ios.svg); }
+            .mdn-anno > .feature > .support > .nodejs::before { background-image: url(https://nodejs.org/static/images/favicons/favicon.ico); }
+            .mdn-anno > .feature > .support > .opera_android::before { background-image: url(https://resources.whatwg.org/browser-logos/opera.svg); }
+            .mdn-anno > .feature > .support > .opera::before { background-image: url(https://resources.whatwg.org/browser-logos/opera.svg); }
+            .mdn-anno > .feature > .support > .safari::before { background-image: url(https://resources.whatwg.org/browser-logos/safari.png); }
+            .mdn-anno > .feature > .support > .samsunginternet_android::before { background-image: url(https://resources.whatwg.org/browser-logos/samsung.svg); }
+            .mdn-anno > .feature > .support > .webview_android::before { background-image: url(https://resources.whatwg.org/browser-logos/android-webview.png); }
+            .name-slug-mismatch { color: red }
+            .caniuse-status:hover { z-index: 9; }
+
+            /* dt, li, .issue, .note, and .example are "position: relative", so to put annotation at right margin, must move to right of containing block */
+            .h-entry:not(.status-LS) dt > .mdn-anno, .h-entry:not(.status-LS) li > .mdn-anno, .h-entry:not(.status-LS) .issue > .mdn-anno, .h-entry:not(.status-LS) .note > .mdn-anno, .h-entry:not(.status-LS) .example > .mdn-anno { right: -6.7em; }
+            .h-entry p + .mdn-anno { margin-top: 0; }
+            h2 + .mdn-anno.after { margin: -48px 0 0 0; }
+            h3 + .mdn-anno.after { margin: -46px 0 0 0; }
+            h4 + .mdn-anno.after { margin: -42px 0 0 0; }
+            h5 + .mdn-anno.after { margin: -40px 0 0 0; }
+            h6 + .mdn-anno.after { margin: -40px 0 0 0; }
+            </style>
 <style>/* style-selflinks */
 
 .heading, .issue, .note, .example, li, dt {
@@ -1337,73 +1464,11 @@ dfn > a.self-link:hover {
 a.self-link::before            { content: "¶"; }
 .heading > a.self-link::before { content: "§"; }
 dfn > a.self-link::before      { content: "#"; }</style>
-<style>/* style-autolinks */
-
-.css.css, .property.property, .descriptor.descriptor {
-    color: #005a9c;
-    font-size: inherit;
-    font-family: inherit;
-}
-.css::before, .property::before, .descriptor::before {
-    content: "‘";
-}
-.css::after, .property::after, .descriptor::after {
-    content: "’";
-}
-.property, .descriptor {
-    /* Don't wrap property and descriptor names */
-    white-space: nowrap;
-}
-.type { /* CSS value <type> */
-    font-style: italic;
-}
-pre .property::before, pre .property::after {
-    content: "";
-}
-[data-link-type="property"]::before,
-[data-link-type="propdesc"]::before,
-[data-link-type="descriptor"]::before,
-[data-link-type="value"]::before,
-[data-link-type="function"]::before,
-[data-link-type="at-rule"]::before,
-[data-link-type="selector"]::before,
-[data-link-type="maybe"]::before {
-    content: "‘";
-}
-[data-link-type="property"]::after,
-[data-link-type="propdesc"]::after,
-[data-link-type="descriptor"]::after,
-[data-link-type="value"]::after,
-[data-link-type="function"]::after,
-[data-link-type="at-rule"]::after,
-[data-link-type="selector"]::after,
-[data-link-type="maybe"]::after {
-    content: "’";
-}
-
-[data-link-type].production::before,
-[data-link-type].production::after,
-.prod [data-link-type]::before,
-.prod [data-link-type]::after {
-    content: "";
-}
-
-[data-link-type=element],
-[data-link-type=element-attr] {
-    font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
-    font-size: .9em;
-}
-[data-link-type=element]::before { content: "<" }
-[data-link-type=element]::after  { content: ">" }
-
-[data-link-type=biblio] {
-    white-space: pre;
-}</style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Mixed Content</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-11-25">25 November 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-09-10">10 September 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1423,7 +1488,7 @@ pre .property::before, pre .property::after {
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2019 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2020 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -1553,9 +1618,9 @@ pre .property::before, pre .property::after {
      <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="mixed" id="mixed-content">mixed content</dfn> 
      <dd>
        A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">request</a> is <strong>mixed content</strong> if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url">url</a> is not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url"><i lang="la">a priori</i> authenticated</a>, <strong>and</strong> the context responsible for
-      loading it requires prohibits mixed security contexts (see <a href="#categorize-settings-object">§ 5.1 Does settings prohibit mixed security contexts?</a> for a normative definition of the latter). 
+      loading it prohibits mixed security contexts (see <a href="#categorize-settings-object">§ 5.1 Does settings prohibit mixed security contexts?</a> for a normative definition of the latter). 
       <p>A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response">response</a> is <strong>mixed content</strong> if it is an <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response">unauthenticated response</a>, <strong>and</strong> the context
-      responsible for loading it requires prohibits mixed security contexts.</p>
+      responsible for loading it prohibits mixed security contexts.</p>
       <div class="example" id="example-13a780ee">
        <a class="self-link" href="#example-13a780ee"></a> Inside a context that restricts mixed content
         (<code>https://secure.example.com/</code>, for example): 
@@ -1593,17 +1658,7 @@ pre .property::before, pre .property::after {
   mixed content, as they never hit the network.</p>
       </ol>
      <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="unauthenticated" data-lt="unauthenticated response" id="unauthenticated-response"> unauthenticated response <span id="insecure-origin insecure-url"></span></dfn> 
-     <dd>
-       We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response①">response</a> (<var>response</var>) is unauthenticated if either of the following statements
-      is false: 
-      <ol>
-       <li data-md>
-        <p><var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url①"><i lang="la">a
-  priori</i> authenticated</a>.</p>
-       <li data-md>
-        <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url①">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme①">scheme</a> is "<code>https</code>" or "<code>wss</code>", <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state" id="ref-for-concept-response-https-state">HTTPS
-  state</a> is "<code>modern</code>".</p>
-      </ol>
+     <dd> We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response①">response</a> (<var>response</var>) is unauthenticated if <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">url</a> is not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url①"><i lang="la">a priori</i> authenticated</a>. 
      <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="embedding-document">embedding document</dfn>
      <dd> Given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> <var>A</var>, the <strong>embedding
       document</strong> of <var>A</var> is <var>A</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context" id="ref-for-browsing-context">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#bc-container-document" id="ref-for-bc-container-document">container document</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a>. 
@@ -1701,6 +1756,21 @@ pre .property::before, pre .property::after {
      <li> ensure that these requirements are applied to any <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑤">Document</a></code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context">nested browsing context</a>, as described in <a href="#strict-nesting">§ 4.4 Inheriting an opt-in</a>. 
     </ol>
     <h3 class="heading settled" data-level="4.2" id="strict-opt-in"><span class="secno">4.2. </span><span class="content">Opting-in</span><a class="self-link" href="#strict-opt-in"></a></h3>
+    <div class="mdn-anno wrapped">
+     <button class="mdn-anno-btn"><span>MDN</span></button>
+     <div class="feature">
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/block-all-mixed-content" title="The HTTP Content-Security-Policy (CSP) block-all-mixed-content directive prevents loading any assets over HTTP when the page uses HTTPS.">Headers/Content-Security-Policy/block-all-mixed-content</a></p>
+      <div class="support">
+       <span class="firefox yes"><span>Firefox</span><span>48+</span></span><span class="safari no"><span>Safari</span><span>?</span></span><span class="chrome yes"><span>Chrome</span><span>Yes</span></span>
+       <hr>
+       <span class="opera yes"><span>Opera</span><span>Yes</span></span><span class="edge_blink yes"><span>Edge</span><span>Yes</span></span>
+       <hr>
+       <span class="edge no"><span>Edge (Legacy)</span><span>None</span></span><span class="ie no"><span>IE</span><span>None</span></span>
+       <hr>
+       <span class="firefox_android yes"><span>Firefox for Android</span><span>48+</span></span><span class="safari_ios no"><span>iOS Safari</span><span>?</span></span><span class="chrome_android yes"><span>Chrome for Android</span><span>Yes</span></span><span class="webview_android yes"><span>Android WebView</span><span>Yes</span></span><span class="samsunginternet_android yes"><span>Samsung Internet</span><span>Yes</span></span><span class="opera_android no"><span>Opera Mobile</span><span>?</span></span>
+      </div>
+     </div>
+    </div>
     <p>Authors may opt a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑥">Document</a></code> into strict mixed content checking via a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="block-all-mixed-content">block-all-mixed-content</dfn> Content Security Policy directive <a data-link-type="biblio" href="#biblio-csp3">[CSP3]</a>, defined via the following ABNF grammar.</p>
 <pre>directive-name  = "block-all-mixed-content"
 directive-value = ""
@@ -1763,7 +1833,7 @@ directive-value = ""
      <p>Given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> (<var>settings</var>):</p>
      <ol>
       <li data-md>
-       <p>If <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state" id="ref-for-https-state">HTTPS state</a> is not "<code>none</code>", then return
+       <p>If <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url③"><i lang="la">a priori</i> authenticated</a>., then return
   "<code>Prohibits Mixed Security Contexts</code>".</p>
       <li data-md>
        <p>If <var>settings</var> has a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#responsible-document" id="ref-for-responsible-document">responsible document</a> <var>document</var>, then:</p>
@@ -1776,8 +1846,8 @@ directive-value = ""
           <li data-md>
            <p>Let <var>embedder settings</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object①">global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>.</p>
           <li data-md>
-           <p>If <var>embedder settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state" id="ref-for-https-state①">HTTPS state</a> is not "<code>None</code>",
-  then return "<code>Prohibits Mixed Security Contexts</code>".</p>
+           <p>If <var>embedder settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin①">origin</a> is <a data-link-type="dfn"><i lang="la"> a priori</i> authenticated</a>., then return
+  "<code>Prohibits Mixed Security Contexts</code>".</p>
          </ol>
        </ol>
       <li data-md>
@@ -1818,7 +1888,7 @@ directive-value = ""
         conditions are met: 
        <ol>
         <li> <a href="#categorize-settings-object">§ 5.1 Does settings prohibit mixed security contexts?</a> returns "<code>Does Not Restrict Mixed Security Contexts</code>" when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client">client</a>. 
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url②">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url③"><i lang="la">a priori</i> authenticated</a>. 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url②">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url④"><i lang="la">a priori</i> authenticated</a>. 
         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content③">mixed content</a>, as
             described in <a href="#requirements-user-controls">§ 7.4 User Controls</a>). 
         <li>
@@ -1838,12 +1908,12 @@ directive-value = ""
          <ol>
           <li data-md>
            <p>Let <var>violation</var> be the result of executing the algorithm defined
-  in <a href="https://www.w3.org/TR/CSP3/#create-violation-for-global">Content Security Policy Level 3 §create-violation-for-global</a> on <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client②">client</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object②">global object</a>, <var>policy</var>,
+  in <a href="https://www.w3.org/TR/CSP3/#create-violation-for-global">Content Security Policy §2.4.1 Create a violation object for global, policy, and directive</a> on <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client②">client</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object②">global object</a>, <var>policy</var>,
   and "<code>block-all-mixed-content</code>".</p>
           <li data-md>
            <p>Set <var>violation</var>’s <a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#violation-resource" id="ref-for-violation-resource">resource</a> to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url③">url</a>.</p>
           <li data-md>
-           <p>Execute the algorithm defined in <a href="https://www.w3.org/TR/CSP3/#report-violation">Content Security Policy Level 3 §report-violation</a> on <var>violation</var>.</p>
+           <p>Execute the algorithm defined in <a href="https://www.w3.org/TR/CSP3/#report-violation">Content Security Policy §5.3 Report a violation</a> on <var>violation</var>.</p>
          </ol>
        </ol>
       <li>
@@ -1885,7 +1955,7 @@ directive-value = ""
        <ol>
         <li> <a href="#categorize-settings-object">§ 5.1 Does settings prohibit mixed security contexts?</a> returns <code>Does Not Restrict
             Mixed Content</code> when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client④">client</a>. 
-        <li> <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-https-state" id="ref-for-concept-response-https-state①">HTTPS state</a> is <code>modern</code>. 
+        <li> <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url①">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑤"><i lang="la">a priori</i> authenticated</a> 
         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content④">mixed content</a>, as
             described in <a href="#requirements-user-controls">§ 7.4 User Controls</a>). 
         <li>
@@ -1934,17 +2004,10 @@ directive-value = ""
         <p>If <var>secure</var> is <code>false</code>, and the algorithm in <a href="#categorize-settings-object">§ 5.1 Does settings prohibit mixed security contexts?</a> returns "<code>Restricts Mixed Security Context</code>" when applied to <var>client</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object③">global object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>, then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7" id="ref-for-section-7.1.7">fail the
   WebSocket connection</a> and abort the connection <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>.</p>
       </ol>
-     <li data-md>
-      <p>After the current step 5, perform the following step:</p>
-      <ol start="6">
-       <li data-md>
-        <p>If <var>secure</var> is <code>true</code>, and the TLS handshake performed in step 5
-  results in an HTTPS state of "<code>deprecated</code>", then the client MUST <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7" id="ref-for-section-7.1.7①">fail the WebSocket connection</a> and abort the connection <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>.</p>
-      </ol>
     </ol>
     <p class="note" role="note"><span>Note:</span> Filed as <a href="http://www.rfc-editor.org/errata_search.php?rfc=6455&amp;eid=4398">errata #4398</a> against <a data-link-type="biblio" href="#biblio-rfc6455">[RFC6455]</a>.</p>
     <p>These changes together mean that we’ll no longer throw a <code>SecurityError</code> exception directly upon constructing a WebSocket object, but will instead rely
-  upon blocking the connection and triggering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7" id="ref-for-section-7.1.7②">fail the WebSocket
+  upon blocking the connection and triggering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6455#section-7.1.7" id="ref-for-section-7.1.7①">fail the WebSocket
   connection</a> algorithm, which developers can catch by hooking a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/web-sockets.html#websocket" id="ref-for-websocket">WebSocket</a></code> object’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/#handler-websocket-onerror" id="ref-for-handler-websocket-onerror">onerror</a></code> handler. This is consistent with
   the behavior of <code class="idl"><a data-link-type="idl" href="https://xhr.spec.whatwg.org/#xmlhttprequest" id="ref-for-xmlhttprequest①">XMLHttpRequest</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/server-sent-events.html#eventsource" id="ref-for-eventsource">EventSource</a></code>, and <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#dom-global-fetch" id="ref-for-dom-global-fetch">fetch()</a></code>.</p>
    </section>
@@ -1965,7 +2028,7 @@ directive-value = ""
      <h3 class="heading settled" data-level="7.2" id="requirements-forms"><span class="secno">7.2. </span><span class="content">Form Submission</span><a class="self-link" href="#requirements-forms"></a></h3>
      <p>If <a href="#categorize-settings-object">§ 5.1 Does settings prohibit mixed security contexts?</a> returns <code>Restricts Mixed Content</code> when applied to a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑨">Document</a></code>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object②">relevant settings object</a>, then a user agent MAY choose to warn users of the
     presence of one or more <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element">form</a></code> elements with <a data-link-type="element-attr" href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action" id="ref-for-attr-fs-action">action</a> attributes whose
-    values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url④"><i lang="la">a priori</i> authenticated URLs</a>.</p>
+    values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑥"><i lang="la">a priori</i> authenticated URLs</a>.</p>
      <p class="note" role="note"><span>Note:</span> Chrome, for example, currently gives the same UI treatment to a page with an insecure
     form action as it does for a page that displays an insecure image.</p>
      <p>Further, a user agent MAY treat form submissions from such a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⓪">Document</a></code> as a <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content⑦">blockable</a> request, even if the submission occurs in the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>.</p>
@@ -2189,15 +2252,6 @@ directive-value = ""
     <li><a href="#ref-for-dom-global-fetch">6. Modifications to WebSockets</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-response-https-state">
-   <a href="https://fetch.spec.whatwg.org/#concept-response-https-state">https://fetch.spec.whatwg.org/#concept-response-https-state</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-response-https-state">2. Key Concepts and Terminology</a>
-    <li><a href="#ref-for-concept-response-https-state①">5.3. 
-      Should response to request be blocked as mixed
-      content? </a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-initiator">
    <a href="https://fetch.spec.whatwg.org/#concept-request-initiator">https://fetch.spec.whatwg.org/#concept-request-initiator</a><b>Referenced in:</b>
    <ul>
@@ -2248,7 +2302,10 @@ directive-value = ""
   <aside class="dfn-panel" data-for="term-for-concept-response-url">
    <a href="https://fetch.spec.whatwg.org/#concept-response-url">https://fetch.spec.whatwg.org/#concept-response-url</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-response-url">2. Key Concepts and Terminology</a> <a href="#ref-for-concept-response-url①">(2)</a>
+    <li><a href="#ref-for-concept-response-url">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-concept-response-url①">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-eventsource">
@@ -2326,13 +2383,6 @@ directive-value = ""
     <li><a href="#ref-for-global-object③">6. Modifications to WebSockets</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-https-state">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">https://html.spec.whatwg.org/multipage/webappapis.html#https-state</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-https-state">5.1. 
-      Does settings prohibit mixed security contexts? </a> <a href="#ref-for-https-state①">(2)</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-the-img-element">
    <a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element">https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element</a><b>Referenced in:</b>
    <ul>
@@ -2357,6 +2407,13 @@ directive-value = ""
    <a href="https://html.spec.whatwg.org/#handler-websocket-onerror">https://html.spec.whatwg.org/#handler-websocket-onerror</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-handler-websocket-onerror">6. Modifications to WebSockets</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-settings-object-origin">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin">https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-settings-object-origin">5.1. 
+      Does settings prohibit mixed security contexts? </a> <a href="#ref-for-concept-settings-object-origin①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-parent-browsing-context">
@@ -2432,7 +2489,7 @@ directive-value = ""
   <aside class="dfn-panel" data-for="term-for-section-7.1.7">
    <a href="https://tools.ietf.org/html/rfc6455#section-7.1.7">https://tools.ietf.org/html/rfc6455#section-7.1.7</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-section-7.1.7">6. Modifications to WebSockets</a> <a href="#ref-for-section-7.1.7①">(2)</a> <a href="#ref-for-section-7.1.7②">(3)</a>
+    <li><a href="#ref-for-section-7.1.7">6. Modifications to WebSockets</a> <a href="#ref-for-section-7.1.7①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-potentially-trustworthy-url">
@@ -2444,7 +2501,7 @@ directive-value = ""
   <aside class="dfn-panel" data-for="term-for-concept-url-scheme">
    <a href="https://url.spec.whatwg.org/#concept-url-scheme">https://url.spec.whatwg.org/#concept-url-scheme</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-url-scheme">2. Key Concepts and Terminology</a> <a href="#ref-for-concept-url-scheme①">(2)</a>
+    <li><a href="#ref-for-concept-url-scheme">2. Key Concepts and Terminology</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-xmlhttprequest">
@@ -2484,7 +2541,6 @@ directive-value = ""
      <li><span class="dfn-paneled" id="term-for-concept-request-client" style="color:initial">client</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-destination" style="color:initial">destination</span>
      <li><span class="dfn-paneled" id="term-for-dom-global-fetch" style="color:initial">fetch(input)</span>
-     <li><span class="dfn-paneled" id="term-for-concept-response-https-state" style="color:initial">https state</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-initiator" style="color:initial">initiator</span>
      <li><span class="dfn-paneled" id="term-for-navigation-request" style="color:initial">navigation request</span>
      <li><span class="dfn-paneled" id="term-for-concept-filtered-response-opaque" style="color:initial">opaque filtered response</span>
@@ -2506,11 +2562,11 @@ directive-value = ""
      <li><span class="dfn-paneled" id="term-for-environment-settings-object" style="color:initial">environment settings object</span>
      <li><span class="dfn-paneled" id="term-for-the-form-element" style="color:initial">form</span>
      <li><span class="dfn-paneled" id="term-for-global-object" style="color:initial">global object</span>
-     <li><span class="dfn-paneled" id="term-for-https-state" style="color:initial">https state</span>
      <li><span class="dfn-paneled" id="term-for-the-img-element" style="color:initial">img</span>
      <li><span class="dfn-paneled" id="term-for-meta" style="color:initial">meta</span>
      <li><span class="dfn-paneled" id="term-for-nested-browsing-context" style="color:initial">nested browsing context</span>
      <li><span class="dfn-paneled" id="term-for-handler-websocket-onerror" style="color:initial">onerror</span>
+     <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin" style="color:initial">origin</span>
      <li><span class="dfn-paneled" id="term-for-parent-browsing-context" style="color:initial">parent browsing context</span>
      <li><span class="dfn-paneled" id="term-for-plugin" style="color:initial">plugin</span>
      <li><span class="dfn-paneled" id="term-for-relevant-settings-object" style="color:initial">relevant settings object</span>
@@ -2605,9 +2661,14 @@ directive-value = ""
    <ul>
     <li><a href="#ref-for-a-priori-authenticated-url">2. Key Concepts and Terminology</a> <a href="#ref-for-a-priori-authenticated-url①">(2)</a>
     <li><a href="#ref-for-a-priori-authenticated-url②">5. Insecure Content in Secure Contexts</a>
-    <li><a href="#ref-for-a-priori-authenticated-url③">5.2. 
+    <li><a href="#ref-for-a-priori-authenticated-url③">5.1. 
+      Does settings prohibit mixed security contexts? </a>
+    <li><a href="#ref-for-a-priori-authenticated-url④">5.2. 
       Should fetching request be blocked as mixed content? </a>
-    <li><a href="#ref-for-a-priori-authenticated-url④">7.2. Form Submission</a>
+    <li><a href="#ref-for-a-priori-authenticated-url⑤">5.3. 
+      Should response to request be blocked as mixed
+      content? </a>
+    <li><a href="#ref-for-a-priori-authenticated-url⑥">7.2. Form Submission</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="unauthenticated-response">
@@ -2746,3 +2807,11 @@ document.body.addEventListener("click", function(e) {
 
 });
 </script>
+<script>/* script-mdn-anno */
+
+            document.body.addEventListener("click", (e) => {
+                if(e.target.closest(".mdn-anno-btn")) {
+                    e.target.closest(".mdn-anno").classList.toggle("wrapped");
+                }
+            });
+            </script>
