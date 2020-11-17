@@ -7,7 +7,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-WD" rel="stylesheet" type="text/css">
   <meta content="Bikeshed version 89ebb6ab, updated Fri Oct 9 15:32:07 2020 -0700" name="generator">
   <link href="https://www.w3.org/TR/mixed-content-2/" rel="canonical">
-  <meta content="4d1fb79d9e8ae2777583dea109a1a7485bc0f76c" name="document-revision">
+  <meta content="ee5efcbc86c624d8085b6eb8f36756d02d86cf2a" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -434,17 +434,17 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Mixed Content Level 2</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">W3C First Public Working Draft, <time class="dt-updated" datetime="2020-11-10">10 November 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">W3C First Public Working Draft, <time class="dt-updated" datetime="2020-11-16">16 November 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
-     <dd><a class="u-url" href="https://www.w3.org/TR/2020/WD-mixed-content-2-2-20201110/">https://www.w3.org/TR/2020/WD-mixed-content-2-2-20201110/</a>
+     <dd><a class="u-url" href="https://www.w3.org/TR/2020/WD-mixed-content-2-2-20201116/">https://www.w3.org/TR/2020/WD-mixed-content-2-2-20201116/</a>
      <dt>Latest published version:
      <dd><a href="https://www.w3.org/TR/mixed-content-2/">https://www.w3.org/TR/mixed-content-2/</a>
      <dt>Editor's Draft:
      <dd><a href="https://w3c.github.io/webappsec-mixed-content/">https://w3c.github.io/webappsec-mixed-content/</a>
      <dt>Version History:
-     <dd><a href="https://github.com/w3c/webappsec-mixed-content/commits/master/level2.src.html">https://github.com/w3c/webappsec-mixed-content/commits/master/level2.src.html</a>
+     <dd><a href="https://github.com/w3c/webappsec-mixed-content/commits/master/index.src.html">https://github.com/w3c/webappsec-mixed-content/commits/master/index.src.html</a>
      <dt>Feedback:
      <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bmixed-content-2%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[mixed-content-2] <i data-lt>… message topic …</i></kbd>” (<a href="https://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
      <dd><a href="https://github.com/w3c/webappsec-mixed-content/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-mixed-content/issues">open issues</a>)
@@ -512,7 +512,7 @@ dfn > a.self-link::before      { content: "#"; }
     <li>
      <a href="#algorithms"><span class="secno">4</span> <span class="content">Algorithms</span></a>
      <ol class="toc">
-      <li><a href="#upgrade-algorithm"><span class="secno">4.1</span> <span class="content">Upgrade <var>request</var> to an <i lang="la">a priori</i> authenticated URL as mixed content, if appropriate</span></a>
+      <li><a href="#upgrade-algorithm"><span class="secno">4.1</span> <span class="content">Upgrade a mixed content <var>request</var> to a <span>potentially trustworthy URL</span>, if appropriate</span></a>
       <li><a href="#existing-mix-algorithms"><span class="secno">4.2</span> <span class="content">Existing Mixed Content Algorithms and Modifications</span></a>
       <li><a href="#categorize-settings-object"><span class="secno">4.3</span> <span class="content"> Does <var>settings</var> prohibit mixed security contexts? </span></a>
       <li><a href="#should-block-fetch"><span class="secno">4.4</span> <span class="content"> Should fetching <var>request</var> be blocked as mixed content? </span></a>
@@ -612,7 +612,7 @@ dfn > a.self-link::before      { content: "#"; }
     <dl>
      <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="mixed" id="mixed-content">mixed content</dfn> 
      <dd>
-       A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">request</a> is <strong>mixed content</strong> if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url">url</a> is not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url"><i lang="la">a priori</i> authenticated</a>, <strong>and</strong> the context responsible for
+       A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">request</a> is <strong>mixed content</strong> if its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url">url</a> is not a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url">potentially trustworthy URL</a> <a data-link-type="biblio" href="#biblio-secure-contexts">[SECURE-CONTEXTS]</a> <strong>and</strong> the context responsible for
       loading it prohibits mixed security contexts (see <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> for a normative definition of the latter). 
       <p>A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response">response</a> is <strong>mixed content</strong> if it is an <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response">unauthenticated response</a>, <strong>and</strong> the context
       responsible for loading it requires prohibits mixed security contexts.</p>
@@ -633,23 +633,8 @@ dfn > a.self-link::before      { content: "#"; }
       concept. This is potentially confusing, but given the term’s near
       ubiquitious usage in a security context across user agents for more than
       a decade, the practical risk of confusion seems low.</p>
-     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="a priori authenticated" data-lt="a priori authenticated URL" id="a-priori-authenticated-url"> <i lang="la">a priori</i> authenticated URL <span id="a-priori-insecure-url a-priori-insecure-origin"></span></dfn> 
-     <dd>
-       We know <i lang="la">a priori</i> that a request to a particular URL
-      (<var>url</var>) will be delivered in a way that mitigates the risks of
-      interception and modifications if either of the following statements is
-      true: 
-      <ol>
-       <li data-md>
-        <p><var>url</var> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url">potentially trustworthy URL</a> <a data-link-type="biblio" href="#biblio-secure-contexts">[SECURE-CONTEXTS]</a>.</p>
-       <li data-md>
-        <p><var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is "<code>data</code>".</p>
-        <p class="note" role="note"><span>Note:</span> We special case <code>data</code> URLs here, as we don’t consider them
-  particularly trustworthy, but we also don’t wish to block them as
-  mixed content, as they never hit the network.</p>
-      </ol>
      <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="unauthenticated" data-lt="unauthenticated response" id="unauthenticated-response"> unauthenticated response <span id="insecure-origin insecure-url"></span></dfn> 
-     <dd> We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response①">response</a> (<var>response</var>) is unauthenticated if <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">url</a> is not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url①"><i lang="la">a priori</i> authenticated</a>. 
+     <dd> We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response①">response</a> (<var>response</var>) is unauthenticated if <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">url</a> is not a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url①">potentially trustworthy URL</a>. 
      <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="embedding-document">embedding document</dfn>
      <dd> Given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> <var>A</var>, the <strong>embedding
       document</strong> of <var>A</var> is <var>A</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context" id="ref-for-browsing-context">browsing context</a>'s <a data-link-type="dfn">container document</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a>. 
@@ -668,7 +653,7 @@ dfn > a.self-link::before      { content: "#"; }
     <p>With that in mind, we here split mixed content into two categories: <a href="#category-upgradeable">§ 3.1 Upgradeable Content</a> and <a href="#category-blockable">§ 3.2 Blockable Content</a>.</p>
     <section>
      <h3 class="heading settled" data-level="3.1" id="category-upgradeable"><span class="secno">3.1. </span><span class="content">Upgradeable Content</span><a class="self-link" href="#category-upgradeable"></a></h3>
-     <note>Upgradeable content was previously referred as optionally-blockable in <a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a></note>
+     <note>Upgradeable content was previously referred to as optionally-blockable in <a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a></note>
      <p>Mixed content is <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="upgradeable" data-lt="upgradeable mixed content" id="upgradeable-mixed-content">upgradeable</dfn> when the risk of allowing its usage as <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content①">mixed content</a> is outweighed by the risk of
     breaking significant portions of the web. This could be because mixed usage of the resource type
     is sufficiently high, and because the resource is low-risk in and of itself. The fact that these
@@ -712,7 +697,7 @@ dfn > a.self-link::before      { content: "#"; }
    <section>
     <h2 class="heading settled" data-level="4" id="algorithms"><span class="secno">4. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
     <section>
-     <h3 class="heading settled" data-level="4.1" id="upgrade-algorithm"><span class="secno">4.1. </span><span class="content">Upgrade <var>request</var> to an <i lang="la">a priori</i> authenticated URL as mixed content, if appropriate</span><a class="self-link" href="#upgrade-algorithm"></a></h3>
+     <h3 class="heading settled" data-level="4.1" id="upgrade-algorithm"><span class="secno">4.1. </span><span class="content">Upgrade a mixed content <var>request</var> to a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url②">potentially trustworthy URL</a>, if appropriate</span><a class="self-link" href="#upgrade-algorithm"></a></h3>
      <p class="note" role="note"><span>Note:</span> The Fetch specification will hook into this algorithm to upgrade upgradeable
     mixed content to HTTPS.</p>
      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request③">Request</a> <var>request</var>, this algorithm will rewrite
@@ -722,7 +707,7 @@ dfn > a.self-link::before      { content: "#"; }
       <li>
         If one or more of the following conditions is met, return without modifying <var>request</var>: 
        <ol>
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url②">url</a> is an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url②"><i lang="la">a priori</i> authenticated URL</a> 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url②">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url③">potentially trustworthy URL</a>. 
         <li> <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> returns "<code>Does Not Restrict Mixed Security
             Contents</code>" when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client">client</a>. 
         <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-mode" id="ref-for-concept-request-mode">mode</a> is <code>CORS</code>. 
@@ -732,8 +717,8 @@ dfn > a.self-link::before      { content: "#"; }
             and <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator" id="ref-for-concept-request-initiator①">initiator</a> is "<code>imageset</code>". 
        </ol>
       <li>
-        If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url③">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme①">scheme</a> is <code>http</code>,
-        set <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url④">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme②">scheme</a> to <code>https</code>, and return. 
+        If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url③">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is <code>http</code>,
+        set <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url④">url</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme①">scheme</a> to <code>https</code>, and return. 
        <p class="note" role="note"><span>Note:</span> Per <a data-link-type="biblio" href="#biblio-url">[url]</a>, we do not modify the port because it will be set to null when the scheme
         is <code>http</code>, and interpreted as 443 once the scheme is changed
         to <code>https</code></p>
@@ -755,7 +740,7 @@ dfn > a.self-link::before      { content: "#"; }
      <p>Given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> (<var>settings</var>):</p>
      <ol>
       <li data-md>
-       <p>If <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url③"><i lang="la">a priori</i> authenticated</a>., then return
+       <p>If <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin">potentially trustworthy origin</a>, then return
   "<code>Prohibits Mixed Security Contexts</code>".</p>
       <li data-md>
        <p>If <var>settings</var> has a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#responsible-document" id="ref-for-responsible-document">responsible document</a> <var>document</var>, then:</p>
@@ -768,7 +753,7 @@ dfn > a.self-link::before      { content: "#"; }
           <li data-md>
            <p>Let <var>embedder settings</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object">global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>.</p>
           <li data-md>
-           <p>If <var>embedder settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin①">origin</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url④"><i lang="la">a priori</i> authenticated</a>, then return
+           <p>If <var>embedder settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin①">origin</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin①">potentially trustworthy origin</a>, then return
   "<code>Prohibits Mixed Security Contexts</code>".</p>
          </ol>
        </ol>
@@ -810,7 +795,7 @@ dfn > a.self-link::before      { content: "#"; }
         conditions are met: 
        <ol>
         <li> <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> returns "<code>Does Not Restrict Mixed Security Contexts</code>" when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client①">client</a>. 
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url⑤">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑤"><i lang="la">a priori</i> authenticated</a>. 
+        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url⑤">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url④">potentially trustworthy URL</a>. 
         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content②">mixed content</a>, as
             described in <a href="#requirements-user-controls">§ 7.2 User Controls</a>). 
         <li>
@@ -843,7 +828,7 @@ dfn > a.self-link::before      { content: "#"; }
        <ol>
         <li> <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> returns <code>Does Not Restrict
             Mixed Content</code> when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client②">client</a>. 
-        <li> <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url①">url</a> is <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑥"><i lang="la">a priori</i> authenticated</a> 
+        <li> <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url①">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url⑤">potentially trustworthy URL</a>. 
         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content③">mixed content</a>, as
             described in <a href="#requirements-user-controls">§ 7.2 User Controls</a>). 
         <li>
@@ -861,17 +846,16 @@ dfn > a.self-link::before      { content: "#"; }
    <section>
     <h2 class="heading settled" data-level="5" id="integration"><span class="secno">5. </span><span class="content">Integrations</span><a class="self-link" href="#integration"></a></h2>
     <h3 class="heading settled" data-level="5.1" id="fetch"><span class="secno">5.1. </span><span class="content">Modifications to Fetch</span><a class="self-link" href="#fetch"></a></h3>
-    <p><a href="https://fetch.spec.whatwg.org/#main-fetch">Fetch Standard §4.1 Main fetch</a> should be modified to call <a href="#upgrade-algorithm">§ 4.1 Upgrade request to an a priori
-    authenticated URL as mixed content, if appropriate</a> on <var>request</var> between steps 3 and 4. That is, upgradeable mixed content should be autoupgraded to HTTPS
+    <p><a href="https://fetch.spec.whatwg.org/#main-fetch">Fetch Standard §4.1 Main fetch</a> should be modified to call <a href="#upgrade-algorithm">§ 4.1 Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a> on <var>request</var> between steps 3 and 4. That is, upgradeable mixed content should be autoupgraded to HTTPS
   before applying mixed content blocking.</p>
     <h3 class="heading settled" data-level="5.2" id="html"><span class="secno">5.2. </span><span class="content">Modifications to HTML</span><a class="self-link" href="#html"></a></h3>
     <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-response" id="ref-for-process-a-navigate-response">Process a navigate response</a> should be modified as follows. Step 3 should abort the download
-  and return if <var>source</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document-url" id="ref-for-concept-document-url">url</a> is an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑦"><i lang="la">a priori</i> authenticated URLs</a> and any URL
-  in <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url-list" id="ref-for-concept-response-url-list">URL list</a> is not an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑧"><i lang="la">a priori</i> authenticated URLs</a>.</p>
+  and return if <var>source</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document-url" id="ref-for-concept-document-url">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url⑥">potentially trustworthy URL</a> and any URL
+  in <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url-list" id="ref-for-concept-response-url-list">URL list</a> is not a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url⑦">potentially trustworthy URL</a>.</p>
     <p>A similar change should be made to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/links.html#downloading-hyperlinks" id="ref-for-downloading-hyperlinks">downloads a hyperlink</a>. In this algorithm, step 6.2
   should be modified to return (aborting the download) if <var>subject</var>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-document" id="ref-for-concept-node-document">node
-  document</a>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document-url" id="ref-for-concept-document-url①">url</a> is an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url⑨"><i lang="la">a priori</i> authenticated URLs</a> and
-  any URL in <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url-list" id="ref-for-concept-response-url-list①">URL list</a> is not an <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url①⓪"><i lang="la">a priori</i> authenticated URLs</a> (where <var>response</var> is the result of
+  document</a>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document-url" id="ref-for-concept-document-url①">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url⑧">potentially trustworthy URL</a> and
+  any URL in <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url-list" id="ref-for-concept-response-url-list①">URL list</a> is not a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url⑨">potentially trustworthy URL</a> (where <var>response</var> is the result of
   fetching <var>request</var>).</p>
     <p class="note" role="note"><span>Note:</span> Downloads are not autoupgraded like other types of mixed content, because the user agent
   does not always know before requesting a resource that it will be downloaded.</p>
@@ -911,8 +895,9 @@ dfn > a.self-link::before      { content: "#"; }
      <h3 class="heading settled" data-level="7.1" id="requirements-forms"><span class="secno">7.1. </span><span class="content">Form Submission</span><a class="self-link" href="#requirements-forms"></a></h3>
      <p>If <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> returns <code>Restricts Mixed Content</code> when applied to a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>, then a user agent MAY choose to warn users of the
     presence of one or more <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element">form</a></code> elements with <a data-link-type="element-attr" href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action" id="ref-for-attr-fs-action">action</a> attributes whose
-    values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url①①"><i lang="la">a priori</i> authenticated URLs</a></p>
-     <p>A user agent MAY choose to warn users on submission of a <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element①">form</a></code> element with <a data-link-type="element-attr" href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action" id="ref-for-attr-fs-action①">action</a> attributes whose values are not <a data-link-type="dfn" href="#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url①②"><i lang="la">a priori</i> authenticated URLs</a> and allow users to abort the submission.</p>
+    values are not <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url①⓪">potentially trustworthy URL</a>s.</p>
+     <p>A user agent MAY choose to warn users on submission of a <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element①">form</a></code> element with <a data-link-type="element-attr" href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action" id="ref-for-attr-fs-action①">action</a> attributes whose values are not <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url①①">potentially trustworthy URL</a>s
+    and allow users to abort the submission.</p>
      <p>Further, a user agent MAY treat form submissions from such a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> as a <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content④">blockable</a> request, even if the submission occurs in the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>.</p>
     </section>
    </section>
@@ -975,8 +960,6 @@ dfn > a.self-link::before      { content: "#"; }
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#a-priori-authenticated-url">a priori authenticated</a><span>, in §2</span>
-   <li><a href="#a-priori-authenticated-url">a priori authenticated URL</a><span>, in §2</span>
    <li><a href="#blockable-mixed-content">blockable</a><span>, in §3.2</span>
    <li><a href="#blockable-mixed-content">blockable mixed content</a><span>, in §3.2</span>
    <li><a href="#embedding-document">embedding document</a><span>, in §2</span>
@@ -1022,8 +1005,7 @@ dfn > a.self-link::before      { content: "#"; }
   <aside class="dfn-panel" data-for="term-for-concept-request-client">
    <a href="https://fetch.spec.whatwg.org/#concept-request-client">https://fetch.spec.whatwg.org/#concept-request-client</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-request-client">4.1. Upgrade request to an a priori
-    authenticated URL as mixed content, if appropriate</a>
+    <li><a href="#ref-for-concept-request-client">4.1. Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a>
     <li><a href="#ref-for-concept-request-client①">4.4. 
       Should fetching request be blocked as mixed content? </a>
     <li><a href="#ref-for-concept-request-client②">4.5. 
@@ -1035,8 +1017,7 @@ dfn > a.self-link::before      { content: "#"; }
    <a href="https://fetch.spec.whatwg.org/#concept-request-destination">https://fetch.spec.whatwg.org/#concept-request-destination</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-request-destination">3.1. Upgradeable Content</a> <a href="#ref-for-concept-request-destination①">(2)</a> <a href="#ref-for-concept-request-destination②">(3)</a>
-    <li><a href="#ref-for-concept-request-destination③">4.1. Upgrade request to an a priori
-    authenticated URL as mixed content, if appropriate</a> <a href="#ref-for-concept-request-destination④">(2)</a>
+    <li><a href="#ref-for-concept-request-destination③">4.1. Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a> <a href="#ref-for-concept-request-destination④">(2)</a>
     <li><a href="#ref-for-concept-request-destination⑤">4.4. 
       Should fetching request be blocked as mixed content? </a>
     <li><a href="#ref-for-concept-request-destination⑥">4.5. 
@@ -1048,15 +1029,13 @@ dfn > a.self-link::before      { content: "#"; }
    <a href="https://fetch.spec.whatwg.org/#concept-request-initiator">https://fetch.spec.whatwg.org/#concept-request-initiator</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-request-initiator">3.1. Upgradeable Content</a>
-    <li><a href="#ref-for-concept-request-initiator①">4.1. Upgrade request to an a priori
-    authenticated URL as mixed content, if appropriate</a>
+    <li><a href="#ref-for-concept-request-initiator①">4.1. Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-mode">
    <a href="https://fetch.spec.whatwg.org/#concept-request-mode">https://fetch.spec.whatwg.org/#concept-request-mode</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-request-mode">4.1. Upgrade request to an a priori
-    authenticated URL as mixed content, if appropriate</a>
+    <li><a href="#ref-for-concept-request-mode">4.1. Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-navigation-request">
@@ -1069,8 +1048,7 @@ dfn > a.self-link::before      { content: "#"; }
    <a href="https://fetch.spec.whatwg.org/#concept-request">https://fetch.spec.whatwg.org/#concept-request</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-request">2. Key Concepts and Terminology</a> <a href="#ref-for-concept-request①">(2)</a> <a href="#ref-for-concept-request②">(3)</a>
-    <li><a href="#ref-for-concept-request③">4.1. Upgrade request to an a priori
-    authenticated URL as mixed content, if appropriate</a>
+    <li><a href="#ref-for-concept-request③">4.1. Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a>
     <li><a href="#ref-for-concept-request④">4.4. 
       Should fetching request be blocked as mixed content? </a> <a href="#ref-for-concept-request⑤">(2)</a>
     <li><a href="#ref-for-concept-request⑥">4.5. 
@@ -1239,18 +1217,31 @@ dfn > a.self-link::before      { content: "#"; }
     <li><a href="#ref-for-video">3.1. Upgradeable Content</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-potentially-trustworthy-origin">
+   <a href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-origin">https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-potentially-trustworthy-origin">4.3. 
+      Does settings prohibit mixed security contexts? </a> <a href="#ref-for-potentially-trustworthy-origin①">(2)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-potentially-trustworthy-url">
    <a href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url">https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-potentially-trustworthy-url">2. Key Concepts and Terminology</a>
+    <li><a href="#ref-for-potentially-trustworthy-url">2. Key Concepts and Terminology</a> <a href="#ref-for-potentially-trustworthy-url①">(2)</a>
+    <li><a href="#ref-for-potentially-trustworthy-url②">4.1. Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a> <a href="#ref-for-potentially-trustworthy-url③">(2)</a>
+    <li><a href="#ref-for-potentially-trustworthy-url④">4.4. 
+      Should fetching request be blocked as mixed content? </a>
+    <li><a href="#ref-for-potentially-trustworthy-url⑤">4.5. 
+      Should response to request be blocked as mixed
+      content? </a>
+    <li><a href="#ref-for-potentially-trustworthy-url⑥">5.2. Modifications to HTML</a> <a href="#ref-for-potentially-trustworthy-url⑦">(2)</a> <a href="#ref-for-potentially-trustworthy-url⑧">(3)</a> <a href="#ref-for-potentially-trustworthy-url⑨">(4)</a>
+    <li><a href="#ref-for-potentially-trustworthy-url①⓪">7.1. Form Submission</a> <a href="#ref-for-potentially-trustworthy-url①①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-scheme">
    <a href="https://url.spec.whatwg.org/#concept-url-scheme">https://url.spec.whatwg.org/#concept-url-scheme</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-url-scheme">2. Key Concepts and Terminology</a>
-    <li><a href="#ref-for-concept-url-scheme①">4.1. Upgrade request to an a priori
-    authenticated URL as mixed content, if appropriate</a> <a href="#ref-for-concept-url-scheme②">(2)</a>
+    <li><a href="#ref-for-concept-url-scheme">4.1. Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a> <a href="#ref-for-concept-url-scheme①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-xmlhttprequest">
@@ -1314,6 +1305,7 @@ dfn > a.self-link::before      { content: "#"; }
    <li>
     <a data-link-type="biblio">[SECURE-CONTEXTS]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="term-for-potentially-trustworthy-origin">potentially trustworthy origin</span>
      <li><span class="dfn-paneled" id="term-for-potentially-trustworthy-url">potentially trustworthy url</span>
     </ul>
    <li>
@@ -1370,23 +1362,6 @@ dfn > a.self-link::before      { content: "#"; }
     <li><a href="#ref-for-mixed-content③">4.5. 
       Should response to request be blocked as mixed
       content? </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="a-priori-authenticated-url">
-   <b><a href="#a-priori-authenticated-url">#a-priori-authenticated-url</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-a-priori-authenticated-url">2. Key Concepts and Terminology</a> <a href="#ref-for-a-priori-authenticated-url①">(2)</a>
-    <li><a href="#ref-for-a-priori-authenticated-url②">4.1. Upgrade request to an a priori
-    authenticated URL as mixed content, if appropriate</a>
-    <li><a href="#ref-for-a-priori-authenticated-url③">4.3. 
-      Does settings prohibit mixed security contexts? </a> <a href="#ref-for-a-priori-authenticated-url④">(2)</a>
-    <li><a href="#ref-for-a-priori-authenticated-url⑤">4.4. 
-      Should fetching request be blocked as mixed content? </a>
-    <li><a href="#ref-for-a-priori-authenticated-url⑥">4.5. 
-      Should response to request be blocked as mixed
-      content? </a>
-    <li><a href="#ref-for-a-priori-authenticated-url⑦">5.2. Modifications to HTML</a> <a href="#ref-for-a-priori-authenticated-url⑧">(2)</a> <a href="#ref-for-a-priori-authenticated-url⑨">(3)</a> <a href="#ref-for-a-priori-authenticated-url①⓪">(4)</a>
-    <li><a href="#ref-for-a-priori-authenticated-url①①">7.1. Form Submission</a> <a href="#ref-for-a-priori-authenticated-url①②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="unauthenticated-response">
