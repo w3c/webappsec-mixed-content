@@ -112,8 +112,8 @@ type: attribute
     </dt>
     <dd>
       A <a>request</a> is <strong>mixed content</strong> if its
-      <a for="request">url</a> is not <a><i lang="la">a priori</i>
-      authenticated</a>, <strong>and</strong> the context responsible for
+      <a for="request">url</a> is not a [=potentially trustworthy URL=] [[!SECURE-CONTEXTS]]
+      <strong>and</strong> the context responsible for
       loading it prohibits mixed security contexts (see
       [[#categorize-settings-object]] for a normative definition of the latter).
 
@@ -149,26 +149,6 @@ type: attribute
     </dd>
 
     <dt>
-      <dfn export local-lt="a priori authenticated" oldids="a-priori-insecure-url a-priori-insecure-origin">
-        <i lang="la">a priori</i> authenticated URL
-      </dfn>
-    </dt>
-    <dd>
-      We know <i lang="la">a priori</i> that a request to a particular URL
-      (|url|) will be delivered in a way that mitigates the risks of
-      interception and modifications if either of the following statements is
-      true:
-
-      1.  |url| is a [=potentially trustworthy URL=] [[!SECURE-CONTEXTS]].
-
-      2.  |url|'s <a for="url">scheme</a> is "`data`".
-
-          Note: We special case `data` URLs here, as we don't consider them
-          particularly trustworthy, but we also don't wish to block them as
-          mixed content, as they never hit the network.
-    </dd>
-
-    <dt>
       <dfn export local-lt="unauthenticated" oldids="insecure-origin insecure-url">
         unauthenticated response
       </dfn>
@@ -176,8 +156,7 @@ type: attribute
     <dd>
       We know <i lang="la">a posteriori</i> that a <a>response</a>
       (|response|) is unauthenticated if |response|'s
-      <a for="response">url</a> is not <a><i lang="la">a priori</i>
-      authenticated</a>.
+      <a for="response">url</a> is not a [=potentially trustworthy URL=].
     </dd>
 
     <dt><dfn export>embedding document</dfn></dt>
@@ -194,6 +173,9 @@ type: attribute
       insecure connection.
     </dd>
   </dl>
+  <p class="note"><dfn export><dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="a priori authenticated" data-lt="a priori authenticated URL" id="a-priori-authenticated-url">
+      This document previously defined the <i lang="la">a priori</i> authenticated URL concept. An <i lang="la">a priori</i> authenticated URL is now equivalent to a [=potentially trustworthy URL=] [[!SECURE-CONTEXTS]].
+  </p>
 </section>
 
 <section>
@@ -271,8 +253,7 @@ type: attribute
   <h2 id="algorithms">Algorithms</h2>
 
   <section>
-    <h3 id="upgrade-algorithm">Upgrade |request| to an <i lang="la">a priori</i>
-    authenticated URL as mixed content, if appropriate</h3>
+    <h3 id="upgrade-algorithm">Upgrade a mixed content |request| to a [=potentially trustworthy URL=], if appropriate</h3>
 
     Note: The Fetch specification will hook into this algorithm to upgrade upgradeable
     mixed content to HTTPS.
@@ -286,8 +267,8 @@ type: attribute
         If one or more of the following conditions is met, return without modifying <var>request</var>:
         <ol>
           <li>
-            <var>request</var>'s <a for="request">url</a> is an
-            <a><i lang="la">a priori</i> authenticated URL</a>
+            <var>request</var>'s <a for="request">url</a> is a
+            [=potentially trustworthy URL=].
           </li>
           <li>
             [[#categorize-settings-object]] returns "<code>Does Not Restrict Mixed Security
@@ -344,8 +325,8 @@ type: attribute
 
     Given an [=environment settings object=] (|settings|):
     
-    1.  If |settings|' [=environment settings object/origin=] is
-        <a><i lang="la">a priori</i> authenticated</a>., then return
+    1.  If |settings|' [=environment settings object/origin=] is a
+        [=potentially trustworthy origin=], then return
         "`Prohibits Mixed Security Contexts`".
 
     2.  If |settings| has a <a>responsible document</a> |document|, then:
@@ -358,8 +339,8 @@ type: attribute
                 [=relevant settings object=].
 
             3.  If |embedder settings|'
-                [=environment settings object/origin=] is
-                <a><i lang="la">a priori</i> authenticated</a>, then return
+                [=environment settings object/origin=] is a
+                [=potentially trustworthy origin=], then return
                 "`Prohibits Mixed Security Contexts`".
 
     3.  Return "`Does Not Restrict Mixed Security Contexts`".
@@ -426,8 +407,7 @@ type: attribute
             <a for="request">client</a>.
           </li>
           <li>
-            |request|'s <a for="request">url</a> is <a><i lang="la">a priori</i>
-            authenticated</a>.
+            |request|'s <a for="request">url</a> is a [=potentially trustworthy URL=].
           </li>
           <li>
             The user agent has been instructed to allow <a>mixed content</a>, as
@@ -480,8 +460,8 @@ type: attribute
             [=request/client=].
           </li>
           <li>
-            <var>response</var>'s [=response/url=] is
-            <a><i lang="la">a priori</i> authenticated</a>
+            <var>response</var>'s [=response/url=] is a
+            [=potentially trustworthy URL=].
           <li>
             The user agent has been instructed to allow <a>mixed content</a>, as
             described in [[#requirements-user-controls]]).
@@ -514,16 +494,16 @@ type: attribute
   <h3 id="html">Modifications to HTML</h3>
 
   <a>Process a navigate response</a> should be modified as follows. Step 3 should abort the download
-  and return if <var>source</var>'s <a>active document</a>'s <a for="Document">url</a> is an
-  <a><i lang="la">a priori</i> authenticated URLs</a> and any URL
-  in <var>response</var>'s <a for="response">URL list</a> is not an
-  <a><i lang="la">a priori</i> authenticated URLs</a>.
+  and return if <var>source</var>'s <a>active document</a>'s <a for="Document">url</a> is a
+  [=potentially trustworthy URL=] and any URL
+  in <var>response</var>'s <a for="response">URL list</a> is not a
+  [=potentially trustworthy URL=].
 
   A similar change should be made to <a>downloads a hyperlink</a>. In this algorithm, step 6.2
   should be modified to return (aborting the download) if <var>subject</var>'s <a>node
-  document</a>'s <a for="Document">url</a> is an <a><i lang="la">a priori</i> authenticated URLs</a> and
-  any URL in <var>response</var>'s <a for="response">URL list</a> is not an
-  <a><i lang="la">a priori</i> authenticated URLs</a> (where <var>response</var> is the result of
+  document</a>'s <a for="Document">url</a> is a [=potentially trustworthy URL=] and
+  any URL in <var>response</var>'s <a for="response">URL list</a> is not a
+  [=potentially trustworthy URL=] (where <var>response</var> is the result of
   fetching <var>request</var>).
 
   Note: Downloads are not autoupgraded like other types of mixed content, because the user agent
@@ -578,11 +558,11 @@ type: attribute
     If [[#categorize-settings-object]] returns `Restricts Mixed Content` when applied to a
     {{Document}}'s [=relevant settings object=], then a user agent MAY choose to warn users of the
     presence of one or more <{form}> elements with <a element-attr>action</a> attributes whose
-    values are not <a><i lang="la">a priori</i> authenticated URLs</a>
+    values are not [=potentially trustworthy URL=]s.
 
     A user agent MAY choose to warn users on submission of a <{form}> element with 
-    <a element-attr>action</a> attributes whose values are not <a><i lang="la">a priori</i>
-    authenticated URLs</a> and allow users to abort the submission.
+    <a element-attr>action</a> attributes whose values are not [=potentially trustworthy URL=]s
+    and allow users to abort the submission.
 
     Further, a user agent MAY treat form submissions from such a {{Document}} as a [=blockable=]
     request, even if the submission occurs in the [=top-level browsing context=].
