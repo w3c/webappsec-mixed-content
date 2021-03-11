@@ -39,11 +39,6 @@ spec:dom; type:interface; text:Document
 type: dfn
   urlPrefix: https://tools.ietf.org/html/rfc6797
     text: mixed security context; url: section-12.4
-type: dfn
-  urlPrefix: https://tools.ietf.org/html/rfc6455; spec: RFC6455
-    text: fail the websocket connection; url: section-7.1.7
-type: attribute
-  text: onerror; for: WebSocket; url: https://www.w3.org/TR/websockets/#handler-websocket-onerror
 </pre>
 
 <section>
@@ -141,7 +136,7 @@ type: attribute
       <a href="https://www.w3.org/TR/wsc-ui/#securepage">section 5.3</a> of
       [[WSC-UI]]. This document updates that initial definition.
 
-      Note: [[XML]] also defines an unrelated 
+      Note: [[XML]] also defines an unrelated
       <a href="https://www.w3.org/TR/2008/REC-xml-20081126/#sec-mixed-content">"mixed content"</a>.
       concept. This is potentially confusing, but given the term's near
       ubiquitious usage in a security context across user agents for more than
@@ -309,7 +304,7 @@ type: attribute
     optionally-blockable mixed content will now be autoupgraded.
     [[mixed-content#should-block-fetch]] and [[mixed-content#should-block-response]] are
     replaced by the versions below, while [[mixed-content#categorize-settings-object]] is left
-    unmodified (but included below since this will replace the [[mixed-content]] spec). 
+    unmodified (but included below since this will replace the [[mixed-content]] spec).
 
 
     section>
@@ -324,7 +319,7 @@ type: attribute
     as appropriate.
 
     Given an [=environment settings object=] (|settings|):
-    
+
     1.  If |settings|' [=environment settings object/origin=] is a
         [=potentially trustworthy origin=], then return
         "`Prohibits Mixed Security Contexts`".
@@ -560,7 +555,7 @@ type: attribute
     presence of one or more <{form}> elements with <a element-attr>action</a> attributes whose
     values are not [=potentially trustworthy URL=]s.
 
-    A user agent MAY choose to warn users on submission of a <{form}> element with 
+    A user agent MAY choose to warn users on submission of a <{form}> element with
     <a element-attr>action</a> attributes whose values are not [=potentially trustworthy URL=]s
     and allow users to abort the submission.
 
