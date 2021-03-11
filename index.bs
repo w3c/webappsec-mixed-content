@@ -556,7 +556,10 @@ type: dfn
 
     A user agent MAY choose to warn users on submission of a <{form}> element with
     <a element-attr>action</a> attributes whose values are not [=potentially trustworthy URL=]s
-    and allow users to abort the submission.
+    and allow users to abort the submission. If a user agent warns on <{form}> element
+    submissions to not [=potentially trustworthy URL=]s, it SHOULD also warn and allow users to
+    abort the submission if upon submission, the <{form}> element's action, redirects to a
+    non [=potentially trustworthy URL=], exposing the <{form}> information.
 
     Further, a user agent MAY treat form submissions from such a {{Document}} as a [=blockable=]
     request, even if the submission occurs in the [=top-level browsing context=].
