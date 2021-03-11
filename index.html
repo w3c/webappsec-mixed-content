@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version b94c7e755, updated Fri Feb 19 16:28:59 2021 -0800" name="generator">
   <link href="https://www.w3.org/TR/mixed-content-2/" rel="canonical">
-  <meta content="a3c863464c559520726554896958aa94efa20b75" name="document-revision">
+  <meta content="b5b215447c03579c709f8f328e75a3783b730f02" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -632,7 +632,7 @@ dfn > a.self-link::before      { content: "#"; }
       concept. This is potentially confusing, but given the term’s near
       ubiquitious usage in a security context across user agents for more than
       a decade, the practical risk of confusion seems low.</p>
-     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="unauthenticated" data-lt="unauthenticated response" id="unauthenticated-response"> unauthenticated response <span id="insecure-origin insecure-url"></span></dfn> 
+     <dt> <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="unauthenticated" data-lt="unauthenticated response" id="unauthenticated-response"> unauthenticated response <span id="insecure-origin"></span><span id="insecure-url"></span></dfn> 
      <dd> We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response①">response</a> (<var>response</var>) is unauthenticated if <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">URL</a> is not a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url①">potentially trustworthy URL</a>. 
      <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="embedding-document">embedding document</dfn>
      <dd> Given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> <var>A</var>, the <strong>embedding
@@ -642,7 +642,7 @@ dfn > a.self-link::before      { content: "#"; }
       which was initiated by a secure context but is downloaded over an
       insecure connection. 
     </dl>
-    <p class="note" role="note"><dfn data-dfn-type="dfn" data-export data-lt="This document previously defined the a priori authenticated URL concept. An a priori authenticated URL is now equivalent to a potentially trustworthy URL [SECURE-CONTEXTS]." id="this-document-previously-defined-the-a-priori-authenticated-url-concept-an-a-priori-authenticated-url-is-now-equivalent-to-a-potentially-trustworthy-url-secure-contexts"><dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="a priori authenticated" data-lt="a priori authenticated URL" id="a-priori-authenticated-url"> This document previously defined the <i lang="la">a priori</i> authenticated URL concept. An <i lang="la">a priori</i> authenticated URL is now equivalent to a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url②">potentially trustworthy URL</a> <a data-link-type="biblio" href="#biblio-secure-contexts">[SECURE-CONTEXTS]</a>. <a class="self-link" href="#a-priori-authenticated-url"></a></dfn><a class="self-link" href="#this-document-previously-defined-the-a-priori-authenticated-url-concept-an-a-priori-authenticated-url-is-now-equivalent-to-a-potentially-trustworthy-url-secure-contexts"></a></dfn></p>
+    <p class="note" role="note"> An <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="a priori authenticated" id="a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL<a class="self-link" href="#a-priori-authenticated-url"></a></dfn> is equivalent to a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url②">potentially trustworthy URL</a> <a data-link-type="biblio" href="#biblio-secure-contexts">[SECURE-CONTEXTS]</a>. </p>
    </section>
    <section>
     <h2 class="heading settled" data-level="3" id="categories"><span class="secno">3. </span><span class="content">Content Categories</span><a class="self-link" href="#categories"></a></h2>
@@ -653,7 +653,7 @@ dfn > a.self-link::before      { content: "#"; }
     <p>With that in mind, we here split mixed content into two categories: <a href="#category-upgradeable">§ 3.1 Upgradeable Content</a> and <a href="#category-blockable">§ 3.2 Blockable Content</a>.</p>
     <section>
      <h3 class="heading settled" data-level="3.1" id="category-upgradeable"><span class="secno">3.1. </span><span class="content">Upgradeable Content</span><a class="self-link" href="#category-upgradeable"></a></h3>
-     <note>Upgradeable content was previously referred to as optionally-blockable in <a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a></note>
+     <p class="note" role="note"> Upgradeable content was previously referred to as optionally-blockable in <a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a> </p>
      <p>Mixed content is <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="upgradeable" data-lt="upgradeable mixed content" id="upgradeable-mixed-content">upgradeable</dfn> when the risk of allowing its usage as <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content①">mixed content</a> is outweighed by the risk of
     breaking significant portions of the web. This could be because mixed usage of the resource type
     is sufficiently high, and because the resource is low-risk in and of itself. The fact that these
@@ -970,7 +970,6 @@ dfn > a.self-link::before      { content: "#"; }
    <li><a href="#mixed-download">mixed download</a><span>, in §2</span>
    <li><a href="#should-block-fetch">Should fetching request be blocked as mixed content?</a><span>, in §4</span>
    <li><a href="#should-block-response">Should response to request be blocked as mixed content?</a><span>, in §4</span>
-   <li><a href="#this-document-previously-defined-the-a-priori-authenticated-url-concept-an-a-priori-authenticated-url-is-now-equivalent-to-a-potentially-trustworthy-url-secure-contexts">This document previously defined the a priori authenticated URL concept. An a priori authenticated URL is now equivalent to a potentially trustworthy URL [SECURE-CONTEXTS].</a><span>, in §2</span>
    <li><a href="#unauthenticated-response">unauthenticated</a><span>, in §2</span>
    <li><a href="#unauthenticated-response">unauthenticated response</a><span>, in §2</span>
    <li><a href="#upgradeable-mixed-content">upgradeable</a><span>, in §3.1</span>
