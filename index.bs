@@ -27,7 +27,6 @@ Boilerplate: omit conformance, omit feedback-header
 -->
 <pre class="link-defaults">
 spec:html; type:dfn; for:/; text: use srcset or picture
-spec:html; type:dfn; for:/; text:browsing context
 spec:html; type:dfn; for:/; text:container document
 spec:html; type:dfn; for:/; text:plugin
 spec:fetch; type:dfn; for:/; text:request
@@ -156,7 +155,7 @@ type: dfn
     <dt><dfn export>embedding document</dfn></dt>
     <dd>
       Given a {{Document}} <var>A</var>, the <strong>embedding
-      document</strong> of <var>A</var> is |A|'s [=browsing context=]'s
+      document</strong> of <var>A</var> is |A|'s [=Document/browsing context=]'s
       [=container document=] [[!HTML]].
     </dd>
 
