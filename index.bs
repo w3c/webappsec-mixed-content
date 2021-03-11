@@ -143,7 +143,7 @@ type: dfn
     </dd>
 
     <dt>
-      <dfn export local-lt="unauthenticated" oldids="insecure-origin insecure-url">
+      <dfn export local-lt="unauthenticated" oldids="insecure-origin, insecure-url">
         unauthenticated response
       </dfn>
     </dt>
@@ -167,8 +167,8 @@ type: dfn
       insecure connection.
     </dd>
   </dl>
-  <p class="note"><dfn export><dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="a priori authenticated" data-lt="a priori authenticated URL" id="a-priori-authenticated-url">
-      This document previously defined the <i lang="la">a priori</i> authenticated URL concept. An <i lang="la">a priori</i> authenticated URL is now equivalent to a [=potentially trustworthy URL=] [[!SECURE-CONTEXTS]].
+  <p class="note">
+      An <dfn export class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="a priori authenticated" data-lt="a priori authenticated URL" id="a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</dfn> is equivalent to a [=potentially trustworthy URL=] [[!SECURE-CONTEXTS]].
   </p>
 </section>
 
@@ -186,8 +186,10 @@ type: dfn
   <section>
     <h3 id="category-upgradeable">Upgradeable Content</h3>
 
-    <note>Upgradeable content was previously referred to as optionally-blockable in
-    [[mixed-content]]</note>
+    <p class="note">
+        Upgradeable content was previously referred to as optionally-blockable in
+    [[mixed-content]]
+    </p>
 
     Mixed content is
     <dfn export lt="upgradeable mixed content" local-lt="upgradeable">upgradeable</dfn>
