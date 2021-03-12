@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version b94c7e755, updated Fri Feb 19 16:28:59 2021 -0800" name="generator">
   <link href="https://www.w3.org/TR/mixed-content-2/" rel="canonical">
-  <meta content="ea4d2249933c9d00d0fc5d07bfe1b4ac167a58dd" name="document-revision">
+  <meta content="0afe352d6dbb91d0249fe3cf64f8eadd22e9b3c5" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -441,7 +441,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Mixed Content Level 2</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-03-11">11 March 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-03-12">12 March 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -897,7 +897,10 @@ dfn > a.self-link::before      { content: "#"; }
     presence of one or more <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element">form</a></code> elements with <a data-link-type="element-attr" href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action" id="ref-for-attr-fs-action">action</a> attributes whose
     values are not <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url①①">potentially trustworthy URL</a>s.</p>
      <p>A user agent MAY choose to warn users on submission of a <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element①">form</a></code> element with <a data-link-type="element-attr" href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-action" id="ref-for-attr-fs-action①">action</a> attributes whose values are not <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url①②">potentially trustworthy URL</a>s
-    and allow users to abort the submission.</p>
+    and allow users to abort the submission. If a user agent warns on <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element②">form</a></code> element
+    submissions to not <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url①③">potentially trustworthy URL</a>s, it SHOULD also warn and allow users to
+    abort the submission if upon submission, the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element③">form</a></code> element’s action, redirects to a
+    non <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url①④">potentially trustworthy URL</a>, exposing the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element" id="ref-for-the-form-element④">form</a></code> information.</p>
      <p>Further, a user agent MAY treat form submissions from such a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> as a <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content④">blockable</a> request, even if the submission occurs in the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>.</p>
     </section>
    </section>
@@ -1131,7 +1134,7 @@ dfn > a.self-link::before      { content: "#"; }
   <aside class="dfn-panel" data-for="term-for-the-form-element">
    <a href="https://html.spec.whatwg.org/multipage/forms.html#the-form-element">https://html.spec.whatwg.org/multipage/forms.html#the-form-element</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-the-form-element">7.1. Form Submission</a> <a href="#ref-for-the-form-element①">(2)</a>
+    <li><a href="#ref-for-the-form-element">7.1. Form Submission</a> <a href="#ref-for-the-form-element①">(2)</a> <a href="#ref-for-the-form-element②">(3)</a> <a href="#ref-for-the-form-element③">(4)</a> <a href="#ref-for-the-form-element④">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-the-img-element">
@@ -1239,7 +1242,7 @@ dfn > a.self-link::before      { content: "#"; }
       Should response to request be blocked as mixed
       content? </a>
     <li><a href="#ref-for-potentially-trustworthy-url⑦">5.2. Modifications to HTML</a> <a href="#ref-for-potentially-trustworthy-url⑧">(2)</a> <a href="#ref-for-potentially-trustworthy-url⑨">(3)</a> <a href="#ref-for-potentially-trustworthy-url①⓪">(4)</a>
-    <li><a href="#ref-for-potentially-trustworthy-url①①">7.1. Form Submission</a> <a href="#ref-for-potentially-trustworthy-url①②">(2)</a>
+    <li><a href="#ref-for-potentially-trustworthy-url①①">7.1. Form Submission</a> <a href="#ref-for-potentially-trustworthy-url①②">(2)</a> <a href="#ref-for-potentially-trustworthy-url①③">(3)</a> <a href="#ref-for-potentially-trustworthy-url①④">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-scheme">
