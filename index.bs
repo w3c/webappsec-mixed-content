@@ -1,6 +1,7 @@
 <h1>Mixed Content Level 2</h1>
 <pre class="metadata">
 Status: ED
+Level: none
 ED: https://w3c.github.io/webappsec-mixed-content/
 Shortname: mixed-content
 Editor: Emily Stark 76989, Google Inc., estark@google.com
