@@ -2,8 +2,7 @@
 <pre class="metadata">
 Status: ED
 ED: https://w3c.github.io/webappsec-mixed-content/
-Shortname: mixed-content-2
-Level: 2
+Shortname: mixed-content
 Editor: Emily Stark 76989, Google Inc., estark@google.com
         Mike West 56384, Google Inc., mkwst@google.com
         Carlos Ibarra Lopez  117196, Google Inc., carlosil@google.com
