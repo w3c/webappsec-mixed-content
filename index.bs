@@ -15,7 +15,7 @@ Abstract:
   This specification describes how a user agent should handle fetching of
   content over unencrypted or unauthenticated connections in the context of an
   encrypted and authenticated document.
-Version History: https://github.com/w3c/webappsec-mixed-content/commits/master/index.src.html
+Version History: https://github.com/w3c/webappsec-mixed-content/commits/main/index.bs
 Boilerplate: omit conformance, omit feedback-header
 !Participate: <a href="https://github.com/w3c/webappsec-mixed-content/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-mixed-content/issues">open issues</a>)
 !Feedback: <a href="https://github.com/w3c/webappsec-mixed-content/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-mixed-content/issues">open issues</a>)
