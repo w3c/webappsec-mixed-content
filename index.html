@@ -4,9 +4,9 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <title>Mixed Content Level 2</title>
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version b94c7e755, updated Fri Feb 19 16:28:59 2021 -0800" name="generator">
+  <meta content="Bikeshed version 76158db7a, updated Mon Sep 13 11:54:49 2021 -0700" name="generator">
   <link href="https://w3c.github.io/webappsec-mixed-content/" rel="canonical">
-  <meta content="af9e38a6c3a08448e51bd5a0e87a5192aacd7eed" name="document-revision">
+  <meta content="693e9741f45122d173ce0cb3a80efef17bf78221" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -113,9 +113,9 @@ pre .property::before, pre .property::after {
     --ins-bg: transparent;
 
     --a-normal-text: #034575;
-    --a-normal-underline: #707070;
+    --a-normal-underline: #bbb;
     --a-visited-text: var(--a-normal-text);
-    --a-visited-underline: #bbb;
+    --a-visited-underline: #707070;
     --a-hover-bg: rgba(75%, 75%, 75%, .25);
     --a-active-text: #c00;
     --a-active-underline: #c00;
@@ -441,7 +441,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Mixed Content Level 2</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-03-12">12 March 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-16">16 September 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -462,7 +462,7 @@ dfn > a.self-link::before      { content: "#"; }
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2021 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2021 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-software">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -487,10 +487,10 @@ dfn > a.self-link::before      { content: "#"; }
 	“[mixed-content-2] <em>…summary of comment…</em>” </p>
    <p> This document was produced by the <a href="https://www.w3.org/2011/webappsec/">Web Application Security Working Group</a>. </p>
    <p> This document was produced by a group operating under
-	the <a href="https://www.w3.org/Consortium/Patent-Policy-20170801/">W3C Patent Policy</a>.
-	W3C maintains a <a href="https://www.w3.org/2004/01/pp-impl/49309/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
+	the <a href="https://www.w3.org/Consortium/Patent-Policy/">W3C Patent Policy</a>.
+	W3C maintains a <a href="https://www.w3.org/groups/wg/webappsec/ipr" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
 	that page also includes instructions for disclosing a patent.
-	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy-20170801/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy-20170801/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
+	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
    <p> This document is governed by the <a href="https://www.w3.org/2020/Process-20200915/" id="w3c_process_revision">15 September 2020 W3C Process Document</a>. </p>
    <p></p>
   </div>
@@ -634,7 +634,7 @@ dfn > a.self-link::before      { content: "#"; }
      <dd> We know <i lang="la">a posteriori</i> that a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response①">response</a> (<var>response</var>) is unauthenticated if <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">URL</a> is not a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url①">potentially trustworthy URL</a>. 
      <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="embedding-document">embedding document</dfn>
      <dd> Given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> <var>A</var>, the <strong>embedding
-      document</strong> of <var>A</var> is <var>A</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#bc-container-document" id="ref-for-bc-container-document">container document</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a>. 
+      document</strong> of <var>A</var> is <var>A</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a>'s <a data-link-type="dfn">container document</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a>. 
      <dt><dfn data-dfn-type="dfn" data-export id="mixed-download">mixed download<a class="self-link" href="#mixed-download"></a></dfn>
      <dd> A mixed download is a resource that a user agent handles as a download,
       which was initiated by a secure context but is downloaded over an
@@ -726,8 +726,8 @@ dfn > a.self-link::before      { content: "#"; }
      <h3 class="heading settled" data-level="4.2" id="existing-mix-algorithms"><span class="secno">4.2. </span><span class="content">Existing Mixed Content Algorithms and Modifications</span><a class="self-link" href="#existing-mix-algorithms"></a></h3>
      <p class="note" role="note"><span>Note:</span> This section specifies modifications to existing mixed content algorithms to ignore the
     distinction between optionally-blockable and blockable mixed content, since all
-    optionally-blockable mixed content will now be autoupgraded. <a href="http://www.w3.org/TR/mixed-content/#should-block-fetch">Mixed Content §5.3 Should fetching request be blocked as mixed content?</a> and <a href="http://www.w3.org/TR/mixed-content/#should-block-response">Mixed Content §5.4 Should response to request be blocked as mixed content?</a> are
-    replaced by the versions below, while <a href="http://www.w3.org/TR/mixed-content/#categorize-settings-object">Mixed Content §5.1 Does settings prohibit mixed security contexts?</a> is left
+    optionally-blockable mixed content will now be autoupgraded. <a href="http://www.w3.org/TR/mixed-content/#should-block-fetch"><cite>Mixed Content</cite> § 5.3 Should fetching request be blocked as mixed content?</a> and <a href="http://www.w3.org/TR/mixed-content/#should-block-response"><cite>Mixed Content</cite> § 5.4 Should response to request be blocked as mixed content?</a> are
+    replaced by the versions below, while <a href="http://www.w3.org/TR/mixed-content/#categorize-settings-object"><cite>Mixed Content</cite> § 5.1 Does settings prohibit mixed security contexts?</a> is left
     unmodified (but included below since this will replace the <a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a> spec).</p>
      <p>section></p>
      <h3 class="heading settled" data-level="4.3" id="categorize-settings-object"><span class="secno">4.3. </span><span class="content"> Does <var>settings</var> prohibit mixed security contexts? </span><a class="self-link" href="#categorize-settings-object"></a></h3>
@@ -844,7 +844,7 @@ dfn > a.self-link::before      { content: "#"; }
    <section>
     <h2 class="heading settled" data-level="5" id="integration"><span class="secno">5. </span><span class="content">Integrations</span><a class="self-link" href="#integration"></a></h2>
     <h3 class="heading settled" data-level="5.1" id="fetch"><span class="secno">5.1. </span><span class="content">Modifications to Fetch</span><a class="self-link" href="#fetch"></a></h3>
-    <p><a href="https://fetch.spec.whatwg.org/#main-fetch">Fetch Standard §4.1 Main fetch</a> should be modified to call <a href="#upgrade-algorithm" id="ref-for-upgrade-algorithm①">§ 4.1 Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a> on <var>request</var> between steps 3 and 4. That is, upgradeable mixed content should be autoupgraded to HTTPS
+    <p><a href="https://fetch.spec.whatwg.org/#main-fetch"><cite>Fetch Standard</cite> § 4.1 Main fetch</a> should be modified to call <a href="#upgrade-algorithm" id="ref-for-upgrade-algorithm①">§ 4.1 Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a> on <var>request</var> between steps 3 and 4. That is, upgradeable mixed content should be autoupgraded to HTTPS
   before applying mixed content blocking.</p>
     <h3 class="heading settled" data-level="5.2" id="html"><span class="secno">5.2. </span><span class="content">Modifications to HTML</span><a class="self-link" href="#html"></a></h3>
     <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-response" id="ref-for-process-a-navigate-response">Process a navigate response</a> should be modified as follows. Step 3 should abort the download
@@ -866,7 +866,7 @@ dfn > a.self-link::before      { content: "#"; }
    <section>
     <h2 class="heading settled" data-level="6" id="obsolescences"><span class="secno">6. </span><span class="content">Obsolescences</span><a class="self-link" href="#obsolescences"></a></h2>
     <h3 class="heading settled" data-level="6.1" id="strict-checking"><span class="secno">6.1. </span><span class="content"><code>Strict Mixed Content Checking</code></span><a class="self-link" href="#strict-checking"></a></h3>
-    <p>This specification renders the <a href="http://www.w3.org/TR/mixed-content/#strict-checking">Mixed Content §4 Strict Mixed Content Checking</a> mode and
+    <p>This specification renders the <a href="http://www.w3.org/TR/mixed-content/#strict-checking"><cite>Mixed Content</cite> § 4 Strict Mixed Content Checking</a> mode and
   the <code>block-all-mixed-content</code> CSP directive obsolete,
   because all mixed content is now blocked if it can’t be autoupgraded.</p>
     <p class="note" role="note"><span>Note:</span> The <code>upgrade-insecure-requests</code> (<a data-link-type="biblio" href="#biblio-upgrade-insecure-requests">[upgrade-insecure-requests]</a>) directive is not
@@ -961,21 +961,21 @@ dfn > a.self-link::before      { content: "#"; }
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#a-priori-authenticated-url">a priori authenticated</a><span>, in §2</span>
-   <li><a href="#a-priori-authenticated-url">a priori authenticated URL</a><span>, in §2</span>
-   <li><a href="#blockable-mixed-content">blockable</a><span>, in §3.2</span>
-   <li><a href="#blockable-mixed-content">blockable mixed content</a><span>, in §3.2</span>
-   <li><a href="#embedding-document">embedding document</a><span>, in §2</span>
-   <li><a href="#mixed-content">mixed</a><span>, in §2</span>
-   <li><a href="#mixed-content">mixed content</a><span>, in §2</span>
-   <li><a href="#mixed-download">mixed download</a><span>, in §2</span>
-   <li><a href="#should-block-fetch">Should fetching request be blocked as mixed content?</a><span>, in §4</span>
-   <li><a href="#should-block-response">Should response to request be blocked as mixed content?</a><span>, in §4</span>
-   <li><a href="#unauthenticated-response">unauthenticated</a><span>, in §2</span>
-   <li><a href="#unauthenticated-response">unauthenticated response</a><span>, in §2</span>
-   <li><a href="#upgradeable-mixed-content">upgradeable</a><span>, in §3.1</span>
-   <li><a href="#upgradeable-mixed-content">upgradeable mixed content</a><span>, in §3.1</span>
-   <li><a href="#upgrade-algorithm">Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a><span>, in §4</span>
+   <li><a href="#a-priori-authenticated-url">a priori authenticated</a><span>, in § 2</span>
+   <li><a href="#a-priori-authenticated-url">a priori authenticated URL</a><span>, in § 2</span>
+   <li><a href="#blockable-mixed-content">blockable</a><span>, in § 3.2</span>
+   <li><a href="#blockable-mixed-content">blockable mixed content</a><span>, in § 3.2</span>
+   <li><a href="#embedding-document">embedding document</a><span>, in § 2</span>
+   <li><a href="#mixed-content">mixed</a><span>, in § 2</span>
+   <li><a href="#mixed-content">mixed content</a><span>, in § 2</span>
+   <li><a href="#mixed-download">mixed download</a><span>, in § 2</span>
+   <li><a href="#should-block-fetch">Should fetching request be blocked as mixed content?</a><span>, in § 4</span>
+   <li><a href="#should-block-response">Should response to request be blocked as mixed content?</a><span>, in § 4</span>
+   <li><a href="#unauthenticated-response">unauthenticated</a><span>, in § 2</span>
+   <li><a href="#unauthenticated-response">unauthenticated response</a><span>, in § 2</span>
+   <li><a href="#upgradeable-mixed-content">upgradeable</a><span>, in § 3.1</span>
+   <li><a href="#upgradeable-mixed-content">upgradeable mixed content</a><span>, in § 3.1</span>
+   <li><a href="#upgrade-algorithm">Upgrade a mixed content request to a potentially trustworthy URL, if appropriate</a><span>, in § 4</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-propdef-background-image">
    <a href="https://drafts.csswg.org/css-backgrounds-3/#propdef-background-image">https://drafts.csswg.org/css-backgrounds-3/#propdef-background-image</a><b>Referenced in:</b>
@@ -1108,12 +1108,6 @@ dfn > a.self-link::before      { content: "#"; }
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc">https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-document-bc">2. Key Concepts and Terminology</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-bc-container-document">
-   <a href="https://html.spec.whatwg.org/multipage/browsers.html#bc-container-document">https://html.spec.whatwg.org/multipage/browsers.html#bc-container-document</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-bc-container-document">2. Key Concepts and Terminology</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-downloading-hyperlinks">
@@ -1290,7 +1284,6 @@ dfn > a.self-link::before      { content: "#"; }
      <li><span class="dfn-paneled" id="term-for-active-document">active document</span>
      <li><span class="dfn-paneled" id="term-for-audio">audio</span>
      <li><span class="dfn-paneled" id="term-for-concept-document-bc">browsing context</span>
-     <li><span class="dfn-paneled" id="term-for-bc-container-document">container document</span>
      <li><span class="dfn-paneled" id="term-for-downloading-hyperlinks">download the hyperlink</span>
      <li><span class="dfn-paneled" id="term-for-environment-settings-object">environment settings object</span>
      <li><span class="dfn-paneled" id="term-for-the-form-element">form</span>
@@ -1328,34 +1321,34 @@ dfn > a.self-link::before      { content: "#"; }
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
    <dt id="biblio-dom">[DOM]
-   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/"><cite>DOM Standard</cite></a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-fetch">[FETCH]
-   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-html">[HTML]
-   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-mixed-content">[MIXED-CONTENT]
-   <dd>Mike West. <a href="https://www.w3.org/TR/mixed-content/">Mixed Content</a>. 2 August 2016. CR. URL: <a href="https://www.w3.org/TR/mixed-content/">https://www.w3.org/TR/mixed-content/</a>
+   <dd>Mike West. <a href="https://www.w3.org/TR/mixed-content/"><cite>Mixed Content</cite></a>. 2 August 2016. CR. URL: <a href="https://www.w3.org/TR/mixed-content/">https://www.w3.org/TR/mixed-content/</a>
    <dt id="biblio-rfc2119">[RFC2119]
-   <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
-   <dd>Mike West. <a href="https://www.w3.org/TR/secure-contexts/">Secure Contexts</a>. 15 September 2016. CR. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
+   <dd>Mike West. <a href="https://www.w3.org/TR/secure-contexts/"><cite>Secure Contexts</cite></a>. 16 September 2021. CR. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
    <dt id="biblio-url">[URL]
-   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/"><cite>URL Standard</cite></a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
    <dt id="biblio-xhr">[XHR]
-   <dd>Anne van Kesteren. <a href="https://xhr.spec.whatwg.org/">XMLHttpRequest Standard</a>. Living Standard. URL: <a href="https://xhr.spec.whatwg.org/">https://xhr.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren. <a href="https://xhr.spec.whatwg.org/"><cite>XMLHttpRequest Standard</cite></a>. Living Standard. URL: <a href="https://xhr.spec.whatwg.org/">https://xhr.spec.whatwg.org/</a>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-css-backgrounds-3">[CSS-BACKGROUNDS-3]
-   <dd>Bert Bos; Elika Etemad; Brad Kemper. <a href="https://www.w3.org/TR/css-backgrounds-3/">CSS Backgrounds and Borders Module Level 3</a>. 22 December 2020. CR. URL: <a href="https://www.w3.org/TR/css-backgrounds-3/">https://www.w3.org/TR/css-backgrounds-3/</a>
+   <dd>Bert Bos; Elika Etemad; Brad Kemper. <a href="https://www.w3.org/TR/css-backgrounds-3/"><cite>CSS Backgrounds and Borders Module Level 3</cite></a>. 26 July 2021. CR. URL: <a href="https://www.w3.org/TR/css-backgrounds-3/">https://www.w3.org/TR/css-backgrounds-3/</a>
    <dt id="biblio-rfc6919">[RFC6919]
-   <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
+   <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://www.rfc-editor.org/rfc/rfc6919"><cite>Further Key Words for Use in RFCs to Indicate Requirement Levels</cite></a>. 1 April 2013. Experimental. URL: <a href="https://www.rfc-editor.org/rfc/rfc6919">https://www.rfc-editor.org/rfc/rfc6919</a>
    <dt id="biblio-upgrade-insecure-requests">[UPGRADE-INSECURE-REQUESTS]
-   <dd>Mike West. <a href="https://www.w3.org/TR/upgrade-insecure-requests/">Upgrade Insecure Requests</a>. 8 October 2015. CR. URL: <a href="https://www.w3.org/TR/upgrade-insecure-requests/">https://www.w3.org/TR/upgrade-insecure-requests/</a>
+   <dd>Mike West. <a href="https://www.w3.org/TR/upgrade-insecure-requests/"><cite>Upgrade Insecure Requests</cite></a>. 8 October 2015. CR. URL: <a href="https://www.w3.org/TR/upgrade-insecure-requests/">https://www.w3.org/TR/upgrade-insecure-requests/</a>
    <dt id="biblio-wsc-ui">[WSC-UI]
-   <dd>Thomas Roessler; Anil Saldhana. <a href="https://www.w3.org/TR/wsc-ui/">Web Security Context: User Interface Guidelines</a>. 12 August 2010. REC. URL: <a href="https://www.w3.org/TR/wsc-ui/">https://www.w3.org/TR/wsc-ui/</a>
+   <dd>Thomas Roessler; Anil Saldhana. <a href="https://www.w3.org/TR/wsc-ui/"><cite>Web Security Context: User Interface Guidelines</cite></a>. 12 August 2010. REC. URL: <a href="https://www.w3.org/TR/wsc-ui/">https://www.w3.org/TR/wsc-ui/</a>
    <dt id="biblio-xml">[XML]
-   <dd>Tim Bray; et al. <a href="https://www.w3.org/TR/xml/">Extensible Markup Language (XML) 1.0 (Fifth Edition)</a>. 26 November 2008. REC. URL: <a href="https://www.w3.org/TR/xml/">https://www.w3.org/TR/xml/</a>
+   <dd>Tim Bray; et al. <a href="https://www.w3.org/TR/xml/"><cite>Extensible Markup Language (XML) 1.0 (Fifth Edition)</cite></a>. 26 November 2008. REC. URL: <a href="https://www.w3.org/TR/xml/">https://www.w3.org/TR/xml/</a>
   </dl>
   <aside class="dfn-panel" data-for="mixed-content">
    <b><a href="#mixed-content">#mixed-content</a></b><b>Referenced in:</b>
