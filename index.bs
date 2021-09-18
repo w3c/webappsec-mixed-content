@@ -1,4 +1,4 @@
-<h1>Mixed Content Level 2</h1>
+<h1>Mixed Content</h1>
 <pre class="metadata">
 Status: ED
 Level: none
@@ -57,11 +57,11 @@ type: dfn
   cookie), or induce the user to take an unintended action (e.g., changing the
   label on a button). These requests are known as mixed content.
 
-  [[!mixed-content]] details how a user agent can mitigate these risks by
+  This specification details how a user agent can mitigate these risks by
   blocking certain types of mixed content, and behaving more strictly in some
   contexts.
 
-  However, as implemented in today's web browsers, [[!mixed-content]] does not fully protect the
+  However, earlier versions of this specification did not fully protect the
   confidentiality and integrity of users' data. Insecure content such as images, audio, and video
   can currently be loaded by default in secure contexts. Secure pages can even initiate insecure
   downloads which escape the user agent's sandbox entirely.
@@ -75,7 +75,7 @@ type: dfn
   transport or it isn't -- and encourage developers to securely load any mixed content that is
   necessary for their webpage to function properly.
 
-  Mixed Content Level 2 therefore updates and extends [[!mixed-content]] to provide users with
+  So this specification was updated to provide users with
   better security and privacy guarantees and a better security UX, while minimizing
   breakage. Instead of advising browsers to simply strictly block all mixed content, the core idea
   of Level 2 is <i>mixed content autoupgrading</i>. That is, mixed content that user agents are not
@@ -187,8 +187,8 @@ type: dfn
     <h3 id="category-upgradeable">Upgradeable Content</h3>
 
     <p class="note">
-        Upgradeable content was previously referred to as optionally-blockable in
-    [[mixed-content]]
+        Upgradeable content was previously referred to as <em>optionally-blockable</em> in
+        earlier versions of this specification.
     </p>
 
     Mixed content is
@@ -298,17 +298,14 @@ type: dfn
   </section>
 
   <section>
-    <h3 id="existing-mix-algorithms">Existing Mixed Content Algorithms and Modifications</h3>
+    <h3 id="existing-mix-algorithms">Modifications to previous algorithms</h3>
 
-    Note: This section specifies modifications to existing mixed content algorithms to ignore the
+    Note: This section includes modifications to algorithms in earlier
+    versions of the specification — to ignore the
     distinction between optionally-blockable and blockable mixed content, since all
-    optionally-blockable mixed content will now be autoupgraded.
-    [[mixed-content#should-block-fetch]] and [[mixed-content#should-block-response]] are
-    replaced by the versions below, while [[mixed-content#categorize-settings-object]] is left
-    unmodified (but included below since this will replace the [[mixed-content]] spec).
+    optionally-blockable mixed content is now be autoupgraded.
 
-
-    section>
+  <section>
     <h3 id="categorize-settings-object">
       Does |settings| prohibit mixed security contexts?
     </h3>
@@ -517,18 +514,14 @@ type: dfn
 
   <h3 id="strict-checking"><code>Strict Mixed Content Checking</code></h3>
 
-  This specification renders the [[mixed-content#strict-checking]] mode and
-  the <code>block-all-mixed-content</code> CSP directive obsolete,
+  This specification obsoletes some parts of earlier versions of the specification —
+  including the <code>block-all-mixed-content</code> CSP directive,
   because all mixed content is now blocked if it can't be autoupgraded.
 
   Note: The <code>upgrade-insecure-requests</code> ([[upgrade-insecure-requests]]) directive is not
   obsolete because it allows developers to upgrade blockable content. This specification only
   upgrades upgradeable content by default.
 
-  <h3 id="mixed-content-1"><code>Mixed Content</code></h3>
-
-  This specification renders the [[mixed-content]] specification obsolete,
-  and replaces it.
 </section>
 
 <section>
