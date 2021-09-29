@@ -77,13 +77,16 @@ type: dfn
 
   So this specification was updated to provide users with
   better security and privacy guarantees and a better security UX, while minimizing
-  breakage. Instead of advising browsers to simply strictly block all mixed content, the core idea
-  of Level 2 is <i>mixed content autoupgrading</i>. That is, mixed content that user agents are not
-  already blocking should be autoupgraded to a secure transport. If the request cannot be
-  autoupgraded, it will be blocked. Autoupgrading avoids loading insecure resources on secure
+  breakage. Among the updates made was — beyond the idea of just advising browsers to strictly
+  block all mixed content — the addition of the idea of <i>mixed content autoupgrading</i>:
+
+  - Mixed content that user agents are not already blocking should be autoupgraded to a secure transport.
+  - If the request cannot be autoupgraded, it will be blocked.
+
+  Autoupgrading avoids loading insecure resources on secure
   webpages, while minimizing the amount of developer effort needed to avoid breakage.
 
-  This specification (Level 2) only recommends autoupgrading types of mixed content subresources
+  This specification only recommends autoupgrading types of mixed content subresources
   that are not currently blocked by default, and does not recommend autougprading types of content
   that are already blocked. This is to minimize the amount of web-visible change; we only want to
   autoupgrade content if it advances us towards the goal of blocking all mixed content by default.
