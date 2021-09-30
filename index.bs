@@ -77,8 +77,7 @@ type: dfn
 
   So this specification was updated to provide users with
   better security and privacy guarantees and a better security UX, while minimizing
-  breakage. Among the updates made was — beyond the idea of just advising browsers to strictly
-  block all mixed content — the addition of the idea of <i>mixed content autoupgrading</i>:
+  breakage. Instead of advising browsers to simply strictly block all mixed content, this specification advises <i>mixed content autoupgrading</i>:
 
   - Mixed content that user agents are not already blocking should be autoupgraded to a secure transport.
   - If the request cannot be autoupgraded, it will be blocked.
@@ -517,8 +516,7 @@ type: dfn
 
   <h3 id="strict-checking"><code>Strict Mixed Content Checking</code></h3>
 
-  This specification obsoletes some parts of earlier versions of the specification —
-  including the <code>block-all-mixed-content</code> CSP directive,
+  An earlier version of this specification defined the <code>block-all-mixed-content</code> CSP directive. It is now obsolete,
   because all mixed content is now blocked if it can't be autoupgraded.
 
   Note: The <code>upgrade-insecure-requests</code> ([[upgrade-insecure-requests]]) directive is not
