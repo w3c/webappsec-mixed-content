@@ -2,11 +2,11 @@
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Mixed Content Level 2</title>
+  <title>Mixed Content</title>
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
   <link href="https://www.w3.org/TR/mixed-content/" rel="canonical">
-  <meta content="47109a970f00a7ca952557d84b23d4b75f4bc5c2" name="document-revision">
+  <meta content="1bf1b93e8141917245cdc7f4a52e0f0fd1c5385d" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -440,8 +440,8 @@ dfn > a.self-link::before      { content: "#"; }
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
-   <h1>Mixed Content Level 2</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-30">30 September 2021</time></span></h2>
+   <h1>Mixed Content</h1>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-10-02">2 October 2021</time></span></h2>
    <details>
     <summary>Specification Metadata</summary>
     <div data-fill-with="spec-metadata">
@@ -517,7 +517,7 @@ dfn > a.self-link::before      { content: "#"; }
      <a href="#algorithms"><span class="secno">4</span> <span class="content">Algorithms</span></a>
      <ol class="toc">
       <li><a href="#upgrade-algorithm"><span class="secno">4.1</span> <span class="content">Upgrade a mixed content <var>request</var> to a <span>potentially trustworthy URL</span>, if appropriate</span></a>
-      <li><a href="#existing-mix-algorithms"><span class="secno">4.2</span> <span class="content">Existing Mixed Content Algorithms and Modifications</span></a>
+      <li><a href="#existing-mix-algorithms"><span class="secno">4.2</span> <span class="content">Modifications to previous algorithms</span></a>
       <li><a href="#categorize-settings-object"><span class="secno">4.3</span> <span class="content"> Does <var>settings</var> prohibit mixed security contexts? </span></a>
       <li><a href="#should-block-fetch"><span class="secno">4.4</span> <span class="content"> Should fetching <var>request</var> be blocked as mixed content? </span></a>
       <li><a href="#should-block-response"><span class="secno">4.5</span> <span class="content"> Should <var>response</var> to <var>request</var> be blocked as mixed
@@ -533,7 +533,6 @@ dfn > a.self-link::before      { content: "#"; }
      <a href="#obsolescences"><span class="secno">6</span> <span class="content">Obsolescences</span></a>
      <ol class="toc">
       <li><a href="#strict-checking"><span class="secno">6.1</span> <span class="content"><code>Strict Mixed Content Checking</code></span></a>
-      <li><a href="#mixed-content-1"><span class="secno">6.2</span> <span class="content"><code>Mixed Content</code></span></a>
      </ol>
     <li>
      <a href="#security-considerations"><span class="secno">7</span> <span class="content">Security and Privacy Considerations</span></a>
@@ -577,10 +576,10 @@ dfn > a.self-link::before      { content: "#"; }
   (e.g., a fabricated stock chart), mutate client-side state (e.g., set a
   cookie), or induce the user to take an unintended action (e.g., changing the
   label on a button). These requests are known as mixed content.</p>
-    <p><a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a> details how a user agent can mitigate these risks by
+    <p>This specification details how a user agent can mitigate these risks by
   blocking certain types of mixed content, and behaving more strictly in some
   contexts.</p>
-    <p>However, as implemented in today’s web browsers, <a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a> does not fully protect the
+    <p>However, earlier versions of this specification did not fully protect the
   confidentiality and integrity of users' data. Insecure content such as images, audio, and video
   can currently be loaded by default in secure contexts. Secure pages can even initiate insecure
   downloads which escape the user agent’s sandbox entirely.</p>
@@ -592,14 +591,18 @@ dfn > a.self-link::before      { content: "#"; }
   provide the user with a simpler mental model -- the webpage is either loaded over a secure
   transport or it isn’t -- and encourage developers to securely load any mixed content that is
   necessary for their webpage to function properly.</p>
-    <p>Mixed Content Level 2 therefore updates and extends <a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a> to provide users with
+    <p>So this specification was updated to provide users with
   better security and privacy guarantees and a better security UX, while minimizing
-  breakage. Instead of advising browsers to simply strictly block all mixed content, the core idea
-  of Level 2 is <i>mixed content autoupgrading</i>. That is, mixed content that user agents are not
-  already blocking should be autoupgraded to a secure transport. If the request cannot be
-  autoupgraded, it will be blocked. Autoupgrading avoids loading insecure resources on secure
+  breakage. Instead of advising browsers to simply strictly block all mixed content, this specification advises <i>mixed content autoupgrading</i>:</p>
+    <ul>
+     <li data-md>
+      <p>Mixed content that user agents are not already blocking should be autoupgraded to a secure transport.</p>
+     <li data-md>
+      <p>If the request cannot be autoupgraded, it will be blocked.</p>
+    </ul>
+    <p>Autoupgrading avoids loading insecure resources on secure
   webpages, while minimizing the amount of developer effort needed to avoid breakage.</p>
-    <p>This specification (Level 2) only recommends autoupgrading types of mixed content subresources
+    <p>This specification only recommends autoupgrading types of mixed content subresources
   that are not currently blocked by default, and does not recommend autougprading types of content
   that are already blocked. This is to minimize the amount of web-visible change; we only want to
   autoupgrade content if it advances us towards the goal of blocking all mixed content by default.</p>
@@ -658,7 +661,8 @@ dfn > a.self-link::before      { content: "#"; }
     <p>With that in mind, we here split mixed content into two categories: <a href="#category-upgradeable">§ 3.1 Upgradeable Content</a> and <a href="#category-blockable">§ 3.2 Blockable Content</a>.</p>
     <section>
      <h3 class="heading settled" data-level="3.1" id="category-upgradeable"><span class="secno">3.1. </span><span class="content">Upgradeable Content</span><a class="self-link" href="#category-upgradeable"></a></h3>
-     <p class="note" role="note"> Upgradeable content was previously referred to as optionally-blockable in <a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a> </p>
+     <p class="note" role="note"> Upgradeable content was previously referred to as <em>optionally-blockable</em> in
+        earlier versions of this specification. </p>
      <p>Mixed content is <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="upgradeable" data-lt="upgradeable mixed content" id="upgradeable-mixed-content">upgradeable</dfn> when the risk of allowing its usage as <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content①">mixed content</a> is outweighed by the risk of
     breaking significant portions of the web. This could be because mixed usage of the resource type
     is sufficiently high, and because the resource is low-risk in and of itself. The fact that these
@@ -730,122 +734,122 @@ dfn > a.self-link::before      { content: "#"; }
      </ol>
     </section>
     <section>
-     <h3 class="heading settled" data-level="4.2" id="existing-mix-algorithms"><span class="secno">4.2. </span><span class="content">Existing Mixed Content Algorithms and Modifications</span><a class="self-link" href="#existing-mix-algorithms"></a></h3>
-     <p class="note" role="note"><span>Note:</span> This section specifies modifications to existing mixed content algorithms to ignore the
+     <h3 class="heading settled" data-level="4.2" id="existing-mix-algorithms"><span class="secno">4.2. </span><span class="content">Modifications to previous algorithms</span><a class="self-link" href="#existing-mix-algorithms"></a></h3>
+     <p class="note" role="note"><span>Note:</span> This section includes modifications to algorithms in earlier
+    versions of the specification — to ignore the
     distinction between optionally-blockable and blockable mixed content, since all
-    optionally-blockable mixed content will now be autoupgraded. <a href="http://www.w3.org/TR/mixed-content/#should-block-fetch"><cite>Mixed Content</cite> § 4.4 Should fetching request be blocked as mixed content?</a> and <a href="http://www.w3.org/TR/mixed-content/#should-block-response"><cite>Mixed Content</cite> § 4.5 Should response to request be blocked as mixed content?</a> are
-    replaced by the versions below, while <a href="http://www.w3.org/TR/mixed-content/#categorize-settings-object"><cite>Mixed Content</cite> § 4.3 Does settings prohibit mixed security contexts?</a> is left
-    unmodified (but included below since this will replace the <a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a> spec).</p>
-     <p>section></p>
-     <h3 class="heading settled" data-level="4.3" id="categorize-settings-object"><span class="secno">4.3. </span><span class="content"> Does <var>settings</var> prohibit mixed security contexts? </span><a class="self-link" href="#categorize-settings-object"></a></h3>
-     <p>Both documents and workers have <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings objects</a> which
+    optionally-blockable mixed content is now be autoupgraded.</p>
+     <section>
+      <h3 class="heading settled" data-level="4.3" id="categorize-settings-object"><span class="secno">4.3. </span><span class="content"> Does <var>settings</var> prohibit mixed security contexts? </span><a class="self-link" href="#categorize-settings-object"></a></h3>
+      <p>Both documents and workers have <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings objects</a> which
     may be examined according to the following algorithm in order to determine
     whether they restrict mixed content. This algorithm returns "<code>Prohibits Mixed Security Contexts</code>" or "<code>Does Not Prohibit Mixed Security Contexts</code>",
     as appropriate.</p>
-     <p>Given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> (<var>settings</var>):</p>
-     <ol>
-      <li data-md>
-       <p>If <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin">potentially trustworthy origin</a>, then return
+      <p>Given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> (<var>settings</var>):</p>
+      <ol>
+       <li data-md>
+        <p>If <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin">potentially trustworthy origin</a>, then return
   "<code>Prohibits Mixed Security Contexts</code>".</p>
-      <li data-md>
-       <p>If <var>settings</var> has a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#responsible-document" id="ref-for-responsible-document">responsible document</a> <var>document</var>, then:</p>
-       <ol>
-        <li data-md>
-         <p>While <var>document</var> has an <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document">embedding document</a>:</p>
-         <ol>
-          <li data-md>
-           <p>Set <var>document</var> to <var>document</var>’s <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document①">embedding document</a>.</p>
-          <li data-md>
-           <p>Let <var>embedder settings</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>.</p>
-          <li data-md>
-           <p>If <var>embedder settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin①">origin</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin①">potentially trustworthy origin</a>, then return
+       <li data-md>
+        <p>If <var>settings</var> has a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#responsible-document" id="ref-for-responsible-document">responsible document</a> <var>document</var>, then:</p>
+        <ol>
+         <li data-md>
+          <p>While <var>document</var> has an <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document">embedding document</a>:</p>
+          <ol>
+           <li data-md>
+            <p>Set <var>document</var> to <var>document</var>’s <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document①">embedding document</a>.</p>
+           <li data-md>
+            <p>Let <var>embedder settings</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>.</p>
+           <li data-md>
+            <p>If <var>embedder settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin①">origin</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin①">potentially trustworthy origin</a>, then return
   "<code>Prohibits Mixed Security Contexts</code>".</p>
-         </ol>
-       </ol>
-      <li data-md>
-       <p>Return "<code>Does Not Restrict Mixed Security Contexts</code>".</p>
-     </ol>
-     <div class="note" role="note">
-       If a document has an <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document②">embedding document</a>, a user agent needs to
+          </ol>
+        </ol>
+       <li data-md>
+        <p>Return "<code>Does Not Restrict Mixed Security Contexts</code>".</p>
+      </ol>
+      <div class="note" role="note">
+        If a document has an <a data-link-type="dfn" href="#embedding-document" id="ref-for-embedding-document②">embedding document</a>, a user agent needs to
       check not only the document itself, but also the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing
       context</a> in which the document is nested, as that is the context
       which controls the user’s expectations regarding the security status of
       the resource she’s loaded. For example: 
-      <div class="example" id="example-4c853e3e"><a class="self-link" href="#example-4c853e3e"></a> <code>http://a.com</code> loads <code>http://evil.com</code>. The
+       <div class="example" id="example-4c853e3e"><a class="self-link" href="#example-4c853e3e"></a> <code>http://a.com</code> loads <code>http://evil.com</code>. The
         insecure request will be allowed, as <code>a.com</code> was not loaded
         over a secure connection. </div>
-      <div class="example" id="example-c38c3226"><a class="self-link" href="#example-c38c3226"></a> <code>https://a.com</code> loads <code>http://evil.com</code>. The
+       <div class="example" id="example-c38c3226"><a class="self-link" href="#example-c38c3226"></a> <code>https://a.com</code> loads <code>http://evil.com</code>. The
         insecure request will be blocked, as <code>a.com</code> was loaded over
         a secure connection. </div>
-      <div class="example" id="example-1ec6834e"><a class="self-link" href="#example-1ec6834e"></a> <code>http://a.com</code> frames <code>https://b.com</code>, which
+       <div class="example" id="example-1ec6834e"><a class="self-link" href="#example-1ec6834e"></a> <code>http://a.com</code> frames <code>https://b.com</code>, which
         loads <code>http://evil.com</code>. In this case, the insecure request
         to <code>evil.com</code> will be blocked, as <code>b.com</code> was
         loaded over a secure connection, even though <code>a.com</code> was not. </div>
-      <div class="example" id="example-202f3835"><a class="self-link" href="#example-202f3835"></a> <code>https://a.com</code> frames a <code>data:</code> URL, which loads <code>http://evil.com</code>. In this case, the insecure request to <code>evil.com</code> will be blocked, as <code>a.com</code> was loaded
+       <div class="example" id="example-202f3835"><a class="self-link" href="#example-202f3835"></a> <code>https://a.com</code> frames a <code>data:</code> URL, which loads <code>http://evil.com</code>. In this case, the insecure request to <code>evil.com</code> will be blocked, as <code>a.com</code> was loaded
         over a secure connection, even though the framed <code>data:</code> URL
         would not block mixed content if loaded in a top-level context. </div>
-     </div>
-    </section>
-    <section>
-     <h3 class="heading settled dfn-paneled" data-dfn-type="dfn" data-export data-level="4.4" data-lt="Should fetching request be blocked as mixed content?" id="should-block-fetch"><span class="secno">4.4. </span><span class="content"> Should fetching <var>request</var> be blocked as mixed content? </span><a class="self-link" href="#should-block-fetch" id="ref-for-should-block-fetch②"></a></h3>
-     <p class="note" role="note"><span>Note:</span> The Fetch specification hooks into this algorithm to determine whether
+      </div>
+     </section>
+     <section>
+      <h3 class="heading settled dfn-paneled" data-dfn-type="dfn" data-export data-level="4.4" data-lt="Should fetching request be blocked as mixed content?" id="should-block-fetch"><span class="secno">4.4. </span><span class="content"> Should fetching <var>request</var> be blocked as mixed content? </span><a class="self-link" href="#should-block-fetch" id="ref-for-should-block-fetch②"></a></h3>
+      <p class="note" role="note"><span>Note:</span> The Fetch specification hooks into this algorithm to determine whether
     a request should be entirely blocked (e.g. because the request is for <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content①">blockable</a> content, and we can <em>assume</em> that it won’t be
     loaded over a secure connection).</p>
-     <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request④">Request</a> <var>request</var>, a user agent determines
+      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request④">Request</a> <var>request</var>, a user agent determines
     whether the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑤">Request</a> <var>request</var> should proceed or not via the
     following algorithm:</p>
-     <ol>
-      <li>
-        Return <strong>allowed</strong> if one or more of the following
+      <ol>
+       <li>
+         Return <strong>allowed</strong> if one or more of the following
         conditions are met: 
-       <ol>
-        <li> <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> returns "<code>Does Not Restrict Mixed Security Contexts</code>" when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client①">client</a>. 
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url⑤">URL</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url⑤">potentially trustworthy URL</a>. 
-        <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content②">mixed content</a>, as
+        <ol>
+         <li> <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> returns "<code>Does Not Restrict Mixed Security Contexts</code>" when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client①">client</a>. 
+         <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url⑤">URL</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url⑤">potentially trustworthy URL</a>. 
+         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content②">mixed content</a>, as
             described in <a href="#requirements-user-controls">§ 7.2 User Controls</a>). 
-        <li>
-          <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination⑤">destination</a> is
+         <li>
+           <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination⑤">destination</a> is
             "<code>document</code>", and <var>request</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context" id="ref-for-concept-environment-target-browsing-context">target browsing
             context</a> has no <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context" id="ref-for-parent-browsing-context">parent browsing context</a>. 
-         <p class="note" role="note"><span>Note:</span> We exclude top-level navigations from mixed content checks,
+          <p class="note" role="note"><span>Note:</span> We exclude top-level navigations from mixed content checks,
             but user agents MAY choose to enforce mixed content checks on
             insecure form submissions (see <a href="#requirements-forms">§ 7.1 Form Submission</a>).</p>
-       </ol>
-      <li> Return <strong>blocked</strong>. 
-     </ol>
-    </section>
-    <section>
-     <h3 class="heading settled dfn-paneled" data-dfn-type="dfn" data-export data-level="4.5" data-lt="Should response to request be blocked as mixed content?" id="should-block-response"><span class="secno">4.5. </span><span class="content"> Should <var>response</var> to <var>request</var> be blocked as mixed
+        </ol>
+       <li> Return <strong>blocked</strong>. 
+      </ol>
+     </section>
+     <section>
+      <h3 class="heading settled dfn-paneled" data-dfn-type="dfn" data-export data-level="4.5" data-lt="Should response to request be blocked as mixed content?" id="should-block-response"><span class="secno">4.5. </span><span class="content"> Should <var>response</var> to <var>request</var> be blocked as mixed
       content? </span><a class="self-link" href="#should-block-response" id="ref-for-should-block-response"></a></h3>
-     <p class="note" role="note"><span>Note:</span> <a href="#should-block-fetch" id="ref-for-should-block-fetch③">If a request proceeds</a>, we still
+      <p class="note" role="note"><span>Note:</span> <a href="#should-block-fetch" id="ref-for-should-block-fetch③">If a request proceeds</a>, we still
     might want to block the response based on the state of the connection
     that generated the response (e.g. because the request is <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content②">blockable</a>,
     but the connection is <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response①">unauthenticated</a>), and we also need to ensure
     that a Service Worker doesn’t accidentally return an <a data-link-type="dfn" href="#unauthenticated-response" id="ref-for-unauthenticated-response②">unauthenticated
     response</a> for a <a data-link-type="dfn" href="#blockable-mixed-content" id="ref-for-blockable-mixed-content③">blockable</a> request. This algorithm is used to make
     that determination.</p>
-     <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑥">request</a> <var>request</var> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response②">response</a> <var>response</var>, the user agent determines what response should be
+      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑥">request</a> <var>request</var> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response②">response</a> <var>response</var>, the user agent determines what response should be
     returned via the following algorithm:</p>
-     <ol>
-      <li>
-        Return <strong>allowed</strong> if one or more of the following
+      <ol>
+       <li>
+         Return <strong>allowed</strong> if one or more of the following
         conditions are met: 
-       <ol>
-        <li> <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> returns <code>Does Not Restrict
+        <ol>
+         <li> <a href="#categorize-settings-object">§ 4.3 Does settings prohibit mixed security contexts?</a> returns <code>Does Not Restrict
             Mixed Content</code> when applied to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client②">client</a>. 
-        <li> <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url①">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url⑥">potentially trustworthy URL</a>. 
-        <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content③">mixed content</a>, as
+         <li> <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url①">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url⑥">potentially trustworthy URL</a>. 
+         <li> The user agent has been instructed to allow <a data-link-type="dfn" href="#mixed-content" id="ref-for-mixed-content③">mixed content</a>, as
             described in <a href="#requirements-user-controls">§ 7.2 User Controls</a>). 
-        <li>
-          <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination⑥">destination</a> is
+         <li>
+           <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination⑥">destination</a> is
             "<code>document</code>", and <var>request</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context" id="ref-for-concept-environment-target-browsing-context①">target browsing
             context</a> has no <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context" id="ref-for-parent-browsing-context①">parent browsing context</a>. 
-         <p class="note" role="note"><span>Note:</span> We exclude top-level navigations from mixed content checks,
+          <p class="note" role="note"><span>Note:</span> We exclude top-level navigations from mixed content checks,
             but user agents MAY choose to enforce mixed content checks on
             insecure form submissions (see <a href="#requirements-forms">§ 7.1 Form Submission</a>).</p>
-       </ol>
-      <li>Return <strong>blocked</strong>.
-     </ol>
+        </ol>
+       <li>Return <strong>blocked</strong>.
+      </ol>
+     </section>
     </section>
    </section>
    <section>
@@ -873,15 +877,11 @@ dfn > a.self-link::before      { content: "#"; }
    <section>
     <h2 class="heading settled" data-level="6" id="obsolescences"><span class="secno">6. </span><span class="content">Obsolescences</span><a class="self-link" href="#obsolescences"></a></h2>
     <h3 class="heading settled" data-level="6.1" id="strict-checking"><span class="secno">6.1. </span><span class="content"><code>Strict Mixed Content Checking</code></span><a class="self-link" href="#strict-checking"></a></h3>
-    <p>This specification renders the <a href="http://www.w3.org/TR/mixed-content/#strict-checking"><cite>Mixed Content</cite> § 6.1 Strict Mixed Content Checking</a> mode and
-  the <code>block-all-mixed-content</code> CSP directive obsolete,
+    <p>An earlier version of this specification defined the <code>block-all-mixed-content</code> CSP directive. It is now obsolete,
   because all mixed content is now blocked if it can’t be autoupgraded.</p>
     <p class="note" role="note"><span>Note:</span> The <code>upgrade-insecure-requests</code> (<a data-link-type="biblio" href="#biblio-upgrade-insecure-requests">[upgrade-insecure-requests]</a>) directive is not
   obsolete because it allows developers to upgrade blockable content. This specification only
   upgrades upgradeable content by default.</p>
-    <h3 class="heading settled" data-level="6.2" id="mixed-content-1"><span class="secno">6.2. </span><span class="content"><code>Mixed Content</code></span><a class="self-link" href="#mixed-content-1"></a></h3>
-    <p>This specification renders the <a data-link-type="biblio" href="#biblio-mixed-content">[mixed-content]</a> specification obsolete,
-  and replaces it.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="7" id="security-considerations"><span class="secno">7. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#security-considerations"></a></h2>
@@ -976,8 +976,8 @@ dfn > a.self-link::before      { content: "#"; }
    <li><a href="#mixed-content">mixed</a><span>, in § 2</span>
    <li><a href="#mixed-content">mixed content</a><span>, in § 2</span>
    <li><a href="#mixed-download">mixed download</a><span>, in § 2</span>
-   <li><a href="#should-block-fetch">Should fetching request be blocked as mixed content?</a><span>, in § 4</span>
-   <li><a href="#should-block-response">Should response to request be blocked as mixed content?</a><span>, in § 4</span>
+   <li><a href="#should-block-fetch">Should fetching request be blocked as mixed content?</a><span>, in § 4.2</span>
+   <li><a href="#should-block-response">Should response to request be blocked as mixed content?</a><span>, in § 4.2</span>
    <li><a href="#unauthenticated-response">unauthenticated</a><span>, in § 2</span>
    <li><a href="#unauthenticated-response">unauthenticated response</a><span>, in § 2</span>
    <li><a href="#upgradeable-mixed-content">upgradeable</a><span>, in § 3.1</span>
@@ -1333,8 +1333,6 @@ dfn > a.self-link::before      { content: "#"; }
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
-   <dt id="biblio-mixed-content">[MIXED-CONTENT]
-   <dd>Emily Stark; Mike West; Carlos IbarraLopez. <a href="https://www.w3.org/TR/mixed-content/"><cite>Mixed Content Level 2</cite></a>. 18 September 2021. CR. URL: <a href="https://www.w3.org/TR/mixed-content/">https://www.w3.org/TR/mixed-content/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
