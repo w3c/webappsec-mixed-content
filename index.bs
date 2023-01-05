@@ -269,6 +269,9 @@ type: dfn
             [=potentially trustworthy URL=].
           </li>
           <li>
+            <var>request</var>'s <a for="request">URL</a> is a litteral IP address.
+          </li>
+          <li>
             [[#categorize-settings-object]] returns "<code>Does Not Restrict Mixed Security
             Contents</code>" when applied to <var>request</var>'s <a for="request">client</a>.
           </li>
@@ -390,6 +393,10 @@ type: dfn
     following algorithm:
 
     <ol>
+      <li>
+        Return <strong>blocked</strong> if <var>request</var>'s
+        <a for="request">URL</a> is a non loopback literal IP address.
+      </li>
       <li>
         Return <strong>allowed</strong> if one or more of the following
         conditions are met:
