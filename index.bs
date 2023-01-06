@@ -33,6 +33,7 @@ spec:html; type:dfn; for:/; text:plugin
 spec:fetch; type:dfn; for:/; text:request
 spec:fetch; type:dfn; for:/; text:response
 spec:dom; type:interface; text:Document
+spec:url; type:dfn; for:/; text:host
 </pre>
 <pre class="anchors">
 type: dfn
@@ -168,6 +169,12 @@ type: dfn
       which was initiated by a secure context but is downloaded over an
       insecure connection.
     </dd>
+
+    <dt><dfn export>non loopback IP address</dfn></dt>
+    <dd>
+      A non loopback <a>IP address</a> is an address that is not contained in
+      CIDR <i>127.0.0.0/8</i> or <i>::1/128</i>.
+    </dd>
   </dl>
   <p class="note">
       An <dfn export class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="a priori authenticated" data-lt="a priori authenticated URL" id="a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</dfn> is equivalent to a [=potentially trustworthy URL=] [[!SECURE-CONTEXTS]].
@@ -269,7 +276,7 @@ type: dfn
             [=potentially trustworthy URL=].
           </li>
           <li>
-            <var>request</var>'s <a for="request">URL</a> is a literal IP address.
+            <var>request</var> <a for="request">URL</a>'s <a>host</a> is an <a>IP address</a>.
           </li>
           <li>
             [[#categorize-settings-object]] returns "<code>Does Not Restrict Mixed Security
@@ -394,8 +401,8 @@ type: dfn
 
     <ol>
       <li>
-        Return <strong>blocked</strong> if <var>request</var>'s
-        <a for="request">URL</a> is a non loopback literal IP address.
+        Return <strong>blocked</strong> if <var>request</var>
+        <a for="request">URL</a>'s <a>host</a> is a <a>non loopback IP address</a>.
       </li>
       <li>
         Return <strong>allowed</strong> if one or more of the following
