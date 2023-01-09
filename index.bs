@@ -33,7 +33,6 @@ spec:html; type:dfn; for:/; text:plugin
 spec:fetch; type:dfn; for:/; text:request
 spec:fetch; type:dfn; for:/; text:response
 spec:dom; type:interface; text:Document
-spec:url; type:dfn; for:/; text:host
 </pre>
 <pre class="anchors">
 type: dfn
@@ -170,10 +169,10 @@ type: dfn
       insecure connection.
     </dd>
 
-    <dt><dfn export>non loopback IP address</dfn></dt>
+    <dt><dfn export>non-loopback IP address</dfn></dt>
     <dd>
-      A non loopback <a>IP address</a> is an address that is not contained in
-      CIDR <i>127.0.0.0/8</i> or <i>::1/128</i>.
+      A non-loopback IP address is an <a>IP address</a> that is not contained in
+      CIDR `127.0.0.0/8` or `::1/128` [[!RFC4632]].
     </dd>
   </dl>
   <p class="note">
@@ -276,7 +275,7 @@ type: dfn
             [=potentially trustworthy URL=].
           </li>
           <li>
-            <var>request</var> <a for="request">URL</a>'s <a>host</a> is an <a>IP address</a>.
+            <var>request</var>'s <a for="request">URL</a>'s <a for="url">host</a> is an <a>IP address</a>.
           </li>
           <li>
             [[#categorize-settings-object]] returns "<code>Does Not Restrict Mixed Security
@@ -402,7 +401,7 @@ type: dfn
     <ol>
       <li>
         Return <strong>blocked</strong> if <var>request</var>
-        <a for="request">URL</a>'s <a>host</a> is a <a>non loopback IP address</a>.
+        <a for="request">URL</a>'s <a for="url">host</a> is a <a>non-loopback IP address</a>.
       </li>
       <li>
         Return <strong>allowed</strong> if one or more of the following
