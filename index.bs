@@ -330,18 +330,15 @@ type: dfn
         [=potentially trustworthy origin=], then return
         "`Prohibits Mixed Security Contexts`".
 
-    2.  If |settings| has a <a>responsible document</a> |document|, then:
+    2.  If |settings|' [=environment settings object/global object=] has a
+        [=Window/associated Document=] |document|, then:
 
-        1.  While |document| has an <a>embedding document</a>:
+        1.  [=list/For each=] [=navigable=] |navigable| in |document|'s
+            [=Document/ancestor navigables=]:
 
-            1.  Set |document| to |document|'s <a>embedding document</a>.
-
-            2.  Let |embedder settings| be |document|'s [=relevant settings object=].
-
-            3.  If |embedder settings|'
-                [=environment settings object/origin=] is a
-                [=potentially trustworthy origin=], then return
-                "`Prohibits Mixed Security Contexts`".
+            1.  If |navigable|'s [=navigable/active document=]'s
+                [=Document/origin=] is a [=potentially trustworthy origin=],
+                then return "`Prohibits Mixed Security Contexts`".
 
     3.  Return "`Does Not Restrict Mixed Security Contexts`".
 
