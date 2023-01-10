@@ -172,7 +172,7 @@ type: dfn
     <dt><dfn export>non-loopback IP address</dfn></dt>
     <dd>
       A non-loopback IP address is an <a>IP address</a> that is not contained in
-      CIDR `127.0.0.0/8` or `::1/128` [[!RFC4632]].
+      CIDR `127.0.0.0/8` or `::1/128`.[[!RFC4632]]
     </dd>
   </dl>
   <p class="note">
@@ -401,7 +401,8 @@ type: dfn
     <ol>
       <li>
         Return <strong>blocked</strong> if <var>request</var>
-        <a for="request">URL</a>'s <a for="url">host</a> is a <a>non-loopback IP address</a>.
+        <a for="request">URL</a>'s <a for="url">host</a> is a <a>non-loopback IP address</a>
+        and mixed-content is <a>upgradeable</a>.
       </li>
       <li>
         Return <strong>allowed</strong> if one or more of the following
