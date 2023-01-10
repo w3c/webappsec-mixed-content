@@ -282,12 +282,6 @@ type: dfn
           <li>
             <var>request</var>'s <a for="request">destination</a> is "<code>image</code>"
             and <var>request</var>'s <a for="request">initiator</a> is "<code>imageset</code>".
-
-            Note: For historical reasons, <code>imageset</code> is not upgraded. Prior to some
-            types of mixed content being upgraded, the spec divided mixed content into blockable
-            and optionally-blockable. <code>imageset</code> was part of the former, and when
-            upgrades were added, the decision was to not upgrade any content that was previously
-            defined as blockable.
           </li>
         </ol>
       </li>
