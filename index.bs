@@ -324,7 +324,7 @@ type: dfn
         [=potentially trustworthy origin=], then return
         "`Prohibits Mixed Security Contexts`".
 
-    2.  If |settings|' [=environment settings object/global object=] has a
+    2.  If |settings|' [=environment settings object/global object=] has an
         [=Window/associated Document=] |document|, then:
 
         1.  [=list/For each=] [=navigable=] |navigable| in |document|'s
