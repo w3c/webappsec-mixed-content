@@ -327,7 +327,8 @@ type: dfn
         [=potentially trustworthy origin=], then return
         "`Prohibits Mixed Security Contexts`".
 
-    2.  If |settings| has a <a>responsible document</a> |document|, then:
+    2.  If |settings|'s [=relevant global object=] has an
+        <a>associated <code>Document</code></a> |document|, then:
 
         1.  While |document| has an <a>embedding document</a>:
 
