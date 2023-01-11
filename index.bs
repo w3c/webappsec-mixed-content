@@ -286,7 +286,7 @@ type: dfn
             Note: For historical reasons, "<code>imageset</code>" is not upgraded. Prior to some
             types of mixed content being upgraded, the spec divided mixed content into blockable
             and optionally-blockable, with blockable being preferred for any type of mixed content
-            that wasn't prevalent. <code>imageset</code> was part of the former, and when
+            that wasn't prevalent. "<code>imageset</code>" was part of the former, and when
             upgrades were added, the decision was to not upgrade any content that was previously
             defined as blockable.
           </li>
