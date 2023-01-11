@@ -269,6 +269,9 @@ type: dfn
             [=potentially trustworthy URL=].
           </li>
           <li>
+            <var>request</var>'s <a for="request">URL</a>'s <a for="url">host</a> is an <a>IP address</a>.
+          </li>
+          <li>
             [[#categorize-settings-object]] returns "<code>Does Not Restrict Mixed Security
             Contents</code>" when applied to <var>request</var>'s <a for="request">client</a>.
           </li>
