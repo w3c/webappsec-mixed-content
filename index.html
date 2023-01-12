@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 26e85e599, updated Thu Dec 8 15:29:31 2022 -0800" name="generator">
   <link href="https://www.w3.org/TR/mixed-content/" rel="canonical">
-  <meta content="9e687c2de748e5ef39b3391f315e9bb67f209db9" name="document-revision">
+  <meta content="b2d7f150905b5e2c54da7c809d5ded852ca815fc" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -461,7 +461,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1>Mixed Content</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-01-11">11 January 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-01-12">12 January 2023</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -736,8 +736,15 @@ dfn > a.self-link::before      { content: "#"; }
         <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-mode" id="ref-for-concept-request-mode">mode</a> is <code>CORS</code>. 
         <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination③">destination</a> is not "<code>image</code>",
             "<code>audio</code>", or "<code>video</code>". 
-        <li> <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination④">destination</a> is "<code>image</code>"
+        <li>
+          <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination④">destination</a> is "<code>image</code>"
             and <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-initiator" id="ref-for-concept-request-initiator①">initiator</a> is "<code>imageset</code>". 
+         <p class="note" role="note"><span>Note:</span> For historical reasons, "<code>imageset</code>" is not upgraded. Prior to some
+            types of mixed content being upgraded, the spec divided mixed content into blockable
+            and optionally-blockable, with blockable being preferred for any type of mixed content
+            that wasn’t prevalent. "<code>imageset</code>" was part of the former, and when
+            upgrades were added, the decision was to not upgrade any content that was previously
+            defined as blockable.</p>
        </ol>
       <li>
         If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url④">URL</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is <code>http</code>,
