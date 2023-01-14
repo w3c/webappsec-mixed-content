@@ -334,10 +334,13 @@ type: dfn
         [=potentially trustworthy origin=], then return
         "`Prohibits Mixed Security Contexts`".
 
-    2.  If |settings|' [=environment settings object/global object=] has an
-        [=Window/associated Document=] |document|, then:
+    2.  If |settings|' [=environment settings object/global object=] is a
+        {{Window/window}}, then:
+        
+        1.  Set |document| to |settings|' [=environment settings object/global object=]'s 
+            [=Window/associated Document=].
 
-        1.  [=list/For each=] [=navigable=] |navigable| in |document|'s
+        2.  [=list/For each=] [=navigable=] |navigable| in |document|'s
             [=Document/ancestor navigables=]:
 
             1.  If |navigable|'s [=navigable/active document=]'s
