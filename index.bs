@@ -276,9 +276,6 @@ type: dfn
             Contents</code>" when applied to <var>request</var>'s <a for="request">client</a>.
           </li>
           <li>
-            <var>request</var>'s <a for="request">mode</a> is <code>CORS</code>.
-          </li>
-          <li>
             <var>request</var>'s <a for="request">destination</a> is not "<code>image</code>",
             "<code>audio</code>", or "<code>video</code>".
           </li>
