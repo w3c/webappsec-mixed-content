@@ -5,8 +5,8 @@ Level: none
 ED: https://w3c.github.io/webappsec-mixed-content/
 Shortname: mixed-content
 Editor: Emily Stark 76989, Google Inc., estark@google.com
-        Mike West 56384, Google Inc., mkwst@google.com
         Carlos Ibarra Lopez  117196, Google Inc., carlosil@google.com
+Former Editor: Mike West 56384, Google Inc., mkwst@google.com
 Group: webappsec
 Issue Tracking: GitHub: https://github.com/w3c/webappsec-mixed-content/issues
 Implementation Report: https://wpt.fyi/results/mixed-content
