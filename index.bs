@@ -408,7 +408,7 @@ type: dfn
             <a for="request">client</a>.
           </li>
           <li>
-            |request|'s <a for="request">URL</a> is a [=potentially trustworthy URL=].
+            |request|'s <a for="request">current URL</a> is a [=potentially trustworthy URL=].
           </li>
           <li>
             The user agent has been instructed to allow <a>mixed content</a>, as
